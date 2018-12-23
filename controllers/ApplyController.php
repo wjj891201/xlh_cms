@@ -82,6 +82,7 @@ class ApplyController extends CheckController
             $options[$key] = $vo;
         }
         $industry = $options;
+        
         return $this->render('apply_base', ['model' => $model, 'allArea' => $allArea, 'industry' => $industry]);
     }
 
