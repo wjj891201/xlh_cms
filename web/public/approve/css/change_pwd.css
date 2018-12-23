@@ -1,0 +1,36 @@
+.changeback{background:none;}
+.changebox{width:95%;margin:0 auto;overflow:hidden;border:1px solid #ddd;background:#fff;padding-bottom:35px;}
+.changebox .article2 .box3{border:none;}
+.changepass ul{width:100%;margin:0 auto;}
+.changepass ul li{line-height:40px;text-align:center;position:relative;}
+.changepass ul li label{width:98px;font-size:16px;line-height:40px;text-align:right;display:inline-block;margin-right: 20px;}
+.changepass ul li input{border:1px solid #ccc;width:202px;line-height:30px;height:30px;text-indent:5px;}
+.changepassbtn{border: none;display:block;width:139px;height:40px;background:#419be9;border-radius:10px;margin:39px auto;line-height:40px;text-align:center;font-size:18px;color:#fff;cursor: pointer;}
+.changepass ul li p.error{position:absolute;left:50%;top:5px;margin-left:162px;line-height:30px;text-align:left;border:1px solid #ccc;background:red url() no-repeat left;text-indent:10px;padding-left:30px;padding-right:10px;}
+.changepwd{display:block;height:26px;font-size:16px;color:#fff;line-height:26px;float:right;margin:35px 57px 0 0;background:url(../styimg/setting.png) no-repeat;background-position:23px;padding-left:51px;padding-right:23px;border-left:1px solid #87a9e0;border-right:1px solid #87a9e0;}
+.error_info{width: 140px;display: inline-block;text-align: left;padding-left: 20px;color: #f43535;font-size: 14px;font-weight: bold;}
+
+.txl{margin-right:-1px;background:url(../images/mtxl_01.png) no-repeat;background-position:23px;}
+.buttons_div .addPeople{background:#fff url(../images/18.png) no-repeat;background-position:18px;text-indent:17px;width:147px;}
+.table_thread{height:47px;text-align:center;background:#f0f4f9;color:#888888;}
+.table_btn a{color:#0070df;margin-right:10px;}
+.form_addPeopleSearch ul{width:703px;padding-left:67px;padding-top:13px;float:left;}
+.form_addPeopleSearch ul li{width:47%;        /*display: inline-block;*/float:left;}
+.form_addPeopleSearch ul li label{width:70px;display:inline-block;text-align:right;float:left;height:30px;line-height:30px;}
+.form_addPeopleSearch .sbtn{width:148px;display:inline-block;background:#419be9;float:left;color:#fff;cursor:pointer;text-align:center;border-radius:6px;font-size:16px;height:46px;line-height:46px;margin-top:22px;}
+.form_addPeopleSearch ul .odd{width:45%;}
+.form_addPeopleSearch ul li .datepicker{width:108px;background:none!important;border-radius:0;}
+.dialog_addPeople{background:#f4f4f4;border:5px solid #666;}
+.form_addPeople{width:300px;margin:0 auto;}
+.form_addPeople ul label{display:inline-block;width:28%;text-align:right;height:30px;float:left;margin-right:7px;line-height:30px;}
+.form_addPeople .role_radio{text-align:left;line-height:30px;text-indent:5px;}
+.form_addPeople li{height:30px;margin-bottom:15px;}
+.sbox .dateSelect{float:left;padding:0;margin:0;}
+.dialog_addPeople .dcontent{padding-top:25px;}
+.hide{display:none;}
+.form_addPeople .dbtn{left:0;padding-top:0;}
+.form_addPeople .dbtn a.dokay,.form_addPeople .dbtn a{margin-right:0;margin-bottom:7px!important;}
+.form_addPeople .myerror span{width:100%;text-align:center;line-height:40px;color:red;display:block;}
+.form_addPeople ul .radio_style{height:30px;background:url(../images/m_06.png) no-repeat center;background-position:0px;text-align:left;text-indent:24px;width:21%;cursor:pointer;}
+.form_addPeople ul .selected{background:url(../images/m_07.png) no-repeat center;background-position:0px;}
+.form_addPeople ul{margin-bottom:-15px;}

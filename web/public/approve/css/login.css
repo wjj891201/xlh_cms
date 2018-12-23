@@ -1,0 +1,66 @@
+@charset "UTF-8";
+body {background:#245fab url('../images/login_bg.jpg') no-repeat center top; height: 100%; overflow: hidden;}
+.login-box { width: 100%;}
+.login-logo { display: block; margin: 0 auto 35px auto; padding-top: 100px; }
+.login { background: #fff; width: 360px; border-top: 3px solid #ff9000; margin: 0 auto; padding: 35px 20px 45px 20px }
+.login .title { height: 30px; margin-bottom: 30px; text-align: center; position: relative; }
+.login .title h3 { font-size: 28px; color: #ff9000; line-height: 30px; font-weight: normal; }
+.login .title a { display: block; position: absolute; top: 0; right: 0; height: 30px; font-size: 14px; color: #666666; line-height: 30px; }
+.login .title a span { color: #ff9000; margin-left: 5px; }
+.login-content { height: 81px; }
+.login-input { border: 1px solid #dddddd; height: 48px; font-size: 14px; color: #666; line-height: 48px; }
+.login-input label { float: left; display: block; height: 48px; width: 60px; padding-left: 20px; }
+.login-input input { height: 48px; float: left; width: 258px; outline: none; border: 0; line-height: 48px; color: #666; padding-left: 10px; }
+.login-auto { height: 24px; font-size: 14px; margin-bottom: 25px; }
+.login-auto a { float: right; color: #2e83c3; }
+.login-auto div { float: left; color: #666; line-height: 24px; }
+.login-auto div input { float: left; margin: 5px 5px 0 0 }
+.login-btn { display: block; width: 360px; height: 50px; background: #ff9000; border-radius: 5px; text-align: center; line-height: 50px; font-size: 16px; color: #fff }
+
+/*注册部分*/
+.register-head { height: 104px; }
+.register-head a { display: block; float: right; width: 145px; height: 35px; border-radius: 10px; background: #399bff; text-align: center; line-height: 35px; font-size: 20px; color: #fff; margin: 33px 0 0 0; }
+.register-logo { float: left; }
+.register-box { height: 656px; background: url('../images/register-bg.jpg') top center no-repeat; padding-top: 62px; }
+.register-content { background: #fff; width: 400px; border-radius: 5px; box-shadow: 5px 5px 5px #ccc; padding: 20px 20px 50px 20px; }
+.register-content .title { height: 22px; line-height: 22px; margin-bottom: 20px; }
+.register-content .title h3 { float: left; line-height: 22px; font-size: 20px; color: #ff9000; }
+.register-content .title span { float: right; line-height: 22px; font-size: 14px; color: #666; }
+.register-content .title a { color: #d23c3f }
+.register-list li { height: 65px; font-size: 14px; }
+.register-list li.first { height: 50px; }
+.register-list li em { float: left; display: block; font-style: normal; width: 80px; height: 38px; line-height: 38px; color: #666; text-align: right; margin-right: 10px; }
+.register-list li label { height: 38px; line-height: 38px; font-size: 14px; color: #999; float: left; display: block; margin-right: 15px; }
+.register-list li label input { float: left; margin: 12px 3px 0 0; }
+.register-list li input[type=text], .register-list li input[type=password] { float: left; height: 36px; width: 243px; border: 1px solid #dddddd; border-radius: 3px; outline: none; }
+.register-list li input.ver { width: 128px; margin-right: 15px; }
+.get-code { float: left; height: 38px; border-radius: 3px; background: #f85c25; width: 100px; font-size: 14px; color: #fff; text-align: center; line-height: 38px; }
+.register-list li.last p { font-size: 14px; color: #666; line-height: 16px; }
+.register-list li.last { height: 38px; }
+.register-list li p input { float: left; margin: 2px 5px 0 0; }
+.register-list li p a { color: #d23c3f }
+.submit-btn { display: block; margin: 0 0 0 80px; width: 292px; height: 45px; background: #ff9000; border-radius: 3px; font-size: 20px; color: #fff; line-height: 45px; text-align: center; margin-top: 20px; }
+.register-list li .error { clear: both; margin-left: 90px; line-height: 28px; }
+.register-list li select { float: left; width: 75px; height: 36px; border: 1px solid #ddd; margin-right: 10px; }
+
+/*找回密码*/
+.find-password { background: #f8f8f8; }
+.password-box { padding: 100px 0 50px 0; background: #fff; }
+.password-box .p-logo { margin: 0 auto 70px auto; display: block; }
+.password-box h3 { font-size: 24px; color: #666; line-height: 24px; margin-bottom: 50px; font-weight: normal; }
+.password-box-content { width: 840px; margin: 0 auto; }
+.find-list { margin: 60px 0 0 145px; }
+.find-list li { height: 38px; margin-bottom: 20px; font-size: 14px; }
+.find-list li label { float: left; display: block; width: 150px; line-height: 38px; color: #666; text-align: right; }
+.find-list li input[type=text] { float: left; width: 208px; height: 36px; border: 1px solid #fff; background: #e4eaf0; padding: 0 10px; line-height: 36px; color: #666; background: #e4eaf0; outline: none; margin-right: 15px; }
+.find-list li .get-code { height: 36px; margin-top: 1px; }
+.find-list li input.ver { width: 128px; }
+.next-step { display: block; width: 136px; height: 40px; border-radius: 10px; background: #399bff; margin: 45px auto 55px auto; font-size: 16px; color: #fff; text-align: center; line-height: 40px; }
+.link { text-align: center; line-height: 24px; height: 24px; font-size: 14px; color: #666; }
+.link a { color: #666; margin: 0 5px; }
+.success { font-size: 22px; color: #ff4800; text-align: center; margin: 50px 0 30px 0; }
+
+/*报错部分*/
+.error { color: #ff0000; line-height: 31px; font-size: 14px;}
+.error-box, input.error-box { border: 1px solid #ff0000; }
+.register-list li input[type=text].error-box { border: 1px solid #ff0000; }

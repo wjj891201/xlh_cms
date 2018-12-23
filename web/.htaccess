@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteRule ^(upfile/.*?_\d+x\d+\.(jpg|gif|png|jpeg))$ /image/index.php?$1 [L,NC]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?/$1 [QSA,PT,L]
+</IfModule>
+
+RewriteCond %{HTTP:Host} ^jshrdtz.com$
+RewriteRule (.*) http://www.jshrdtz.com/$1 [NC,R=301]
