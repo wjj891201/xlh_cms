@@ -30,8 +30,9 @@ class LoanHandleController extends CommonController
         $approve_user_id = Yii::$app->approvr_user->identity->id;
         $pageSize = 20;
         $query = WorkflowLog::find()->alias('wfl')
-                ->select(['wfl.id workflow_log_id', 'wfl.user_id approve_user_id', 'wfl.group_id', 'wfl.node_id', 'wfl.is_read', 'b.*'])
+                ->select(['wfl.id workflow_log_id', 'wfl.user_id approve_user_id', 'wfl.group_id', 'wfl.node_id', 'wfl.is_read', 'b.*', 'l.*'])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
+                ->leftJoin('{{%enterprise_loan}} l', 'l.base_id=wfl.app_id')
                 ->where(['AND', ['wfl.user_id' => $approve_user_id], ['OR', ['wfl.result' => null], ['wfl.result' => '']], ['wfl.group_id' => $this->loan_group_id]]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $pageSize]);
