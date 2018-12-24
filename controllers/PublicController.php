@@ -6,6 +6,7 @@ use app\controllers\CommonController;
 use Yii;
 use app\libs\Tool;
 use app\models\Member;
+use app\models\PhoneMessage;
 
 class PublicController extends CommonController
 {
@@ -99,7 +100,55 @@ class PublicController extends CommonController
         Yii::$app->cache->set($phone, $sms, 600);
         if ($sms)
         {
-            exit("$sms");
+            $info = Member::find()->where(['username' => $phone])->asArray()->one();
+            if (!empty($info))
+            {
+                $data = ['code' => '20001', 'message' => '该手机号已注册，请更换手机号'];
+            }
+            else
+            {
+                # 恶意刷量控制~~~start
+                //1.0
+                $time_start = date('Y-m-d') . ' 00:00:00';
+                $time_end = date('Y-m-d') . ' 23:59:59';
+                $count = PhoneMessage::find()->where(['and', ['mobile' => $phone, 'status' => 1], ['between', 'create_time', $time_start, $time_end]])->count();
+                if ($count >= 5)
+                {
+                    $data = ['code' => '20002', 'message' => '该手机号一天只能发送5条短信'];
+                    echo json_encode($data);
+                    exit;
+                }
+                //2.0
+                $last_one = PhoneMessage::find()->where(['mobile' => $phone])->orderBy(['create_time' => SORT_DESC])->asArray()->one();
+                $overtime = Yii::$app->params['overtime'];
+                if ((strtotime($last_one['create_time']) + $overtime) > time())
+                {
+                    $data = ['code' => '20002', 'message' => '发送过于频繁，请等待' . $overtime . '秒后再做操作'];
+                    echo json_encode($data);
+                    exit;
+                }
+                # 恶意刷量控制~~~end
+                $result = Tool::send_sms_java_api('00', $phone, $sms);
+                if ($result['status'])
+                {
+                    $message = [
+                        'mobile' => $phone,
+                        'code' => $sms,
+                        'type' => 1,
+                        'status' => 1,
+                        'remark' => json_encode($result['msg']),
+                        'create_time' => date('Y-m-d H:i:s')
+                    ];
+                    Yii::$app->db->createCommand()->insert('{{%phone_message}}', $message)->execute();
+                    $data = ['code' => '20000', 'message' => '验证码发送成功', 'short' => $sms];
+                }
+                else
+                {
+                    $data = ['code' => '20002', 'message' => '发送失败'];
+                }
+            }
+            echo json_encode($data);
+            exit;
         }
     }
 

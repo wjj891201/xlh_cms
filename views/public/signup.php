@@ -55,11 +55,11 @@ $this->registerJsFile('@web/public/kjd/js/layer/layer.js', ['depends' => ['app\a
     $('#btnSend').on('click', function () {
         var phone = $("#member-username").val();
         if (phone == null || phone == "") {
-            layer.msg('请输入手机号码', {icon: 2, time: 1500});
+            layer.tips('请输入手机号码', '#member-username', {tips: [1, '#EA2000']});
             return false;
         }
         if (!(/^1(3|4|5|7|8)\d{9}$/.test(phone))) {
-            layer.msg('手机号码有误', {icon: 2, time: 1500});
+            layer.tips('手机号码有误', '#member-username', {tips: [1, '#EA2000']});
             return false;
         }
         if (!$(this).hasClass('not')) {
@@ -69,10 +69,16 @@ $this->registerJsFile('@web/public/kjd/js/layer/layer.js', ['depends' => ['app\a
     //验证手机号，发送验证码
     function sendphonecode(phoneNo) {
         $.get("<?= Url::to(['public/sms']) ?>", {"phone": phoneNo}, function (data) {
-            if (data) {
+            if (data.code == '20000') {
                 var time = setInterval(function () {
                     settime(time);
                 }, 1000);
+            } else if (data.code == '20001') {
+                layer.tips(data.message, '#member-username', {tips: [1, '#EA2000']});
+                return false;
+            } else {
+                layer.tips(data.message, '#short', {tips: [1, '#EA2000']});
+                return false;
             }
         }, "json");
     }
