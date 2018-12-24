@@ -2,6 +2,8 @@
 
 $params = require(__DIR__ . '/params.php');
 
+Yii::$classMap['Simple_html_dom'] = '@app/libs/Simple_html_dom.php';
+
 $config = [
     'timeZone' => 'Asia/Chongqing',
     'id' => 'basic',
