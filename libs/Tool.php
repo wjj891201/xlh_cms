@@ -71,4 +71,46 @@ class Tool
         exit();
     }
 
+    /**
+     * 短信接口Java版
+     * @param string type 00：验证 01：通知 02：营销
+     * @param string|array $mobile 手机号
+     * @param string $content 短信内容
+     * @param sting switch 模拟开关器 on打开  off关闭
+     * @return array array('status'=>true|false,'msg'=>'')
+     * 
+     */
+    public static function send_sms_java_api($type, $mobile, $content, $switch = 'off')
+    {
+        $url = "http://sms.easyrong.dev:8080/api/sms/send";
+        $requset = ['spType' => $type, 'mobile' => $mobile, 'content' => $content, 'simulatorSwitch' => $switch];
+        $requset = json_encode($requset);
+        $json = ['content-type: application/json;charset=UTF-8', 'Content-Length:' . strlen($requset) . ''];
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $json);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $requset);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $result = json_decode($result, true);
+
+        if (isset($result['status']))
+        {
+            if ($result['status'] == 1)
+            {
+                return ['status' => true, 'msg' => $result['result']];
+            }
+            else
+            {
+                return ['status' => false, 'msg' => $result['result']];
+            }
+        }
+        else
+        {
+            return ['status' => false, 'msg' => '接口异常'];
+        }
+    }
+
 }

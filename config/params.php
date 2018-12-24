@@ -28,6 +28,8 @@ return [
         'grant' => 'grant', //授信
         'finish' => 'finish'
     ],
+    # 短信间隔时间
+    'overtime' => 120,
     # 企业适用会计制度
     'system' => [
             ['id' => 1, 'name' => '企业会计准则（一般企业）'],
