@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\controllers\CheckController;
 use Yii;
 use yii\helpers\ArrayHelper;
+use app\libs\Tool;
 use app\models\EnterpriseBase;
 use app\models\EnterpriseFinance;
 use app\models\EnterpriseDescribe;
@@ -82,7 +83,7 @@ class ApplyController extends CheckController
             $options[$key] = $vo;
         }
         $industry = $options;
-        
+
         return $this->render('apply_base', ['model' => $model, 'allArea' => $allArea, 'industry' => $industry]);
     }
 
@@ -344,6 +345,75 @@ class ApplyController extends CheckController
     {
         $info = pathinfo($filename);
         return $info["extension"];
+    }
+
+    /**
+     * 验证财务报表格式
+     */
+    public function actionAjaxCheckReprtFormat()
+    {
+        $info = [];
+        $enterprise_type = Yii::$app->request->post('type');
+        $upload_id = Yii::$app->request->post('upload_id');
+        $year = Yii::$app->request->post('year');
+        $filename = Yii::$app->request->post('fileName');
+        if (in_array($upload_id, [1, 3, 5]))
+        {
+            $file_type = "balance";
+        }
+        else if (in_array($upload_id, [2, 4, 6]))
+        {
+            $file_type = "profit";
+        }
+        $result = Tool::check_report_format_by_php($enterprise_type, $file_type, $filename, $year, 'JS');
+        $res_asset = $file_type == "balance" ? $result : [];
+        $res_profit = $file_type == "profit" ? $result : [];
+        if (!empty($result['data']))
+        {
+            $endTime = isset($result['data']['endTime']) ? $result['data']['endTime'] : '';
+            if ($year == 'last')
+            {
+                // 近一期
+                $last_three_start = strtotime(date("Y-m-01", strtotime("-3 month")));
+                $last_three_end = strtotime(date("Y-m-01"));
+                if (strtotime($endTime) >= $last_three_start && strtotime($endTime) < $last_three_end)
+                {
+                    echo json_encode(['ck' => 1, 'msg' => '解析通过', 'info' => $info, 'endTime' => $endTime]);
+                    exit;
+                }
+            }
+            else
+            {
+                //年度报表
+                $begin_time = isset($result['data']['beginTime']) ? $result['data']['beginTime'] : '';
+                if ($endTime == $year . '-12' && (empty($begin_time) || substr($begin_time, 0, 4) == $year))
+                {
+                    //年销售收入
+                    $businessIncomeYear = !empty($res_profit['data']['businessIncomeYear']) ? $res_profit['data']['businessIncomeYear'] : 0;
+                    //年利润总额
+                    $totalProfitYear = !empty($res_profit['data']['totalProfitYear']) ? $res_profit['data']['totalProfitYear'] : 0;
+                    //净资产
+                    $totalOwnerEquityEnd = !empty($res_asset['data']['totalOwnerEquityEnd']) ? $res_asset['data']['totalOwnerEquityEnd'] : 0;
+                    //资产负债率
+                    $totalLiabilitiesEnd = !empty($res_asset['data']['totalLiabilitiesEnd']) ? $res_asset['data']['totalLiabilitiesEnd'] : 0; //负债合计
+                    $totalAssetsEnd = !empty($res_asset['data']['totalAssetsEnd']) ? $res_asset['data']['totalAssetsEnd'] : 0; //资产合计
+                    $ratio = empty($totalAssetsEnd) ? 0 : $totalLiabilitiesEnd / $totalAssetsEnd;
+
+                    $info['annual_profit'] = round($totalProfitYear / 10000, 6); //年利润总额
+                    $info['net_asset'] = round($totalOwnerEquityEnd / 10000, 6); //净资产
+
+                    $info['annual_sales'] = round($businessIncomeYear / 10000, 6); //年销售收入
+                    $info['asset_debt_ratio'] = $ratio ? sprintf("%.2f", 100 * $ratio) : 0; //资产负债率
+
+                    echo json_encode(['ck' => 1, 'msg' => '解析通过', 'info' => $info, 'endTime' => $endTime, 'operate_info' => $file_type]);
+                    exit;
+                }
+            }
+            echo json_encode(['ck' => -4, 'msg' => '解析通过，报表年份不符', 'info' => $info, 'endTime' => $endTime]);
+            exit;
+        }
+        echo json_encode(['ck' => 0, 'msg' => '格式不正确', 'info' => $info]);
+        exit;
     }
 
 }

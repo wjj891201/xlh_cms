@@ -273,14 +273,27 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                     //可以做一些正在上传的效果
                 },
                 success: function (data) {
-                    //data，我们这里是异步上传到后端程序所返回的图片地址
                     var obj = JSON.parse(data);
                     if (obj.code == 20000) {
-                        $("#dq" + obj.success.type).append(obj.success.name);
-                        $("#files" + obj.success.type).val(obj.success.url);
-                        //为了让yii2框架的验证生效
-                        $("#files" + obj.success.type).focus();
-                        $("#files" + obj.success.type).blur();
+                        if (number == 3) {
+                            var result = 1;
+                        } else {
+                            var result = check_report_format(fileupload_id, obj.success.url, file_year, number);
+                        }
+                        if (result > 0) {
+                            $("#dq" + obj.success.type).append(obj.success.name);
+                            $("#files" + obj.success.type).val(obj.success.url);
+                            //为了让yii2框架的验证生效
+                            $("#files" + obj.success.type).focus();
+                            $("#files" + obj.success.type).blur();
+                        } else {
+                            var err_msg = '格式内容有误，详情下载教程';
+                            if (result == -4) {
+                                err_msg = '报表年份错误，请重新提交';
+                            }
+                            layer.tips(err_msg, '.field-files' + fileupload_id, {tips: [4, '#EA2000']});
+                            return false;
+                        }
                     }
                     if (obj.code == 20001) {
                         layer.msg(obj.error, {icon: 2, time: 2000});
@@ -290,6 +303,37 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                     console.log(responseStr);
                 }
             });
+        }
+        // 验证财务报表格式
+        function check_report_format(upload_id, fileName, year, accounting_system) {
+            var result_wmc = 0;
+            $.ajax({
+                url: "<?= Url::to(['apply/ajax-check-reprt-format']) ?>",
+                async: false,
+                dataType: 'json',
+                data: {'_csrf': '<?= Yii::$app->request->csrfToken ?>', 'upload_id': upload_id, 'fileName': fileName, 'year': year, 'type': accounting_system},
+                type: 'post',
+                success: function (data) {
+                    result_wmc = data.ck;
+                    var info = data.info;
+                    if (result_wmc == 1 && info.annual_sales != undefined && data.endTime >= '2017-01')
+                    {
+                        if (data.operate_info != undefined && data.operate_info == "balance")
+                        {
+                            // 资产负债表
+                            $('#s_net_asset').val(info.net_asset);//净资产
+                            $('#s_asset_debt_ratio').val(info.asset_debt_ratio);//资产负债率
+                        }
+                        if (data.operate_info != undefined && data.operate_info == "profit")
+                        {
+                            // 利润表
+                            $('#s_annual_sales').val(info.annual_sales);//年销售收入
+                            $('#s_annual_profit').val(info.annual_profit);//年利润总额
+                        }
+                    }
+                }
+            });
+            return result_wmc;
         }
     });
 </script>
