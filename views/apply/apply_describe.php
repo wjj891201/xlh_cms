@@ -55,20 +55,22 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                             <div class="clear"></div>
                             <div style="width:700px;float: right;" id="this_here">
                                 <?php $profession = json_decode($model->profession, true); ?>
-                                <?php foreach ($profession as $key => $vo): ?>
-                                    <ul class="exper_conts" data-id="<?= $key ?>">
-                                        <li><label style="width:90px;">姓名：</label><?= $vo['name'] ?><input name="pro_name[]" type="hidden" value="<?= $vo['name'] ?>"></li>
-                                        <li><label style="width:90px;">职位：</label><?= $vo['position'] ?><input name="pro_job[]" type="hidden" value="<?= $vo['position'] ?>"></li>
-                                        <li>
-                                            <label style="width:90px;">经历：</label>
-                                            <p class="over-experience" style="width:210px;height: 100px;word-wrap : break-word"><?= $vo['experience'] ?></p>
-                                            <input name="pro_exp[]" type="hidden" value="<?= $vo['experience'] ?>">
-                                        </li>
-                                        <div class="oper_btns">
-                                            <a class="exper_btns_a exper_btns1">编辑</a><a class="exper_btns_a exper_btns2">删除</a>
-                                        </div>
-                                    </ul>
-                                <?php endforeach; ?>
+                                <?php if (!empty($profession)): ?>
+                                    <?php foreach ($profession as $key => $vo): ?>
+                                        <ul class="exper_conts" data-id="<?= $key ?>">
+                                            <li><label style="width:90px;">姓名：</label><?= $vo['name'] ?><input name="pro_name[]" type="hidden" value="<?= $vo['name'] ?>"></li>
+                                            <li><label style="width:90px;">职位：</label><?= $vo['position'] ?><input name="pro_job[]" type="hidden" value="<?= $vo['position'] ?>"></li>
+                                            <li>
+                                                <label style="width:90px;">经历：</label>
+                                                <p class="over-experience" style="width:210px;height: 100px;word-wrap : break-word"><?= $vo['experience'] ?></p>
+                                                <input name="pro_exp[]" type="hidden" value="<?= $vo['experience'] ?>">
+                                            </li>
+                                            <div class="oper_btns">
+                                                <a class="exper_btns_a exper_btns1">编辑</a><a class="exper_btns_a exper_btns2">删除</a>
+                                            </div>
+                                        </ul>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <?= $form->field($model, 'code', ['errorOptions' => ['class' => 'msg']])->hiddenInput(['id' => 'code'])->label(false); ?>
@@ -77,15 +79,17 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                         <label>企业拥有资质：</label>
                         <div class="core_member_box addp_style">
                             <?php $qualification_certificate = json_decode($model->qualification_certificate, true); ?>
-                            <?php foreach ($qualification_certificate as $key => $vo): ?>
-                                <div class="natural_file">
-                                    <p class="natural_file_name"><?= $vo['name'] ?><span class="natural_file_del">x</span></p>
-                                    <p class="natural_rel_name"><a href="" class="put_name"><?= $vo['file_name'] ?></a></p>
-                                    <input type="hidden" name="u_zizhi_name[]" value="<?= $vo['name'] ?>">
-                                    <input type="hidden" name="u_zizhi_file[]" value="<?= $vo['path'] ?>">
-                                    <input type="hidden" name="u_zizhi_file_name[]" value="<?= $vo['file_name'] ?>">
-                                </div>
-                            <?php endforeach; ?>
+                            <?php if (!empty($qualification_certificate)): ?>
+                                <?php foreach ($qualification_certificate as $key => $vo): ?>
+                                    <div class="natural_file">
+                                        <p class="natural_file_name"><?= $vo['name'] ?><span class="natural_file_del">x</span></p>
+                                        <p class="natural_rel_name"><a href="" class="put_name"><?= $vo['file_name'] ?></a></p>
+                                        <input type="hidden" name="u_zizhi_name[]" value="<?= $vo['name'] ?>">
+                                        <input type="hidden" name="u_zizhi_file[]" value="<?= $vo['path'] ?>">
+                                        <input type="hidden" name="u_zizhi_file_name[]" value="<?= $vo['file_name'] ?>">
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                             <div class="add_natural">
                                 <p>+&nbsp;添加资质</p>
                             </div>
