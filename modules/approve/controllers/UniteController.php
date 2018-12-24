@@ -8,6 +8,7 @@ use app\models\WorkflowLog;
 use app\models\WorkflowNode;
 use app\models\Organization;
 use app\models\WorkflowGroup;
+use app\models\EnterpriseLoan;
 
 class UniteController extends CommonController
 {
@@ -87,6 +88,32 @@ class UniteController extends CommonController
         //把审批结果更新一下
         if ($next_node_id || in_array($action_key, ['end', 'defer', 'finish', 'grant']))
         {
+            if($action_key == 'grant'){ //授信
+                
+                $grant_data['credit_amount']   = Yii::$app->request->post('credit_amount');
+                $grant_data['credit_time']     = Yii::$app->request->post('credit_time');
+                $grant_data['credit_validity'] = Yii::$app->request->post('credit_validity');
+                $grant_data['loan_id']         = Yii::$app->request->post('loan_id');
+                $model  = new EnterpriseLoan();
+                $res    = $model->grant_edit($grant_data, ['loan_id'=>$grant_data['loan_id']]);
+                $errors = $model->firstErrors;
+                if(!$res && !empty($errors)){
+                    $i   = 0;
+                    $arr = [];
+                    foreach($errors as $k => $v){
+                        if($i == 0) {
+                            $arr['key'] = $k;
+                            $arr['val'] = $v;
+                        }
+                        $i++;
+                    }
+                    exit(json_encode(['status'=> false, 'msg'=>$arr]));
+                }else{
+                    WorkflowLog::updateAll($data, ['id' => $workflow_log_id]);
+                    exit(json_encode(['status'=> true, 'msg'=>'授信成功']));
+                }
+                exit;
+            }
             WorkflowLog::updateAll($data, ['id' => $workflow_log_id]);
         }
         else

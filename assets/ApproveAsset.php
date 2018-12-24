@@ -36,6 +36,7 @@ class ApproveAsset extends AssetBundle
         'js/common.js',
 //        'js/data.js'
         'js/layer/layer.js',
+        'js/laydate/laydate.js',
     ];
     public $jsOptions = [
         'position' => View::POS_HEAD,
