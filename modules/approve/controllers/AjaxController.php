@@ -34,5 +34,21 @@ class AjaxController extends CommonController{
         }      
         echo $html;
     }
+
+
+    public function actionUploads(){
+        // p($_FILES, 1);
+        $allowed_types = ['gif', 'jpg', 'jpeg', 'png', 'pdf', 'GIF', 'JPG', 'JPEG', 'PNG', 'PDF'];
+        $max_size      = 10240000; //10M
+
+        $uploan_url    = 'upfile/loan/' . date('Ymd') . '/';
+        $result        = $this->ajax_upload_do($uploan_url, 0, $allowed_types, $max_size);
+        $result        = json_decode($result, true);
+        $file_path = '';
+        if($result['code'] == 20000){
+            $file_path =  $result['success']['url'];
+        }
+        echo $file_path;
+    }
    
 }
