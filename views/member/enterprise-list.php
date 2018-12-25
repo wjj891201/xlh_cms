@@ -47,7 +47,13 @@ $this->registerJsFile('@web/public/kjd/js/layer/layer.js', ['depends' => ['app\a
                                             <div class="right">
                                                 <span class="gray">申请时间：</span><?= $vo['base_create_time'] ?> &nbsp;&nbsp;&nbsp;&nbsp;
                                                 <span class="gray">状态：</span>
-                                                <span class="red"><?= $vo['node_name'] ?>-<?= $vo['result_cn'] ?></span>
+                                                <span class="red">
+                                                    <?php if (empty($vo['result'])): ?>
+                                                        待<?= $vo['organization_name'] ?>审核
+                                                    <?php else: ?>
+                                                        <?= $vo['organization_name'] ?><?= $vo['result_cn'] ?>
+                                                    <?php endif; ?>
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
