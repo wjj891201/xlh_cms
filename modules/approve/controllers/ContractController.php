@@ -2,15 +2,18 @@
 namespace app\modules\approve\controllers;
 
 use Yii;
-use yii\data\Pagination;
 use app\models\EnterpriseLoanContract;
 
 class ContractController extends CommonController{
 
     // public function init(){}
 
-    public function actionIndex(){
-        EnterpriseLoanContract::getList();
-        echo 'OK';
+    public function actionGetLoanInfo(){
+
+    }
+
+    public function actionAddLoanInfo(){
+        $post = Yii::$app->request->post();
+        p($post);
     }
 }

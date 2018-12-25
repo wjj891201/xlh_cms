@@ -37,23 +37,13 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
 <div class="dialog dialog_loan_form">
     <div class="dialog_box">
         <form class="form loan_add_from">
-            <ul>
-                <li>
-                    <label>贷款企业名称：</label>
-                    <span id="enterprise_name">三川智慧科技股份有限公司</span></li>
-                <li>
-                    <label>期望贷款金额：</label>
-                    <span id="apply_amount">110</span>万 </li>
-                <li>
-                    <label>期望贷款周期：</label>
-                    <span id="period_month">2</span>个月</li>
-                <li>
-                    <label>可用授信金额：</label>
-                    <span id="already_loan_amount">110</span>万</li>
-                <li>
-                    <label>受理银行：</label>
-                    <span id="bank_name">徽商银行支行</span>
-                </li>
+            <ul style="border:0px;" class="loan_add_from_head">
+                <li><label>贷款企业名称：</label> <span>1</span></li>
+                <li><label>期望贷款金额：</label> <span>2</span>万 </li>
+                <li><label>期望贷款周期：</label> <span>3</span>个月</li>
+                <li><label>可用授信金额：</label> <span>4</span>万</li>
+            </ul>
+            <ul style="border:0px;">
                 <li>
                     <label>贷款合同号：</label>
                     <input type="text" name="contract_num" placeholder="请输入合同编号">
@@ -64,11 +54,11 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
                 </li>
                 <li>
                     <label>贷款开始时间：</label>
-                    <input type="text" name="contract_loan_start_time" class="datepicker hasDatepicker">
+                    <input type="text" name="contract_loan_start_time" class="datepicker" id="start_time" onclick="retget_start_time();">
                 </li>
                 <li>
                     <label>贷款结束时间：</label>
-                    <input type="text" name="contract_loan_end_time">
+                    <input type="text" name="contract_loan_end_time" class="datepicker" id="end_time">
                 </li>
                 <li>
                     <label>贷款周期：</label>
@@ -101,9 +91,11 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
                 </li>
             </ul>
         </form>
-        <div class="btn"> <a class="loan_add"">确认提交</a> </div>
+        <div class="btn"> <a class="loan_add" onclick="loan_add()">确认提交</a> </div>
     </div>
 </div>
+
+
 
 <script type="text/javascript">
 $(function(){
@@ -111,20 +103,42 @@ $(function(){
     $(".loan_info").click(function(){
         loan_id = $(this).data('loan_id');
 
+        $.get('/approve/ajax/get-loan-info?loan_id='+loan_id+'&type_id=1', function(data){
+            $(".loan_add_from_head").empty().html(data);
+        }, 'html');
+
+
         layer.tab({
             area:['500px', '700px'],
             tab:[
-                {title: '历史放款信息',content: $(".dialog_loan_list").html()},
-                {title: '填写放款信息',content: $(".dialog_loan_form").html()}
+                { title:'历史放款信息', content:$(".dialog_loan_list").html() },
+                { title:'填写放款信息', content:$(".dialog_loan_form").html() }
             ]
         });
+
+
     });
 
     
 });
-
-
-$(".loan_add").click(function(){
-    alert('ddddd');
+// 选择时间
+function get_start_time(){
+    laydate.render({
+        elem: '#start_time',
+    });    
+}
+     
+laydate.render({
+    elem: '#end_time',
 });
+
+
+function loan_add(){
+   $.post('/approve/contract/add-loan-info', $(".loan_add_from").serialize(), function(data){
+        // $(".loan_add_from_head").empty().html(data);
+    
+
+    }, 'html'); 
+   return false;
+}
 </script>
