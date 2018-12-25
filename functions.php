@@ -35,3 +35,24 @@ function getLastSql($query=NULL){
     }
     echo $sql;
 }
+
+/**
+ * [ajaxReturn Ajax返回]
+ * @param  [array]  $data [数组]
+ * @param  [string] $type [类型]
+ * @return [string]       [json数据]
+ */
+function ajaxReturn($data=[], $type='json') {
+    switch (strtolower($type)){
+        case 'json' :
+            header('Content-Type:application/json; charset=utf-8');
+            exit(json_encode($data));
+        case 'jsonp':
+            header('Content-Type:application/json; charset=utf-8');
+            $handler = 'callback';
+            exit($handler.'('.json_encode($data).');');  
+        default :
+            header('Content-Type:text/html; charset=utf-8');
+            exit($data);
+    }
+}

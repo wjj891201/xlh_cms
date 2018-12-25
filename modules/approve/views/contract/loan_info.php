@@ -96,35 +96,35 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
                         <ul style="border:0px;">
                             <li>
                                 <label>贷款合同号：</label>
-                                <input type="text" name="contract_num" placeholder="请输入合同编号">
+                                <input type="text" name="contract_num" class="contract_num" placeholder="请输入合同编号">
                             </li>
                             <li>
                                 <label>实际放贷金额：</label>
-                                <input type="number" name="loan_amount_money" placeholder="请输入金额">万
+                                <input type="number" name="loan_amount_money" class="loan_amount_money" placeholder="请输入金额">万
                             </li>
                             <li>
                                 <label>贷款开始时间：</label>
-                                <input type="text" name="contract_loan_start_time" class="datepicker" id="start_time" lay-key="1" readonly="readonly">
+                                <input type="text" name="contract_loan_start_time" class="datepicker contract_loan_start_time" id="start_time" lay-key="1" readonly="readonly">
                             </li>
                             <li>
                                 <label>贷款结束时间：</label>
-                                <input type="text" name="contract_loan_end_time" class="datepicker" id="end_time" lay-key="2" readonly="readonly">
+                                <input type="text" name="contract_loan_end_time" class="datepicker contract_loan_end_time" id="end_time" lay-key="2" readonly="readonly">
                             </li>
                             <li>
                                 <label>贷款周期：</label>
-                                <input type="number" name="loan_day" id="count_days" readonly="readonly"> 天
+                                <input type="number" name="loan_day" class="loan_day" id="count_days" readonly="readonly"> 天
                             </li>
                             <li>
                                 <label>贷款利率：</label>
-                                <input type="number" name="loan_rate">  %
+                                <input type="number" name="loan_rate" class="loan_rate">  %
                             </li>
                             <li>
                                 <label>基准利率：</label>
-                                <input type="number" name="loan_benchmark_rate"> %
+                                <input type="number" name="loan_benchmark_rate" class="loan_benchmark_rate"> %
                             </li>
                             <li>
                                 <label>还款方式：</label>
-                                <select name="repayment_mode">
+                                <select name="repayment_mode" class="repayment_mode">
                                     <option value="0">请选择</option>
                                     <option value="1">先息后本</option>
                                     <option value="2">等额本息</option>
@@ -137,10 +137,11 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
                             </li>
                             <li>
                                 <label>请上传放款凭证：</label>
-                                <input type="file" id="loan_voucher_uploads" style="width: 184px;" onchange="set_loan_uploads(this);">
+                                <input type="file" class="loan_voucher" id="loan_voucher_uploads" style="width: 184px;" onchange="set_loan_uploads(this);">
                                 <input type="hidden" name="loan_voucher" id="loan_voucher">
                             </li>
                         </ul>
+                        <input type="hidden" name="loan_id" id="loan_id">
                     </form>
                     <div class="btn"> <a class="loan_add" onclick="loan_add()">确认提交</a> </div>
                 </div>
@@ -153,10 +154,24 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
 <script type="text/javascript">
 // 添加放款信息
 function loan_add(){
+    $.ajaxSettings.async = false;
     $.post('/approve/contract/add-loan-info', $(".loan_add_from").serialize(), function(data){
-        // $(".loan_add_from_head").empty().html(data);
-    
-    }, 'html'); 
+        var code   = data.code;
+        var msg    = data.msg;
+        if(code == 200){
+            layer.msg(msg, {icon: 1, time: 1500}, function(){
+                window.location.reload();
+            });
+        }else if(code == 201){
+            layer.msg(msg, {icon: 2, time: 1500});
+            return false;
+        }else if(code == 202){
+            var key = data.msg.key;
+            var val = data.msg.val;
+            layer.tips(val, '.loan_add_from .'+key, {tips: [3, 'red'], time:2000});
+            return false;
+        }
+    }, 'json'); 
    return false;
 }
 
@@ -173,12 +188,21 @@ $(function(){
     var loan_id = 0;
     $(".loan_info").click(function(){
         $(".zzsc").css('display', 'block');
+        
         loan_id = $(this).data('loan_id');
+        
+        $(".loan_add_from")[0].reset();
 
         $.get('/approve/ajax/get-loan-info?loan_id='+loan_id+'&type_id=1', function(data){
             $(".loan_add_from_head").empty().html(data);
         }, 'html');
+        
+        $.get('/approve/ajax/get-loan-list?loan_id='+loan_id+'&type_id=1', function(data){
+            
+        }, 'html');
 
+        $("#loan_id").val(loan_id);
+        
         layer.open({
             type: 1,
             title: '放款信息',
