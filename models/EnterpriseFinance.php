@@ -8,6 +8,11 @@ use Yii;
 class EnterpriseFinance extends ActiveRecord
 {
 
+    public $s_annual_sales;
+    public $s_annual_profit;
+    public $s_net_asset;
+    public $s_asset_debt_ratio;
+
     public static function tableName()
     {
         return "{{%enterprise_finance}}";
@@ -52,7 +57,7 @@ class EnterpriseFinance extends ActiveRecord
                 ['research_num', 'validateAcn', 'on' => ['6_q', '6_n', '!6_q', '!6_n']],
                 ['user_id', 'default', 'value' => Yii::$app->session['member']['userid']],
                 ['base_id', 'default', 'value' => EnterpriseBase::getBaseId()],
-                ['finance_year', 'safe']
+                [['finance_year', 's_annual_sales', 's_annual_profit', 's_net_asset', 's_asset_debt_ratio'], 'safe']
         ];
     }
 
@@ -111,6 +116,19 @@ class EnterpriseFinance extends ActiveRecord
         if (!$identify && $accounting_system != 3)
         {
             $this->scenario = '!6_n';
+        }
+        //报表解析的数据处理
+        if (in_array($accounting_system, [1, 2]))
+        {
+            $s_net_asset = $data['EnterpriseFinance']['s_net_asset'];
+            $s_asset_debt_ratio = $data['EnterpriseFinance']['s_asset_debt_ratio'];
+            $s_annual_sales = $data['EnterpriseFinance']['s_annual_sales'];
+            $s_annual_profit = $data['EnterpriseFinance']['s_annual_profit'];
+            $data['EnterpriseFinance']['net_asset'] = !empty($s_net_asset) ? $s_net_asset : '';
+            $data['EnterpriseFinance']['asset_debt_ratio'] = !empty($s_asset_debt_ratio) ? $s_asset_debt_ratio : '';
+            $data['EnterpriseFinance']['annual_sales'] = !empty($s_annual_sales) ? $s_annual_sales : '';
+            $data['EnterpriseFinance']['annual_profit'] = !empty($s_annual_profit) ? $s_annual_profit : '';
+            unset($data['EnterpriseFinance']['s_net_asset'], $data['EnterpriseFinance']['s_asset_debt_ratio'], $data['EnterpriseFinance']['s_annual_sales'], $data['EnterpriseFinance']['s_annual_profit']);
         }
         if ($this->load($data) && $this->save())
         {

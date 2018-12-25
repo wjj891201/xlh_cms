@@ -197,8 +197,8 @@ span.swiper-pagination-bullet-active { background: #3e9fff }
 .bar { background-color: #209deb; width: 0%; height: 10px; border-radius: 4px }
 .checkReal { border: 1px solid #8ac5f8; background: #e5f3ff; color: #3e9fff; display: inline-block; height: 36px; line-height: 36px; padding: 0 8px; border-radius: 5px; margin-left: 10px; }
 .checkReal:hover { cursor: pointer }
-.checkedReal { display:inline-block; visibility: hidden; margin-left: 10px; vertical-align: middle; width: 192px; font-size: 15px; margin-bottom: 6px; }
-.checkedReal i { display: inline-block; height: 24px; width: 24px; background: url(../../static/images/apply/c1.png) no-repeat; vertical-align: middle; margin-right: 4px }
+.checkedReal { display:inline-block; margin-left: 10px; vertical-align: middle; width: 192px; font-size: 15px; margin-bottom: 6px; }
+.checkedReal i { display: inline-block; height: 24px; width: 24px; background: url(../images/all_right.png) no-repeat; vertical-align: middle; margin-right: 4px }
 .upload .subtitle { color: #666; font-size: 14px }
 .upload .upload_after .subtitle { text-decoration: underline }
 .nextbtn { width: 220px; height: 70px; border-radius: 10px; background: #3e9fff; font-size: 26px; color: #fff; text-align: center; line-height: 70px; margin: 0 auto; box-shadow: 2px 2px 3px #b9dafb; cursor: pointer }
