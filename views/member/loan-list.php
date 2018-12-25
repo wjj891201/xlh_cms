@@ -164,8 +164,7 @@ $this->registerJsFile('@web/public/kjd/js/layer/layer.js', ['depends' => ['app\a
                                                                     还款开始时间：<?= $v['contract_repayment_start_time'] ?><br/> 
                                                                     还款截止时间：<?= $v['contract_repayment_end_time'] ?><br/> 
                                                                     预计还款天数：<?= $v['repayment_days'] ?> 天<br/> 
-                                                                    还款凭证：
-                                                                    <a href="<?= $v['repayment_voucher'] ?>" download=""><i class="dicon"></i>下载</a>
+                                                                    还款凭证：<a href="<?= Url::to(['member/download-guide-files', 'type' => 2, 'file' => $v['repayment_voucher']]) ?>"><i class="dicon"></i>下载</a>
                                                                 </p>
                                                             </div>
                                                         </div>
