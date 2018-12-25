@@ -44,7 +44,11 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                 <ul class="step1box step3Box step2box">
                     <li>
                         <label> 企业名称：</label>
-                        <?= $form->field($model, 'enterprise_name', ['template' => "{input}<div class=\"checkReal\">检查名称真实性</div>{error}", 'errorOptions' => ['class' => 'msg']])->textInput(['class' => 'company_name', 'id' => 'enterprise_name', 'placeholder' => '请输入工商登记的企业名称'])->label(false); ?>
+                        <?php if ($model->base_id): ?>
+                            <?= $form->field($model, 'enterprise_name', ['template' => "{input}{error}", 'errorOptions' => ['class' => 'msg']])->textInput(['class' => 'company_name', 'id' => 'enterprise_name', 'readonly' => 'readonly', 'style' => 'background:#eee;'])->label(false); ?>
+                        <?php else: ?>
+                            <?= $form->field($model, 'enterprise_name', ['template' => "{input}<div class=\"checkReal\">检查名称真实性</div><div class=\"checkedReal\"></div>{error}", 'errorOptions' => ['class' => 'msg']])->textInput(['class' => 'company_name', 'id' => 'enterprise_name', 'placeholder' => '请输入工商登记的企业名称'])->label(false); ?>
+                        <?php endif; ?>
                     </li>
                     <li class="area">
                         <label>所属区域：</label>
@@ -119,35 +123,63 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                 layer.tips('企业名称不能为空', '#enterprise_name', {tips: [1, '#EA2000']});
                 return false;
             }
-            $.cookie('enterprise_name', name, {expires: 1});
-            $.ajax({
-                async: false,
-                dateType: "json",
-                type: 'post',
-                data: {name: name, _csrf: '<?= Yii::$app->request->csrfToken ?>'},
-                url: '<?= Url::to(['apply/ajax-query-enterprise-name']); ?>',
-                success: function (result) {
-                    var info = eval("(" + result + ")");
-                    ck = info.ck;
-                    if (ck == 1) {
-                        var data = info.data;
-                        // 注册相关信息
-                        $('#register_info').val(data.register_info);
-                        // 填充其他信息
-                        $('#legal_person').val(data.legal_person);
-                        if ($('#legal_person_phone').val() == '') {
-                            $('#legal_person_phone').val(data.legal_person_phone);
+            if (!$(this).hasClass('not')) {
+                $.cookie('enterprise_name', name, {expires: 1});
+                $.ajax({
+                    async: false,
+                    dateType: "json",
+                    type: 'post',
+                    data: {name: name, _csrf: '<?= Yii::$app->request->csrfToken ?>'},
+                    url: '<?= Url::to(['apply/ajax-query-enterprise-name']); ?>',
+                    success: function (result) {
+                        var info = eval("(" + result + ")");
+                        ck = info.ck;
+                        if (ck == 1) {
+                            var data = info.data;
+                            // 注册相关信息
+                            $('#register_info').val(data.register_info);
+                            // 填充其他信息
+                            $('#legal_person').val(data.legal_person);
+                            if ($('#legal_person_phone').val() == '') {
+                                $('#legal_person_phone').val(data.legal_person_phone);
+                            }
+                            $('#contact_mail').val(data.contact_mail);
+                            $('#contact_address').val(data.contact_address);
+                            $('.checkedReal').html("<i></i>已验证真实性").attr('style', 'color:#000');
+                            //倒计时
+                            var time = setInterval(function () {
+                                settime(time);
+                            }, 1000);
+                        } else {
+                            $('.checkedReal').empty();
+                            layer.tips(info.msg, '#enterprise_name', {tips: [1, '#EA2000']});
+                            return false;
                         }
-                        $('#contact_mail').val(data.contact_mail);
-                        $('#contact_address').val(data.contact_address);
-                    } else {
-                        layer.tips(info.msg, '#enterprise_name', {tips: [1, '#EA2000']});
-                        return false;
                     }
-                }
-            });
+                });
+            }
         });
     });
+
+    //间隔时间
+    var countdown = 59;
+    //60秒后可重新发送
+    function settime(time) {
+        $('#enterprise_name').attr("readonly", "readonly");
+        if (countdown <= 0) {
+            clearInterval(time);
+            $('.checkReal').removeClass("not");
+            $('.checkReal').removeClass('btnclickon');
+            $('#enterprise_name').attr('readonly', false);
+            $('.checkReal').html("检查名称真实性");
+            countdown = 59;
+        } else {
+            $('.checkReal').addClass("not");
+            $('.checkReal').addClass('btnclickon');
+            $('.checkReal').html("重新发送(" + countdown + ")");
+            countdown--;
+        }
+    }
 
     //上传图片
     function fileChange(target) {
