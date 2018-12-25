@@ -13,6 +13,7 @@ use app\models\WorkflowLog;
 use app\models\ApproveUser;
 use app\models\Organization;
 use app\models\WorkflowNode;
+use app\models\EnterpriseLoanContract;
 
 class MemberController extends CheckController
 {
@@ -53,14 +54,15 @@ class MemberController extends CheckController
         $loan_group_id = WorkflowGroup::find()->select('id')->where(['group_key' => 'loan'])->scalar();
         # 2.0查询列表
         $list = EnterpriseBase::find()->alias('eb')
-                        ->select(['eb.base_id', 'eb.enterprise_name', 'el.loan_id', 'el.loan_create_time', 'el.apply_amount', 'el.period_month'])
+                        ->select(['eb.enterprise_name', 'el.*'])
                         ->leftJoin('{{%enterprise_loan}} el', 'eb.base_id=el.base_id')
                         ->where(['eb.user_id' => $this->userid])
                         ->asArray()->all();
         $temp = [];
         foreach ($list as $key => $vo)
         {
-            $log_info = WorkflowLog::find()->select(['user_id', 'node_id', 'result'])->where(['app_id' => $vo['base_id'], 'group_id' => $loan_group_id])->orderBy(['id' => SORT_DESC])->asArray()->one();
+            $log_info = WorkflowLog::find()->select(['id', 'user_id', 'node_id', 'result'])->where(['app_id' => $vo['base_id'], 'group_id' => $loan_group_id])->orderBy(['id' => SORT_DESC])->asArray()->one();
+            $vo['log_id'] = $log_info['id'];
             $vo['approve_user_id'] = $log_info['user_id'];
             $approve_user_info = ApproveUser::find()->select(['username', 'belong'])->where(['id' => $log_info['user_id']])->asArray()->one();
             $vo['approve_user_name'] = $approve_user_info['username'];
@@ -92,6 +94,7 @@ class MemberController extends CheckController
                     break;
             }
             $vo['result_cn'] = $str;
+            $vo['loan_repay'] = EnterpriseLoanContract::find()->where(['loan_id' => $vo['loan_id']])->asArray()->all();
             $temp[] = $vo;
         }
         $list = $temp;
@@ -124,7 +127,8 @@ class MemberController extends CheckController
         $temp = [];
         foreach ($list as $key => $vo)
         {
-            $log_info = WorkflowLog::find()->select(['user_id', 'node_id', 'result'])->where(['app_id' => $vo['base_id'], 'group_id' => $group_id])->orderBy(['id' => SORT_DESC])->asArray()->one();
+            $log_info = WorkflowLog::find()->select(['id', 'user_id', 'node_id', 'result'])->where(['app_id' => $vo['base_id'], 'group_id' => $group_id])->orderBy(['id' => SORT_DESC])->asArray()->one();
+            $vo['log_id'] = $log_info['id'];
             $vo['approve_user_id'] = $log_info['user_id'];
             $approve_user_info = ApproveUser::find()->select(['username', 'belong'])->where(['id' => $log_info['user_id']])->asArray()->one();
             $vo['approve_user_name'] = $approve_user_info['username'];
@@ -189,6 +193,17 @@ class MemberController extends CheckController
                 break;
         }
         Tool::downloadFile($true_file);
+    }
+
+    /**
+     * 获取原因
+     */
+    public function actionGetReason()
+    {
+        $log_id = Yii::$app->request->post('log_id');
+        $info = WorkflowLog::find()->where(['id' => $log_id])->asArray()->one();
+        echo json_encode($info);
+        exit;
     }
 
 }

@@ -690,7 +690,7 @@ a.guide,a.guide:hover,a.guide:active{color:#3e9fff;text-decoration:underline;fon
 .dialog  li input,.dialog  li textarea{display:block;float:left;background:#fff;line-height:33px;font-size:14px}
 .dialog  li input{width:48%;height:33px}
 .dialog  li textarea{width:78%;height:110px;line-height:20px;padding:15px 10px}
-.dialog{border:5px solid rgba(0,0,0,0.6)}
+/*.dialog{border:5px solid rgba(0,0,0,0.6)}*/
 
 /*.dokay2 { margin: 30px auto; display: block; background: #419be9; width: 137px; height: 45px; line-height: 45px; text-align: center; color: #fff; font-size: 18px; border-radius: 5px; cursor: pointer }
 .dokay2:hover { color: #fff }*/
@@ -821,7 +821,7 @@ a.guide,a.guide:hover,a.guide:active{color:#3e9fff;text-decoration:underline;fon
 .sidemenu .content li{border-top:1px solid #e6e6e6;height:31px;line-height:31px;padding:0 15px;}
 .scrollline{width:300px;height:25px;line-height:25px;border:#ccc 1px solid;overflow:hidden;}
 .scrollline li{height:25px;padding-left:10px;}
-.dialog{display:none;z-index:10000;width:40%;position:fixed!important; /* FF IE7*/_position:absolute; /*IE6*/_top:expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (document.documentElement.clientHeight- this.offsetHeight)/2:document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);}
+.dialog{z-index:10000;position:fixed!important; /* FF IE7*/_position:absolute; /*IE6*/_top:expression(eval(document.compatMode && document.compatMode=='CSS1Compat') ? documentElement.scrollTop + (document.documentElement.clientHeight- this.offsetHeight)/2:document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);}
 .dialog.dani{-webkit-animation:bounceIn 0.1s forwards;}
 html,body{height:100%;}
 .dialog .dclose{background:url(../images/close.png) 0 0 no-repeat;display:block;width:25px;height:25px;float:right;margin:10px 10px 0 0;cursor:pointer;outline:none;}
@@ -983,7 +983,7 @@ em{float:left;display:inline;height:30px;line-height:30px;margin-left:10px;width
 .dialog .title{border-bottom:1px solid #ddd;width:90%;margin:0 auto;margin-top:30px;}
 .dialog .title h3{border-bottom:3px solid #209deb;width:30%;margin:0 auto;padding-bottom:4px;font-size:14px;font-weight:bold;text-align:center;}
 .dialog .title h3.info{border-bottom:3px solid #209deb;}
-.dialog .dcontent{font-size:13px;padding:30px 0 0 0;}
+/*.dialog .dcontent{font-size:13px;padding:30px 0 0 0;}*/
 .diasty1 ul li{font-size:16px;color:#333333;}
 .diasty1 label{display:inline-block;width:160px;text-align:right;color:#666666;vertical-align:top;}
 .diasty1 input[type='text'],.diasty1 select{border:1px solid #ccc;height:30px;line-height:30px;width:200px;text-indent:10px;margin-right:6px;}
@@ -994,8 +994,8 @@ em{float:left;display:inline;height:30px;line-height:30px;margin-left:10px;width
 .diasty1 .selearea1{background:url(../images/selected.png) no-repeat left;}
 .diasty2 ul li{margin-bottom:20px;}
 .diasty2 label{width:50%;}
-.dialog .dcontent{font-size:13px;padding:30px 0 0 0;}
-.dialog .dcontent .reason_list{height:330px;overflow-y:scroll;overflow-x:hidden;}
+/*.dialog .dcontent{font-size:13px;padding:30px 0 0 0;}*/
+.dialog .dcontent .reason_list{height:226px;}
 .dialog .dcontent .reason_list li{width:470px;margin:10px auto;border-bottom:1px dashed #ddd;padding-bottom:8px;}
 .dialog .dcontent .reason_list label{width:70px;line-height:32px;height:32px;font-weight:bold;margin-left:20px;}
 .dialog .dcontent .reason_list p{width:60%;line-height:32px;height:32px;text-align:left;padding-left:20px;}

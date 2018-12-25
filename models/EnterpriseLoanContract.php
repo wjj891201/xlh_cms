@@ -1,16 +1,20 @@
-<?php 
+<?php
+
 namespace app\models;
 
 use yii\db\ActiveRecord;
 use Yii;
 
-class EnterpriseLoanContract extends ActiveRecord{
+class EnterpriseLoanContract extends ActiveRecord
+{
 
-    public static function tableName(){
+    public static function tableName()
+    {
         return "{{%enterprise_loan_contract}}";
     }
 
-    public function attributeLabels(){
+    public function attributeLabels()
+    {
         return [
             'apply_amount' => '申请金额',
             'period_month' => '申请期限',
@@ -18,9 +22,8 @@ class EnterpriseLoanContract extends ActiveRecord{
         ];
     }
 
-
-    
-    public function rules(){
+    public function rules()
+    {
         // return [
         //         [['apply_amount', 'period_month', 'loan_purpose'], 'required', 'message' => '{attribute}必填'],
         //         ['apply_amount', 'number', 'message' => '{attribute}必须为数字'],
@@ -32,7 +35,8 @@ class EnterpriseLoanContract extends ActiveRecord{
         // ];
     }
 
-    public static function getList(){
+    public static function getList()
+    {
         echo 'list';
     }
 

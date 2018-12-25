@@ -9,6 +9,10 @@ $this->title = '科技资质认证管理';
 $this->params['breadcrumbs'][] = $this->title;
 $this->registerMetaTag(['name' => 'keywords', 'content' => '']);
 $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description');
+
+# layer~~~start
+$this->registerJsFile('@web/public/kjd/js/layer/layer.js', ['depends' => ['app\assets\KjdAsset'], 'position' => View::POS_HEAD]);
+# layer~~~end
 ?>
 <div class="wrapper">
     <div class="titleBar ">
@@ -69,7 +73,13 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                                     </td>
                                     <td class="last">
                                         <div class="border">
-                                            <a class="edit btn" href="<?= Url::to(['member/base-detail', 'base_id' => $vo['base_id']]) ?>">查看资料</a>
+                                            <?php if ($vo['result'] == 'end'): ?>
+                                                <a class="reasonBtn btn" data-log-id="<?= $vo['log_id'] ?>" href="javascript:void(0);">终止原因</a>
+                                            <?php elseif ($vo['result'] == 'back'): ?>
+                                                <a class="reasonBtn btn" data-log-id="<?= $vo['log_id'] ?>" href="javascript:void(0);">退回原因</a>
+                                            <?php else: ?>
+                                                <a class="edit btn" href="<?= Url::to(['member/base-detail', 'base_id' => $vo['base_id']]) ?>">查看资料</a>
+                                            <?php endif; ?>
                                         </div>
                                     </td>
                                 </tr>
@@ -83,3 +93,40 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
     </div>
     <!-- 资质列表 end -->
 </div>
+
+<div class="reason_detail" style="display: none;">
+    <div class="dialog">
+        <div class="dcontent info" >
+            <div class="reason_list" id="reason"></div>
+        </div>
+    </div> 
+</div>
+<script>
+    $(function () {
+        $(".reasonBtn").click(function () {
+            var log_id = $(this).data("log-id");
+            var title = $(this).html();
+            $.ajax({
+                url: '<?= Url::to(['member/get-reason']) ?>',
+                async: false,
+                dateType: "json",
+                type: 'post',
+                data: {'_csrf': '<?= Yii::$app->request->csrfToken ?>', 'log_id': log_id},
+                success: function (result) {
+                    var obj = JSON.parse(result);
+                    $('#reason').html(obj.comment);
+                }
+            });
+            aaa = layer.open({
+                type: 1,
+                title: title,
+                skin: 'layui-layer-rim',
+                area: ['400px', '290px'],
+                content: $('.reason_detail'),
+                end: function () {
+                    $('#reason').empty();
+                }
+            });
+        });
+    });
+</script>
