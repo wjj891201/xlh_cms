@@ -208,10 +208,10 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                     </li>
                 </ul>
             </div>
-<!--            <input type="hidden" name="s_annual_sales" id="s_annual_sales" value=""/>
-            <input type="hidden" name="s_annual_profit" id="s_annual_profit" value=""/>
-            <input type="hidden" name="s_net_asset" id="s_net_asset" value=""/>
-            <input type="hidden" name="s_asset_debt_ratio" id="s_asset_debt_ratio" value=""/>-->
+            <?= $form->field($model, 's_annual_sales')->hiddenInput(['id' => 's_annual_sales'])->label(false); ?>
+            <?= $form->field($model, 's_annual_profit')->hiddenInput(['id' => 's_annual_profit'])->label(false); ?>
+            <?= $form->field($model, 's_net_asset')->hiddenInput(['id' => 's_net_asset'])->label(false); ?>
+            <?= $form->field($model, 's_asset_debt_ratio')->hiddenInput(['id' => 's_asset_debt_ratio'])->label(false); ?>
             <div class="save_btn">
                 <a href="<?= Url::to(['apply/apply-base']) ?>" class="left_btn">上一步</a>
                 <?= Html::submitButton('下一步', ['class' => 'nextbtn right_btn grey']); ?>
