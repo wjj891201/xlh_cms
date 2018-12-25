@@ -35,7 +35,16 @@ class AjaxController extends CommonController{
         echo $html;
     }
 
+    public function actionGetLoanList(){
+        $get      = Yii::$app->request->get();
+        $loan_id  = empty($get['loan_id']) ? 0 : intval($get['loan_id']);
+        $type_id  = empty($get['type_id']) ? 0 : intval($get['type_id']);
+    }
 
+    /**
+     * [actionUploads Ajax上传]
+     * @return [string] [保存图片路径]
+     */
     public function actionUploads(){
         // p($_FILES, 1);
         $allowed_types = ['gif', 'jpg', 'jpeg', 'png', 'pdf', 'GIF', 'JPG', 'JPEG', 'PNG', 'PDF'];

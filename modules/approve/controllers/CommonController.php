@@ -86,4 +86,22 @@ class CommonController extends Controller
         $info = pathinfo($filename);
         return $info["extension"];
     }
+
+    public function getModelError($model=null){
+        $arr = [];
+        if(!empty($model)){
+            $errors = $model->firstErrors;
+            if(!empty($errors)){
+                $i  = 0;
+                foreach($errors as $k => $v){
+                    if($i == 0) {
+                        $arr['key'] = $k;
+                        $arr['val'] = $v;
+                    }
+                    $i++;
+                }
+            }
+        }
+        return $arr;
+    }
 }
