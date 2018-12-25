@@ -45,10 +45,9 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                 <p><i id="other_condition" class="choiceBtn choiceBtn1"></i>我已具备上述特定条件</p>
             </div>
             <div class="btn-group">
-                <!--<a href="<? Url::to(['apply/apply-base']) ?>" class="applyBtn">立即申请</a>-->
                 <a href="javascript:void(0);" onclick="return add()" class="applyBtn" style="display: block">立即申请</a>
             </div>
-            <div class="applyTip">已经申请过了？<a href="">查看申请进度</a></div>
+            <div class="applyTip">已经申请过了？<a href="<?= Url::to(['member/enterprise-list']) ?>">查看申请进度</a></div>
         </div>
     </div>
 </div>
