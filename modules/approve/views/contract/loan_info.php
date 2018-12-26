@@ -114,7 +114,7 @@
             } else if (code == 202) {
                 var key = data.msg.key;
                 var val = data.msg.val;
-                layer.tips(val, '.loan_add_from .' + key, {tips: [3, 'red'], time: 2000});
+                layer.tips(val, '.loan_add_from .' + key, {tips: [1, 'red'], time: 2000});
                 return false;
             }
         }, 'json');
@@ -171,19 +171,10 @@
             });
 
         });
-    });
-
-    // 监控时间日期选择
-    $(document).on('change', '.contract_loan_start_time', function () {
-        set_loan_days();
-    });
-
-    $(document).on('change', '.contract_loan_end_time', function () {
-        set_loan_days();
-    });
-
-    $(document).on('click', '.count_days', function () {
-        set_loan_days();
+        // 监控时间日期选择
+        $('.contract_loan_start_time,.contract_loan_end_time').change(function () {
+            set_loan_days();
+        });
     });
 
     // 设置天数

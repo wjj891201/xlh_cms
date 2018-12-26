@@ -132,19 +132,12 @@
             });
 
         });
-    });
 
-// 监控时间日期选择
-    $(document).on('change', '#contract_repayment_start_time', function () {
-        set_repayment_days();
-    });
+        // 监控时间日期选择
+        $('#contract_repayment_start_time,#contract_repayment_end_time').change(function () {
+            set_repayment_days();
+        });
 
-    $(document).on('change', '#contract_repayment_end_time', function () {
-        set_repayment_days();
-    });
-
-    $(document).on('click', '#repayment_days', function () {
-        set_repayment_days();
     });
 
 // 设置天数

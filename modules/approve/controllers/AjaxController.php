@@ -3,8 +3,10 @@
 namespace app\modules\approve\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use app\models\EnterpriseLoan;
 use app\models\WorkflowLog;
+use app\libs\Tool;
 use app\models\EnterpriseLoanContract;
 
 class AjaxController extends CommonController
@@ -55,9 +57,9 @@ class AjaxController extends CommonController
         if ($loan_id)
         {
             $info = EnterpriseLoan::find()->alias('a')
-                    ->select(['a.loan_id', 'b.base_id', 'b.enterprise_name'])
-                    ->leftJoin('{{%enterprise_base}} b', 'b.base_id=a.base_id')
-                    ->asArray()->one();
+                            ->select(['a.loan_id', 'b.base_id', 'b.enterprise_name'])
+                            ->leftJoin('{{%enterprise_base}} b', 'b.base_id=a.base_id')
+                            ->asArray()->one();
 
             $list = EnterpriseLoanContract::find()->alias('a')
                             ->select(['b.apply_amount', 'b.period_month', 'a.loan_create_time', 'a.contract_num', 'a.loan_amount_money', 'a.contract_loan_start_time', 'a.contract_loan_end_time', 'a.loan_day', 'a.loan_rate', 'a.loan_benchmark_rate', 'a.repayment_mode', 'a.loan_voucher'])
@@ -86,7 +88,7 @@ class AjaxController extends CommonController
                     $repayment_mode_info = isset($repayment_mode[$v['repayment_mode']]) ? $repayment_mode[$v['repayment_mode']] : '其他';
 
                     $html .= '<li><label>还款方式：</label><p>' . $repayment_mode_info . '</p></li>';
-                    $html .= '<li><label>放款凭证：</label><p><a onclick="download_file(\'' . $v['loan_voucher'] . '\')" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
+                    $html .= '<li><label>放款凭证：</label><p><a href="' . Url::to(['ajax/download', 'filename' => $v['loan_voucher']]) . '" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
                     $html .= '</ul>';
                 }
             }
@@ -94,26 +96,30 @@ class AjaxController extends CommonController
         echo $html;
     }
 
-
-    public function actionGetRepaymentInfo(){
+    public function actionGetRepaymentInfo()
+    {
         $get = Yii::$app->request->get();
         $loan_id = empty($get['loan_id']) ? 0 : intval($get['loan_id']);
         $html = '<option value="">请选择还款合同</option>';
-        if(!empty($loan_id)){
+        if (!empty($loan_id))
+        {
             $list = EnterpriseLoanContract::find()
-                    ->select(['contract_id', 'contract_num'])
-                    ->where(['loan_contract_status'=>0, 'loan_id'=>$loan_id])
-                    ->asArray()->all();
-            if(!empty($list)){
-                foreach($list as $v){
-                    $html .= '<option value="'.  $v['contract_id'] .'">'. $v['contract_num'] .'</option>';
+                            ->select(['contract_id', 'contract_num'])
+                            ->where(['loan_contract_status' => 0, 'loan_id' => $loan_id])
+                            ->asArray()->all();
+            if (!empty($list))
+            {
+                foreach ($list as $v)
+                {
+                    $html .= '<option value="' . $v['contract_id'] . '">' . $v['contract_num'] . '</option>';
                 }
             }
         }
         echo $html;
     }
 
-    public function actionGetRepaymentList(){
+    public function actionGetRepaymentList()
+    {
         $get = Yii::$app->request->get();
         $loan_id = empty($get['loan_id']) ? 0 : intval($get['loan_id']);
         $type_id = empty($get['type_id']) ? 0 : intval($get['type_id']);
@@ -122,15 +128,15 @@ class AjaxController extends CommonController
         if ($loan_id)
         {
             $info = EnterpriseLoan::find()->alias('a')
-                    ->select(['a.loan_id', 'b.base_id', 'b.enterprise_name'])
-                    ->leftJoin('{{%enterprise_base}} b', 'b.base_id=a.base_id')
-                    ->asArray()->one();
+                            ->select(['a.loan_id', 'b.base_id', 'b.enterprise_name'])
+                            ->leftJoin('{{%enterprise_base}} b', 'b.base_id=a.base_id')
+                            ->asArray()->one();
 
             $list = EnterpriseLoanContract::find()->alias('a')
-                    ->select(['b.apply_amount', 'b.period_month', 'a.loan_create_time', 'a.repayment_create_time','a.contract_num','a.repayment_status','a.contract_repayment_start_time','a.contract_repayment_end_time','a.repayment_voucher'])
-                    ->leftJoin('{{%enterprise_loan}} b', 'b.loan_id=a.loan_id')
-                    ->where(['a.loan_id'=>$loan_id, 'a.loan_contract_status'=>1])
-                    ->asArray()->all();
+                            ->select(['b.apply_amount', 'b.period_month', 'a.loan_create_time', 'a.repayment_create_time', 'a.contract_num', 'a.repayment_status', 'a.contract_repayment_start_time', 'a.contract_repayment_end_time', 'a.repayment_voucher'])
+                            ->leftJoin('{{%enterprise_loan}} b', 'b.loan_id=a.loan_id')
+                            ->where(['a.loan_id' => $loan_id, 'a.loan_contract_status' => 1])
+                            ->asArray()->all();
 
             $repayment_status = Yii::$app->params['repayment_status'];
 
@@ -139,14 +145,14 @@ class AjaxController extends CommonController
                 foreach ($list as $v)
                 {
                     $html .= '<ul>';
-                    $html .= '<li><label>还款录入时间：</label><p>'. $v['repayment_create_time'] .'</p></li>';
-                    $html .= '<li><label>贷款企业名称：</label><p>'. $info['enterprise_name'] .'</p></li>';
-                    $html .= '<li><label>贷款合同号：</label><p>'. $v['contract_num'] .'</p></li>';
+                    $html .= '<li><label>还款录入时间：</label><p>' . $v['repayment_create_time'] . '</p></li>';
+                    $html .= '<li><label>贷款企业名称：</label><p>' . $info['enterprise_name'] . '</p></li>';
+                    $html .= '<li><label>贷款合同号：</label><p>' . $v['contract_num'] . '</p></li>';
                     $repayment_status_info = isset($repayment_status[$v['repayment_status']]) ? $repayment_status[$v['repayment_status']] : '其他';
-                    $html .= '<li><label>还款状态：</label><p>'. $repayment_status_info .'</p></li>';
-                    $html .= '<li><label>还款开始时间：</label><p>'. $v['contract_repayment_start_time'] .'</p></li>';
-                    $html .= '<li><label>还款截止时间：</label><p>'. $v['contract_repayment_end_time'] .'</p></li>';
-                    $html .= '<li><label>还款凭证：</label><p><a onclick="download_file(\''. $v['repayment_voucher'] .'\')" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
+                    $html .= '<li><label>还款状态：</label><p>' . $repayment_status_info . '</p></li>';
+                    $html .= '<li><label>还款开始时间：</label><p>' . $v['contract_repayment_start_time'] . '</p></li>';
+                    $html .= '<li><label>还款截止时间：</label><p>' . $v['contract_repayment_end_time'] . '</p></li>';
+                    $html .= '<li><label>还款凭证：</label><p><a href="' . Url::to(['ajax/download', 'filename' => $v['repayment_voucher']]) . '" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
                     $html .= '</ul>';
                 }
             }
@@ -206,126 +212,12 @@ class AjaxController extends CommonController
         $filename = trim($filename, '/');
         if (@is_file($filename))
         {
-            $this->force_download(trim($filename, '/'), NULL);
+            Tool::downloadFile($filename);
         }
         else
         {
             echo "文件不存在！";
         }
-    }
-
-    /**
-     * Force Download
-     *
-     * Generates headers that force a download to happen
-     *
-     * @param   string  filename
-     * @param   mixed   the data to be downloaded
-     * @param   bool    whether to try and send the actual file MIME type
-     * @return  void
-     */
-    private function force_download($filename = '', $data = '', $set_mime = FALSE)
-    {
-        if ($filename === '' OR $data === '')
-        {
-            return;
-        }
-        elseif ($data === NULL)
-        {
-            if (@is_file($filename) && ($filesize = @filesize($filename)) !== FALSE)
-            {
-                $filepath = $filename;
-                $filename = explode('/', str_replace(DIRECTORY_SEPARATOR, '/', $filename));
-                $filename = end($filename);
-            }
-            else
-            {
-                return;
-            }
-        }
-        else
-        {
-            $filesize = strlen($data);
-        }
-
-        // Set the default MIME type to send
-        $mime = 'application/octet-stream';
-
-        $x = explode('.', $filename);
-        $extension = end($x);
-
-        if ($set_mime === TRUE)
-        {
-            if (count($x) === 1 OR $extension === '')
-            {
-                /* If we're going to detect the MIME type,
-                 * we'll need a file extension.
-                 */
-                return;
-            }
-
-            // Load the mime types
-            $mimes = Yii::$app->params['mimes'];
-
-            // Only change the default MIME if we can find one
-            if (isset($mimes[$extension]))
-            {
-                $mime = is_array($mimes[$extension]) ? $mimes[$extension][0] : $mimes[$extension];
-            }
-        }
-
-        /* It was reported that browsers on Android 2.1 (and possibly older as well)
-         * need to have the filename extension upper-cased in order to be able to
-         * download it.
-         *
-         * Reference: http://digiblog.de/2011/04/19/android-and-the-download-file-headers/
-         */
-        if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT']))
-        {
-            $x[count($x) - 1] = strtoupper($extension);
-            $filename = implode('.', $x);
-        }
-
-        if ($data === NULL && ($fp = @fopen($filepath, 'rb')) === FALSE)
-        {
-            return;
-        }
-
-        // Clean output buffer
-        if (ob_get_level() !== 0 && @ob_end_clean() === FALSE)
-        {
-            @ob_clean();
-        }
-
-        // Generate the server headers
-        header('Content-Type: ' . $mime);
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Expires: 0');
-        header('Content-Transfer-Encoding: binary');
-        header('Content-Length: ' . $filesize);
-
-        // Internet Explorer-specific headers
-        if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== FALSE)
-        {
-            header('Cache-Control: no-cache, no-store, must-revalidate');
-        }
-
-        header('Pragma: no-cache');
-
-        // If we have raw data - just dump it
-        if ($data !== NULL)
-        {
-            exit($data);
-        }
-
-        // Flush 1MB chunks of data
-        while (!feof($fp) && ($data = fread($fp, 1048576)) !== FALSE)
-        {
-            echo $data;
-        }
-
-        fclose($fp);
-        exit;
     }
 
 }
