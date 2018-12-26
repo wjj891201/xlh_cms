@@ -6,23 +6,7 @@
     <div class="content">
         <ul>
             <li class="show" style="display:block;">
-                <div class="dialog_box repayment_add_list">
-                    <ul>
-                        <li><label>贷款录入时间：</label><p>2018-10-10 10:15:59</p></li>
-                        <li><label>贷款企业名称：</label><p>贸易有限公司</p></li>
-                        <li><label>期望贷款金额：</label><p>100万</p></li>
-                        <li><label>期望贷款周期：</label><p>12月</p></li>
-                        <li><label>贷款合同号：</label><p>213221</p></li>
-                        <li><label>实际放贷金额：</label><p>52.57万</p></li>
-                        <li><label>贷款开始时间：</label><p>2018-10-01</p></li>
-                        <li><label>贷款结束时间：</label><p>2019-10-01</p></li>
-                        <li><label>贷款周期：</label><p>365天</p></li>
-                        <li><label>贷款利率：</label><p>3%</p></li>
-                        <li><label>基准利率：</label><p>3%</p></li>
-                        <li><label>还款方式：</label><p>等本等息</p></li>
-                        <li><label>受理银行：</label><p>农业银行</p></li>
-                    </ul>
-                </div>
+                <div class="dialog_box repayment_add_list"></div>
             </li>
             <li class="show" style="display:none;">
                 <div class="dialog_box">
@@ -74,132 +58,136 @@
 
 <script type="text/javascript">
 // 添加放款信息
-function repayment_add(){
-    $.ajaxSettings.async = false;
-    $.post('/approve/contract/add-repayment-info', $(".repayment_add_from").serialize(), function(data){
-        var code   = data.code;
-        var msg    = data.msg;
-        if(code == 200){
-            layer.msg(msg, {icon: 1, time: 1500}, function(){
-                window.location.reload();
-            });
-        }else if(code == 201){
-            layer.msg(msg, {icon: 2, time: 1500});
-            return false;
-        }else if(code == 202){
-            var key = data.msg.key;
-            var val = data.msg.val;
-            layer.tips(val, '.repayment_add_from #'+key, {tips: [3, 'red'], time:2000});
-            return false;
-        }
-    }, 'json'); 
-   return false;
-}
-
-$(function(){
-    // tab切换 mouseover
-    $("#repayment_info_block .tab a").click(function(){
-        $(this).addClass('on').siblings().removeClass('on');
-        var index = $(this).index();
-        number = index;
-        $('#repayment_info_block .content .show').hide();
-        $('#repayment_info_block .content .show:eq('+index+')').show();
-    });
-
-    var loan_id = 0;
-    $(".repayment_info").click(function(){
-        $("#contract_id").empty();
-        $(".repayment_add_list").empty();
-        $("#repayment_info_block").css('display', 'block');
-        
-        loan_id = $(this).data('loan_id');
-        
-        $(".repayment_add_from")[0].reset();
-
-        $.get('/approve/ajax/get-repayment-info?loan_id='+loan_id+'&type_id=1', function(data){
-            $("#contract_id").empty().html(data);
-        }, 'html');
-        
-        $.get('/approve/ajax/get-repayment-list?loan_id='+loan_id+'&type_id=1', function(data){
-            $(".repayment_add_list").empty().html(data);
-        }, 'html');
-
-        $(".repayment_add_from #loan_id").val(loan_id);
-        
-        layer.open({
-            type: 1,
-            title: '放款信息',
-            area: ['550px', '700px'],
-            content: $("#repayment_info_block"),
-            success: function(){
-                laydate.render({
-                    elem: "#contract_repayment_start_time",
-                    done: function(value, date, endDate){ $('#contract_repayment_start_time').change(); }
+    function repayment_add() {
+        $.ajaxSettings.async = false;
+        $.post('/approve/contract/add-repayment-info', $(".repayment_add_from").serialize(), function (data) {
+            var code = data.code;
+            var msg = data.msg;
+            if (code == 200) {
+                layer.msg(msg, {icon: 1, time: 1500}, function () {
+                    window.location.reload();
                 });
-                laydate.render({
-                    "elem": "#contract_repayment_end_time",
-                    done: function(value, date, endDate){ $('#contract_repayment_end_time').change(); }
-                });
+            } else if (code == 201) {
+                layer.msg(msg, {icon: 2, time: 1500});
+                return false;
+            } else if (code == 202) {
+                var key = data.msg.key;
+                var val = data.msg.val;
+                layer.tips(val, '.repayment_add_from #' + key, {tips: [3, 'red'], time: 2000});
+                return false;
             }
+        }, 'json');
+        return false;
+    }
+
+    $(function () {
+        // tab切换 mouseover
+        $("#repayment_info_block .tab a").click(function () {
+            $(this).addClass('on').siblings().removeClass('on');
+            var index = $(this).index();
+            number = index;
+            $('#repayment_info_block .content .show').hide();
+            $('#repayment_info_block .content .show:eq(' + index + ')').show();
         });
 
+        var loan_id = 0;
+        $(".repayment_info").click(function () {
+            $("#contract_id").empty();
+            $(".repayment_add_list").empty();
+            $("#repayment_info_block").css('display', 'block');
+
+            loan_id = $(this).data('loan_id');
+
+            $(".repayment_add_from")[0].reset();
+
+            $.get('/approve/ajax/get-repayment-info?loan_id=' + loan_id + '&type_id=1', function (data) {
+                $("#contract_id").empty().html(data);
+            }, 'html');
+
+            $.get('/approve/ajax/get-repayment-list?loan_id=' + loan_id + '&type_id=1', function (data) {
+                $(".repayment_add_list").empty().html(data);
+            }, 'html');
+
+            $(".repayment_add_from #loan_id").val(loan_id);
+
+            layer.open({
+                type: 1,
+                title: '放款信息',
+                area: ['550px', '700px'],
+                content: $("#repayment_info_block"),
+                success: function () {
+                    laydate.render({
+                        elem: "#contract_repayment_start_time",
+                        done: function (value, date, endDate) {
+                            $('#contract_repayment_start_time').change();
+                        }
+                    });
+                    laydate.render({
+                        "elem": "#contract_repayment_end_time",
+                        done: function (value, date, endDate) {
+                            $('#contract_repayment_end_time').change();
+                        }
+                    });
+                }
+            });
+
+        });
     });
-});
 
 // 监控时间日期选择
-$(document).on('change', '#contract_repayment_start_time', function(){
-    set_repayment_days();
-});
+    $(document).on('change', '#contract_repayment_start_time', function () {
+        set_repayment_days();
+    });
 
-$(document).on('change', '#contract_repayment_end_time', function(){
-    set_repayment_days();
-});
+    $(document).on('change', '#contract_repayment_end_time', function () {
+        set_repayment_days();
+    });
 
-$(document).on('click', '#repayment_days', function(){
-    set_repayment_days();
-});
+    $(document).on('click', '#repayment_days', function () {
+        set_repayment_days();
+    });
 
 // 设置天数
-function set_repayment_days(){
-    var start_time = $("#contract_repayment_start_time").val();
-    var end_time   = $("#contract_repayment_end_time").val();
-    if(start_time !== '' && end_time !== ''){
-        // console.log( start_time +' '+end_time);
-        if(start_time > end_time){
-            $("#contract_repayment_start_time").val('');
-            $("#repayment_days").val('');
-            layer.tips('贷款结束时间不能大于开始时间', '#start_time', {tips: [3, 'red'], time:2000});
-            return false;
+    function set_repayment_days() {
+        var start_time = $("#contract_repayment_start_time").val();
+        var end_time = $("#contract_repayment_end_time").val();
+        if (start_time !== '' && end_time !== '') {
+            // console.log( start_time +' '+end_time);
+            if (start_time > end_time) {
+                $("#contract_repayment_start_time").val('');
+                $("#repayment_days").val('');
+                layer.tips('贷款结束时间不能大于开始时间', '#start_time', {tips: [3, 'red'], time: 2000});
+                return false;
+            }
+            $("#repayment_days").val(repaymentDateDiff(start_time, end_time));
+            return true;
         }
-        $("#repayment_days").val(repaymentDateDiff(start_time, end_time));
-        return true;
+        return false;
     }
-    return false;
-}
 
 // 计算两个时间的天数
-function repaymentDateDiff(sDate1, sDate2) {
-    var  iDays;
-    iDays = parseInt(Math.abs((new Date(sDate1)) - (new Date(sDate2))) / 1000 / 60 / 60 / 24);
-    return iDays;
-}
+    function repaymentDateDiff(sDate1, sDate2) {
+        var iDays;
+        iDays = parseInt(Math.abs((new Date(sDate1)) - (new Date(sDate2))) / 1000 / 60 / 60 / 24);
+        return iDays;
+    }
 
 // 上传附件
-function set_repayment_uploads(obj){
-    var formData = new FormData();
-    formData.append("file", $("#repayment_voucher")[0].files[0]);  
-    $.ajax({
-        url : '/approve/ajax/uploads',
-        type : "POST",
-        data : formData,
-        dataType : "text",
-        contentType : false,
-        processData : false,
-        success: function (data) {
-            if(data !== ''){
-                $("#hidden_repayment_voucher").val(data);
+    function set_repayment_uploads(obj) {
+        var formData = new FormData();
+        formData.append("file", $("#repayment_voucher")[0].files[0]);
+        $.ajax({
+            url: '/approve/ajax/uploads',
+            type: "POST",
+            data: formData,
+            dataType: "text",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data !== '') {
+                    $("#hidden_repayment_voucher").val(data);
+                }
             }
-        }
-    });
-}
+        });
+    }
 </script>

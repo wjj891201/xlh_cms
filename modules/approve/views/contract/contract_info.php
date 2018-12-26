@@ -60,7 +60,7 @@ $(function(){
             type: 1,
             title: '放款信息',
             area: ['550px', '700px'],
-            content: $(".contract"),
+            content: $(".contract")
         });
     });
 });
