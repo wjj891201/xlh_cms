@@ -4,9 +4,10 @@ namespace app\modules\approve\controllers;
 
 use Yii;
 use yii\helpers\Url;
+use app\libs\Tool;
+use yii\helpers\ArrayHelper;
 use app\models\EnterpriseLoan;
 use app\models\WorkflowLog;
-use app\libs\Tool;
 use app\models\EnterpriseLoanContract;
 
 class AjaxController extends CommonController
@@ -26,7 +27,6 @@ class AjaxController extends CommonController
         $get = Yii::$app->request->get();
         $loan_id = empty($get['loan_id']) ? 0 : intval($get['loan_id']);
         $type_id = empty($get['type_id']) ? 0 : intval($get['type_id']);
-
         $model = new EnterpriseLoan();
         $loan_row = $model->find()->alias("a")
                         ->select('a.apply_amount,a.period_month,a.credit_amount,a.already_loan_amount,b.enterprise_name')
@@ -65,9 +65,9 @@ class AjaxController extends CommonController
                             ->select(['b.apply_amount', 'b.period_month', 'a.loan_create_time', 'a.contract_num', 'a.loan_amount_money', 'a.contract_loan_start_time', 'a.contract_loan_end_time', 'a.loan_day', 'a.loan_rate', 'a.loan_benchmark_rate', 'a.repayment_mode', 'a.loan_voucher'])
                             ->leftJoin('{{%enterprise_loan}} b', 'b.loan_id=a.loan_id')
                             ->where(['a.loan_id' => $loan_id])->asArray()->all();
-
+            
             $repayment_mode = Yii::$app->params['repayment_mode']; //还款方式
-
+            $repayment_mode = ArrayHelper::index($repayment_mode, 'id');
             if (!empty($list))
             {
                 foreach ($list as $v)
@@ -84,9 +84,7 @@ class AjaxController extends CommonController
                     $html .= '<li><label>贷款周期：</label><p>' . $v['loan_day'] . '天</p></li>';
                     $html .= '<li><label>贷款利率：</label><p>' . $v['loan_rate'] . '%</p></li>';
                     $html .= '<li><label>基准利率：</label><p>' . $v['loan_benchmark_rate'] . '%</p></li>';
-
-                    $repayment_mode_info = isset($repayment_mode[$v['repayment_mode']]) ? $repayment_mode[$v['repayment_mode']] : '其他';
-
+                    $repayment_mode_info = isset($repayment_mode[$v['repayment_mode']]['name']) ? $repayment_mode[$v['repayment_mode']]['name'] : '其他';
                     $html .= '<li><label>还款方式：</label><p>' . $repayment_mode_info . '</p></li>';
                     $html .= '<li><label>放款凭证：</label><p><a href="' . Url::to(['ajax/download', 'filename' => $v['loan_voucher']]) . '" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
                     $html .= '</ul>';
@@ -139,7 +137,7 @@ class AjaxController extends CommonController
                             ->asArray()->all();
 
             $repayment_status = Yii::$app->params['repayment_status'];
-
+            $repayment_status = ArrayHelper::index($repayment_status, 'id');
             if (!empty($list))
             {
                 foreach ($list as $v)
@@ -148,7 +146,7 @@ class AjaxController extends CommonController
                     $html .= '<li><label>还款录入时间：</label><p>' . $v['repayment_create_time'] . '</p></li>';
                     $html .= '<li><label>贷款企业名称：</label><p>' . $info['enterprise_name'] . '</p></li>';
                     $html .= '<li><label>贷款合同号：</label><p>' . $v['contract_num'] . '</p></li>';
-                    $repayment_status_info = isset($repayment_status[$v['repayment_status']]) ? $repayment_status[$v['repayment_status']] : '其他';
+                    $repayment_status_info = isset($repayment_status[$v['repayment_status']]['name']) ? $repayment_status[$v['repayment_status']]['name'] : '其他';
                     $html .= '<li><label>还款状态：</label><p>' . $repayment_status_info . '</p></li>';
                     $html .= '<li><label>还款开始时间：</label><p>' . $v['contract_repayment_start_time'] . '</p></li>';
                     $html .= '<li><label>还款截止时间：</label><p>' . $v['contract_repayment_end_time'] . '</p></li>';

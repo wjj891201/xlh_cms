@@ -1,3 +1,7 @@
+<?php
+
+use yii\helpers\Url;
+?>
 <style type="text/css">
     ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
     .dialog_box {width:100%;margin:0 auto;font-size:13px;}
@@ -33,12 +37,7 @@
             <li class="show" style="display:none;">
                 <div class="dialog_box">
                     <form class="form loan_add_from">
-                        <ul style="border:0px;" class="loan_add_from_head">
-                            <li><label>贷款企业名称：</label> <span>1</span></li>
-                            <li><label>期望贷款金额：</label> <span>2</span>万 </li>
-                            <li><label>期望贷款周期：</label> <span>3</span>个月</li>
-                            <li><label>可用授信金额：</label> <span>4</span>万</li>
-                        </ul>
+                        <ul style="border:0px;" class="loan_add_from_head"></ul>
                         <ul style="border:0px;">
                             <li>
                                 <label>贷款合同号：</label>
@@ -70,15 +69,12 @@
                             </li>
                             <li>
                                 <label>还款方式：</label>
+                                <?php $repayment_mode = Yii::$app->params['repayment_mode']; ?>
                                 <select name="repayment_mode" class="repayment_mode">
                                     <option value="0">请选择</option>
-                                    <option value="1">先息后本</option>
-                                    <option value="2">等额本息</option>
-                                    <option value="3">等额本金</option>
-                                    <option value="4">等本等息</option>
-                                    <option value="5">灵活还款</option>
-                                    <option value="6">随借随还</option>
-                                    <option value="7">一次性还本付息</option>
+                                    <?php foreach ($repayment_mode as $key => $vo): ?>
+                                        <option value="<?= $vo['id'] ?>"><?= $vo['name'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </li>
                             <li>
@@ -98,7 +94,7 @@
 </div>
 
 <script type="text/javascript">
-// 添加放款信息
+    // 添加放款信息
     function loan_add() {
         $.ajaxSettings.async = false;
         $.post('/approve/contract/add-loan-info', $(".loan_add_from").serialize(), function (data) {
@@ -182,7 +178,6 @@
         var start_time = $(".contract_loan_start_time").val();
         var end_time = $(".contract_loan_end_time").val();
         if (start_time !== '' && end_time !== '') {
-            // console.log( start_time +' '+end_time);
             if (start_time > end_time) {
                 $(".contract_loan_start_time").val('');
                 $(".loan_day").val('');
@@ -195,19 +190,19 @@
         return false;
     }
 
-// 计算两个时间的天数
+    // 计算两个时间的天数
     function DateDiff(sDate1, sDate2) {
         var iDays;
         iDays = parseInt(Math.abs((new Date(sDate1)) - (new Date(sDate2))) / 1000 / 60 / 60 / 24);
         return iDays;
     }
 
-// 上传附件
+    // 上传附件
     function set_loan_uploads() {
         var formData = new FormData();
         formData.append("file", $(".loan_voucher")[0].files[0]);
         $.ajax({
-            url: '/approve/ajax/uploads',
+            url: '<?= Url::to(['ajax/uploads']) ?>',
             type: "POST",
             data: formData,
             dataType: "text",

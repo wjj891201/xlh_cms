@@ -20,12 +20,12 @@
                             </li>
                             <li>
                                 <label>还款状态：</label>
+                                <?php $repayment_status = Yii::$app->params['repayment_status']; ?>
                                 <select id="repayment_status" name="repayment_status">
                                     <option value="">请选择</option>
-                                    <option value="1">按期还款</option>
-                                    <option value="2">提前还款</option>
-                                    <option value="3">延期还款</option>
-                                    <option value="4">已逾期</option>
+                                    <?php foreach ($repayment_status as $key => $vo): ?>
+                                        <option value="<?= $vo['id'] ?>"><?= $vo['name'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </li>
                             <li>
@@ -57,7 +57,7 @@
 </div>
 
 <script type="text/javascript">
-// 添加放款信息
+    // 添加放款信息
     function repayment_add() {
         $.ajaxSettings.async = false;
         $.post('/approve/contract/add-repayment-info', $(".repayment_add_from").serialize(), function (data) {
@@ -73,7 +73,7 @@
             } else if (code == 202) {
                 var key = data.msg.key;
                 var val = data.msg.val;
-                layer.tips(val, '.repayment_add_from #' + key, {tips: [3, 'red'], time: 2000});
+                layer.tips(val, '.repayment_add_from #' + key, {tips: [1, 'red'], time: 2000});
                 return false;
             }
         }, 'json');
@@ -112,7 +112,7 @@
 
             layer.open({
                 type: 1,
-                title: '放款信息',
+                title: '还款信息',
                 area: ['550px', '700px'],
                 content: $("#repayment_info_block"),
                 success: function () {
@@ -140,7 +140,7 @@
 
     });
 
-// 设置天数
+    // 设置天数
     function set_repayment_days() {
         var start_time = $("#contract_repayment_start_time").val();
         var end_time = $("#contract_repayment_end_time").val();
@@ -158,14 +158,14 @@
         return false;
     }
 
-// 计算两个时间的天数
+    // 计算两个时间的天数
     function repaymentDateDiff(sDate1, sDate2) {
         var iDays;
         iDays = parseInt(Math.abs((new Date(sDate1)) - (new Date(sDate2))) / 1000 / 60 / 60 / 24);
         return iDays;
     }
 
-// 上传附件
+    // 上传附件
     function set_repayment_uploads(obj) {
         var formData = new FormData();
         formData.append("file", $("#repayment_voucher")[0].files[0]);
