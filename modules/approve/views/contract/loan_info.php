@@ -1,7 +1,3 @@
-<?php 
-use yii\web\View;
-// $this->registerJsFile('@web/public/approve/js/My97DatePicker/WdatePicker.js', ['depends' => ['app\assets\ApproveAsset'], 'position' => View::POS_HEAD]);
-?>
 <style type="text/css">
 ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
 .dialog_box {width:100%;margin:0 auto;font-size:13px;}
@@ -35,40 +31,10 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
     <div class="content">
         <ul>
             <li class="show" style="display:block;">
-                <div class="dialog_box">
+                <div class="dialog_box loan_add_list">
                     <ul>
                         <li><label>贷款录入时间：</label><p>2018-10-10 10:15:59</p></li>
-                        <li><label>贷款企业名称：</label><p>上海方正拓康贸易有限公司</p></li>
-                        <li><label>期望贷款金额：</label><p>100万</p></li>
-                        <li><label>期望贷款周期：</label><p>12月</p></li>
-                        <li><label>贷款合同号：</label><p>213221</p></li>
-                        <li><label>实际放贷金额：</label><p>52.57万</p></li>
-                        <li><label>贷款开始时间：</label><p>2018-10-01</p></li>
-                        <li><label>贷款结束时间：</label><p>2019-10-01</p></li>
-                        <li><label>贷款周期：</label><p>365天</p></li>
-                        <li><label>贷款利率：</label><p>3%</p></li>
-                        <li><label>基准利率：</label><p>3%</p></li>
-                        <li><label>还款方式：</label><p>等本等息</p></li>
-                        <li><label>受理银行：</label><p>农业银行</p></li>
-                    </ul>
-                    <ul>
-                        <li><label>贷款录入时间：</label><p>2018-10-10 10:15:59</p></li>
-                        <li><label>贷款企业名称：</label><p>上海方正拓康贸易有限公司</p></li>
-                        <li><label>期望贷款金额：</label><p>100万</p></li>
-                        <li><label>期望贷款周期：</label><p>12月</p></li>
-                        <li><label>贷款合同号：</label><p>213221</p></li>
-                        <li><label>实际放贷金额：</label><p>52.57万</p></li>
-                        <li><label>贷款开始时间：</label><p>2018-10-01</p></li>
-                        <li><label>贷款结束时间：</label><p>2019-10-01</p></li>
-                        <li><label>贷款周期：</label><p>365天</p></li>
-                        <li><label>贷款利率：</label><p>3%</p></li>
-                        <li><label>基准利率：</label><p>3%</p></li>
-                        <li><label>还款方式：</label><p>等本等息</p></li>
-                        <li><label>受理银行：</label><p>农业银行</p></li>
-                    </ul>
-                    <ul>
-                        <li><label>贷款录入时间：</label><p>2018-10-10 10:15:59</p></li>
-                        <li><label>贷款企业名称：</label><p>上海方正拓康贸易有限公司</p></li>
+                        <li><label>贷款企业名称：</label><p>贸易有限公司</p></li>
                         <li><label>期望贷款金额：</label><p>100万</p></li>
                         <li><label>期望贷款周期：</label><p>12月</p></li>
                         <li><label>贷款合同号：</label><p>213221</p></li>
@@ -84,7 +50,6 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
                 </div>
             </li>
             <li class="show" style="display:none;">
-
                 <div class="dialog_box">
                     <form class="form loan_add_from">
                         <ul style="border:0px;" class="loan_add_from_head">
@@ -198,7 +163,7 @@ $(function(){
         }, 'html');
         
         $.get('/approve/ajax/get-loan-list?loan_id='+loan_id+'&type_id=1', function(data){
-            
+            $(".loan_add_list").empty().html(data);
         }, 'html');
 
         $("#loan_id").val(loan_id);
@@ -278,5 +243,9 @@ function set_loan_uploads(obj){
             }
         }
     });
+}
+
+function download_pz(val){
+    window.location.href="/approve/ajax/download?filename="+val;
 }
 </script>
