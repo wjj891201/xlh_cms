@@ -90,6 +90,66 @@ class AjaxController extends CommonController
         echo $html;
     }
 
+
+    public function actionGetRepaymentInfo(){
+        $get = Yii::$app->request->get();
+        $loan_id = empty($get['loan_id']) ? 0 : intval($get['loan_id']);
+        $html = '<option value="">请选择还款合同</option>';
+        if(!empty($loan_id)){
+            $list = EnterpriseLoanContract::find()
+                    ->select(['contract_id', 'contract_num'])
+                    ->where(['loan_contract_status'=>0, 'loan_id'=>$loan_id])
+                    ->asArray()->all();
+            if(!empty($list)){
+                foreach($list as $v){
+                    $html .= '<option value="'.  $v['contract_id'] .'">'. $v['contract_num'] .'</option>';
+                }
+            }
+        }
+        echo $html;
+    }
+
+    public function actionGetRepaymentList(){
+        $get = Yii::$app->request->get();
+        $loan_id = empty($get['loan_id']) ? 0 : intval($get['loan_id']);
+        $type_id = empty($get['type_id']) ? 0 : intval($get['type_id']);
+
+        $html = '';
+        if ($loan_id)
+        {
+            $info = EnterpriseLoan::find()->alias('a')
+                    ->select(['a.loan_id', 'b.base_id', 'b.enterprise_name'])
+                    ->leftJoin('{{%enterprise_base}} b', 'b.base_id=a.base_id')
+                    ->asArray()->one();
+
+            $list = EnterpriseLoanContract::find()->alias('a')
+                    ->select(['b.apply_amount', 'b.period_month', 'a.loan_create_time', 'a.repayment_create_time','a.contract_num','a.repayment_status','a.contract_repayment_start_time','a.contract_repayment_end_time','a.repayment_voucher'])
+                    ->leftJoin('{{%enterprise_loan}} b', 'b.loan_id=a.loan_id')
+                    ->where(['a.loan_id'=>$loan_id, 'a.loan_contract_status'=>1])
+                    ->asArray()->all();
+
+            $repayment_status = Yii::$app->params['repayment_status'];
+
+            if (!empty($list))
+            {
+                foreach ($list as $v)
+                {
+                    $html .= '<ul>';
+                    $html .= '<li><label>还款录入时间：</label><p>'. $v['repayment_create_time'] .'</p></li>';
+                    $html .= '<li><label>贷款企业名称：</label><p>'. $info['enterprise_name'] .'</p></li>';
+                    $html .= '<li><label>贷款合同号：</label><p>'. $v['contract_num'] .'</p></li>';
+                    $repayment_status_info = isset($repayment_status[$v['repayment_status']]) ? $repayment_status[$v['repayment_status']] : '其他';
+                    $html .= '<li><label>还款状态：</label><p>'. $repayment_status_info .'</p></li>';
+                    $html .= '<li><label>还款开始时间：</label><p>'. $v['contract_repayment_start_time'] .'</p></li>';
+                    $html .= '<li><label>还款截止时间：</label><p>'. $v['contract_repayment_end_time'] .'</p></li>';
+                    $html .= '<li><label>还款凭证：</label><p><a onclick="download_repayment(\''. $v['repayment_voucher'] .'\')" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
+                    $html .= '</ul>';
+                }
+            }
+        }
+        echo $html;
+    }
+
     /**
      * [actionUploads Ajax上传]
      * @return [string] [保存图片路径]
@@ -99,7 +159,7 @@ class AjaxController extends CommonController
         $allowed_types = ['gif', 'jpg', 'jpeg', 'png', 'pdf', 'GIF', 'JPG', 'JPEG', 'PNG', 'PDF'];
         $max_size = 10240000; //10M
 
-        $uploan_url = 'upfile/loan/' . date('Ymd') . '/';
+        $uploan_url = 'upfile/contract/' . date('Ymd') . '/';
         $result = $this->ajax_upload_do($uploan_url, 0, $allowed_types, $max_size);
         $result = json_decode($result, true);
         $file_path = '';
