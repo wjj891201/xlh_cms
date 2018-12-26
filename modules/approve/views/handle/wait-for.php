@@ -28,7 +28,7 @@ use yii\widgets\LinkPager;
                                     <td><?= $vo['legal_person_phone'] ?></td>
                                     <td><?= $vo['register_date'] ?></td>
                                     <td class="table_btn">
-                                        <a href="javascript:void(0);">查看</a>
+                                        <a class="stream" data-app_id="<?= $vo['app_id'] ?>" data-group_id="<?= $vo['group_id'] ?>" href="javascript:void(0);">查看</a>
                                         <?php if ($vo['is_read'] != 1): ?>
                                             <?php foreach ($vo['actionList'] as $k => $v): ?>
                                                 <a href="javascript:void(0);" data-workflow_log_id="<?= $vo['workflow_log_id'] ?>" data-action_key="<?= $v['action_key'] ?>" data-next_node_id="<?= $v['next_node_id'] ?>" class="<?= $v['action_key'] ?>"><?= $v['action_name'] ?></a>
@@ -75,7 +75,7 @@ use yii\widgets\LinkPager;
         </form>
     </div>
 </div>
-
+<?= $this->render('/contract/stream'); ?>
 <script>
     $(function () {
         $('.pass,.end,.back,.defer,.finish').click(function () {

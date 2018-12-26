@@ -28,7 +28,7 @@ use yii\widgets\LinkPager;
                                     <td><?= $vo['legal_person_phone'] ?></td>
                                     <td><?= $vo['register_date'] ?></td>
                                     <td class="table_btn">
-                                        <a href="javascript:void(0);">查看</a>
+                                        <a class="stream" data-app_id="<?= $vo['app_id'] ?>" data-group_id="<?= $vo['group_id'] ?>" href="javascript:void(0);">查看</a>
                                         <?php if (Yii::$app->approvr_user->identity->id == $vo['approve_user_id']): ?>
                                             <?php foreach ($actionList as $k => $v): ?>
                                                 <?php if ($v['action_key'] != 'defer'): ?>
@@ -55,3 +55,4 @@ use yii\widgets\LinkPager;
         </div>
     </div>
 </div>
+<?= $this->render('/contract/stream'); ?>

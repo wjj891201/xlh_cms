@@ -28,7 +28,7 @@ use yii\widgets\LinkPager;
                                     <td><?= $vo['legal_person_phone'] ?></td>
                                     <td><?= $vo['register_date'] ?></td>
                                     <td class="table_btn">
-                                        <a href="javascript:void(0);">查看</a>
+                                        <a class="stream" data-app_id="<?= $vo['app_id'] ?>" data-group_id="<?= $vo['group_id'] ?>" href="javascript:void(0);">查看</a>
                                         <?php if ($vo['is_read'] != 1): ?>
                                             <?php foreach ($vo['actionList'] as $k => $v): ?>
                                                 <a href="javascript:void(0);" data-loan_id="<?= $vo['loan_id']; ?>" data-workflow_log_id="<?= $vo['workflow_log_id'] ?>" data-action_key="<?= $v['action_key'] ?>" data-next_node_id="<?= $v['next_node_id'] ?>" class="<?= $v['action_key'] ?>"><?= $v['action_name'] ?></a>
@@ -75,11 +75,11 @@ use yii\widgets\LinkPager;
 </div>
 
 <style type="text/css">
-ul, li, ol {list-style:none;list-style-type:none;}
-.grant_form {width:500px;margin:0 auto;}
-.grant_form ul li {height:30px;width:auto;margin-bottom:15px;margin-bottom:10px;}
-.grant_form ul label {display:inline-block;width:35%;text-align:right;height:30px;float:left;margin-right:7px;line-height:30px;}
-.grant_form ul li span {line-height: 30px;}
+    ul, li, ol {list-style:none;list-style-type:none;}
+    .grant_form {width:500px;margin:0 auto;}
+    .grant_form ul li {height:30px;width:auto;margin-bottom:15px;margin-bottom:10px;}
+    .grant_form ul label {display:inline-block;width:35%;text-align:right;height:30px;float:left;margin-right:7px;line-height:30px;}
+    .grant_form ul li span {line-height: 30px;}
 </style>
 <div class="dialog dialog_grant">
     <div class="dcontent">
@@ -107,6 +107,7 @@ ul, li, ol {list-style:none;list-style-type:none;}
         </form>
     </div>
 </div>
+<?= $this->render('/contract/stream'); ?>
 
 <script>
     $(function () {
@@ -124,7 +125,7 @@ ul, li, ol {list-style:none;list-style-type:none;}
                         location.href = "/approve/unite/result?workflow_log_id=" + workflow_log_id + "&action_key=" + action_key;
                     }
                 });
-            } else if(attribute == 'grant'){
+            } else if (attribute == 'grant') {
                 var loan_id = $(this).data('loan_id');
                 $(".grant_form .loan_id").val(loan_id);
 
@@ -132,7 +133,7 @@ ul, li, ol {list-style:none;list-style-type:none;}
                 $(".grant_form .action_key").val(action_key);
                 $(".grant_form .next_node_id").val(next_node_id);
 
-                $.get('/approve/ajax/get-loan-info?loan_id='+loan_id, function(data){
+                $.get('/approve/ajax/get-loan-info?loan_id=' + loan_id, function (data) {
                     $("#grant_head_info").empty().html(data);
                 }, 'html');
 
@@ -175,26 +176,26 @@ ul, li, ol {list-style:none;list-style-type:none;}
     }
     // 选择时间
     laydate.render({
-        elem: '#start_time',
-    }); 
+        elem: '#start_time'
+    });
     laydate.render({
-        elem: '#end_time',
+        elem: '#end_time'
     });
 
-    $(".grant_form .dokay").click(function(){
+    $(".grant_form .dokay").click(function () {
         $.ajaxSettings.async = false;
-        $.post("<?= Url::to(['unite/result']) ?>", $(".grant_form").serialize(), function(data){
+        $.post("<?= Url::to(['unite/result']) ?>", $(".grant_form").serialize(), function (data) {
             var status = data.status;
             var msg = data.msg
-            if(status){
-                layer.msg(msg, {icon: 1, time: 1500}, function(){
+            if (status) {
+                layer.msg(msg, {icon: 1, time: 1500}, function () {
                     window.location.reload();
                 });
-            }else{
-                layer.tips(msg.val, '.grant_form .'+msg.key, {tips: [3, 'red'], time:2000});
+            } else {
+                layer.tips(msg.val, '.grant_form .' + msg.key, {tips: [3, 'red'], time: 2000});
                 return false;
             }
-        },"json");
+        }, "json");
         return false;
     });
 </script>
