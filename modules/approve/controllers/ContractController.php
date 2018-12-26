@@ -8,12 +8,6 @@ use app\models\EnterpriseLoan;
 
 class ContractController extends CommonController{
 
-    // public function init(){}
-
-    public function actionGetLoanInfo(){
-
-    }
-
     public function actionAddLoanInfo(){
         $request   = Yii::$app->request;
         if($request->isPost){
@@ -46,6 +40,28 @@ class ContractController extends CommonController{
                     ajaxReturn(['code'=>'200', 'msg'=>'填写放贷信息成功']);
                 }
                 ajaxReturn(['code'=>'201', 'msg'=>'填写放贷信息失败']);
+            }else{
+                ajaxReturn(['code'=>'202', 'msg'=>$this->getModelError($model)]);
+            }
+        }
+    }
+
+    public function actionAddRepaymentInfo(){
+        $request   = Yii::$app->request;
+        if($request->isPost){
+            $post  = $request->post();
+            $model = new EnterpriseLoanContract();
+
+            $model->scenario = "add_repayment_info";
+            $model->setAttributes($post);
+            if($model->validate()){
+                $post['repayment_create_time'] = date('Y-m-d H:i:s');
+                $post['loan_contract_status']  = 1;
+                $info = $model->updateAll($post, ['contract_id'=>$post['contract_id'], 'loan_id'=>$post['loan_id']]);
+                if($info){
+                    ajaxReturn(['code'=>'200', 'msg'=>'填写还款信息成功']);
+                }
+                ajaxReturn(['code'=>'201', 'msg'=>'填写还款信息失败']);
             }else{
                 ajaxReturn(['code'=>'202', 'msg'=>$this->getModelError($model)]);
             }

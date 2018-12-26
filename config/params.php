@@ -74,6 +74,7 @@ return [
                 ['id' => 11, 'name' => '其他']
         ]
     ],
+    
     #还款方式
     'repayment_mode' =>[
         1 => '先息后本',
@@ -84,7 +85,22 @@ return [
         6 => '随借随还',
         7 => '一次性还本付息'
     ],
-    
+
+    #还款状态
+    'repayment_status' => [
+        1 => '按期还款',
+        2 => '提前还款',
+        3 => '延期还款',
+        4 => '已逾期',
+    ],
+
+    #放款状态
+    'loan_status' => [
+        0 => '未放款',
+        1 => '未全额放款',
+        2 => '已全额放款',
+    ],
+
     'mimes' => [
         'hqx'   =>  ['application/mac-binhex40', 'application/mac-binhex', 'application/x-binhex40', 'application/x-mac-binhex40'],
         'cpt'   =>  'application/mac-compactpro',

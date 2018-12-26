@@ -23,7 +23,7 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
 .zzsc .content{ overflow:hidden; padding:10px;}
 </style>
 
-<div class="zzsc" style="display:none;">
+<div class="zzsc" id="loan_info_block" style="display:none;">
     <div class="tab">
         <a href="javascript:;" class="on">历史放款信息</a>
         <a href="javascript:;">填写放款信息</a>
@@ -142,17 +142,17 @@ function loan_add(){
 
 $(function(){
     // tab切换 mouseover
-    $(".zzsc .tab a").click(function(){
+    $("#loan_info_block .tab a").click(function(){
         $(this).addClass('on').siblings().removeClass('on');
         var index = $(this).index();
         number = index;
-        $('.zzsc .content .show').hide();
-        $('.zzsc .content .show:eq('+index+')').show();
+        $('#loan_info_block .content .show').hide();
+        $('#loan_info_block .content .show:eq('+index+')').show();
     });
 
     var loan_id = 0;
     $(".loan_info").click(function(){
-        $(".zzsc").css('display', 'block');
+        $("#loan_info_block").css('display', 'block');
         
         loan_id = $(this).data('loan_id');
         
@@ -166,13 +166,13 @@ $(function(){
             $(".loan_add_list").empty().html(data);
         }, 'html');
 
-        $("#loan_id").val(loan_id);
+        $(".loan_add_from #loan_id").val(loan_id);
         
         layer.open({
             type: 1,
             title: '放款信息',
             area: ['550px', '700px'],
-            content: $(".zzsc"),
+            content: $("#loan_info_block"),
             success: function(){
                 laydate.render({
                     elem: "#start_time",
