@@ -62,6 +62,9 @@ ApproveAsset::register($this);
                     });
                 });
             });
+            function download_file(val){
+                window.location.href="/approve/ajax/download?filename="+val;
+            }
         </script>
         <?php $this->endBody() ?>
     </body>

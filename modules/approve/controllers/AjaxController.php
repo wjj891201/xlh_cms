@@ -82,7 +82,7 @@ class AjaxController extends CommonController
                     $repayment_mode_info = isset($repayment_mode[$v['repayment_mode']]) ? $repayment_mode[$v['repayment_mode']] : '其他';
 
                     $html .= '<li><label>还款方式：</label><p>' . $repayment_mode_info . '</p></li>';
-                    $html .= '<li><label>放款凭证：</label><p><a onclick="download_pz(\'' . $v['loan_voucher'] . '\')" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
+                    $html .= '<li><label>放款凭证：</label><p><a onclick="download_file(\'' . $v['loan_voucher'] . '\')" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
                     $html .= '</ul>';
                 }
             }
@@ -142,7 +142,7 @@ class AjaxController extends CommonController
                     $html .= '<li><label>还款状态：</label><p>'. $repayment_status_info .'</p></li>';
                     $html .= '<li><label>还款开始时间：</label><p>'. $v['contract_repayment_start_time'] .'</p></li>';
                     $html .= '<li><label>还款截止时间：</label><p>'. $v['contract_repayment_end_time'] .'</p></li>';
-                    $html .= '<li><label>还款凭证：</label><p><a onclick="download_repayment(\''. $v['repayment_voucher'] .'\')" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
+                    $html .= '<li><label>还款凭证：</label><p><a onclick="download_file(\''. $v['repayment_voucher'] .'\')" style = "cursor:pointer;color:#4479cf">下载</a></p></li>';
                     $html .= '</ul>';
                 }
             }

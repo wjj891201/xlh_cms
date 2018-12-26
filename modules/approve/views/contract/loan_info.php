@@ -244,8 +244,4 @@ function set_loan_uploads(obj){
         }
     });
 }
-
-function download_pz(val){
-    window.location.href="/approve/ajax/download?filename="+val;
-}
 </script>

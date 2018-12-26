@@ -27,7 +27,7 @@
             <li class="show" style="display:none;">
                 <div class="dialog_box">
                     <form class="form repayment_add_from">
-                        <ul>
+                        <ul style="border:none;">
                             <li>
                                 <label>贷款合同号：</label>
                                 <select id="contract_id" name="contract_id">
@@ -201,9 +201,5 @@ function set_repayment_uploads(obj){
             }
         }
     });
-}
-
-function download_repayment(val){
-    window.location.href="/approve/ajax/download?filename="+val;
 }
 </script>
