@@ -83,8 +83,8 @@
                             </li>
                             <li>
                                 <label>请上传放款凭证：</label>
-                                <input type="file" class="loan_voucher" id="loan_voucher_uploads" style="width: 184px;" onchange="set_loan_uploads(this);">
-                                <input type="hidden" name="loan_voucher">
+                                <input class="loan_voucher" type="file" style="width: 184px;" onchange="set_loan_uploads();">
+                                <input id="hidden_loan_voucher" name="loan_voucher" type="hidden">
                             </li>
                         </ul>
                         <input type="hidden" name="loan_id" id="loan_id">
@@ -212,9 +212,9 @@
     }
 
 // 上传附件
-    function set_loan_uploads(obj) {
+    function set_loan_uploads() {
         var formData = new FormData();
-        formData.append("file", $("#loan_voucher_uploads")[0].files[0]);
+        formData.append("file", $(".loan_voucher")[0].files[0]);
         $.ajax({
             url: '/approve/ajax/uploads',
             type: "POST",
@@ -224,7 +224,7 @@
             processData: false,
             success: function (data) {
                 if (data !== '') {
-                    $("#loan_voucher").val(data);
+                    $("#hidden_loan_voucher").val(data);
                 }
             }
         });

@@ -54,10 +54,14 @@ class AjaxController extends CommonController
         $html = '';
         if ($loan_id)
         {
+            $info = EnterpriseLoan::find()->alias('a')
+                    ->select(['a.loan_id', 'b.base_id', 'b.enterprise_name'])
+                    ->leftJoin('{{%enterprise_base}} b', 'b.base_id=a.base_id')
+                    ->asArray()->one();
+
             $list = EnterpriseLoanContract::find()->alias('a')
-                            ->select(['c.enterprise_name', 'b.apply_amount', 'b.period_month', 'a.loan_create_time', 'a.contract_num', 'a.loan_amount_money', 'a.contract_loan_start_time', 'a.contract_loan_end_time', 'a.loan_day', 'a.loan_rate', 'a.loan_benchmark_rate', 'a.repayment_mode', 'a.loan_voucher'])
+                            ->select(['b.apply_amount', 'b.period_month', 'a.loan_create_time', 'a.contract_num', 'a.loan_amount_money', 'a.contract_loan_start_time', 'a.contract_loan_end_time', 'a.loan_day', 'a.loan_rate', 'a.loan_benchmark_rate', 'a.repayment_mode', 'a.loan_voucher'])
                             ->leftJoin('{{%enterprise_loan}} b', 'b.loan_id=a.loan_id')
-                            ->leftJoin('{{%enterprise_base}} c', 'b.base_id=b.base_id')
                             ->where(['a.loan_id' => $loan_id])->asArray()->all();
 
             $repayment_mode = Yii::$app->params['repayment_mode']; //还款方式
@@ -68,7 +72,7 @@ class AjaxController extends CommonController
                 {
                     $html .= '<ul>';
                     $html .= '<li><label>贷款录入时间：</label><p>' . $v['loan_create_time'] . '</p></li>';
-                    $html .= '<li><label>贷款企业名称：</label><p>' . $v['enterprise_name'] . '</p></li>';
+                    $html .= '<li><label>贷款企业名称：</label><p>' . $info['enterprise_name'] . '</p></li>';
                     $html .= '<li><label>期望贷款金额：</label><p>' . $v['apply_amount'] . '万</p></li>';
                     $html .= '<li><label>期望贷款周期：</label><p>' . $v['period_month'] . '月</p></li>';
                     $html .= '<li><label>贷款合同号：</label><p>' . $v['contract_num'] . '</p></li>';
