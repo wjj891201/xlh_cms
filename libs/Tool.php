@@ -49,7 +49,7 @@ class Tool
 
     /**
      * 文件下载
-     * */
+     */
     public static function downloadFile($true_file, $downloads_filename = '')
     {
         $pathinfo = pathinfo($true_file);
