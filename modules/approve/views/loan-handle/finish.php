@@ -28,9 +28,9 @@ use yii\widgets\LinkPager;
                                     <td><?= $vo['legal_person_phone'] ?></td>
                                     <td><?= $vo['register_date'] ?></td>
                                     <td class="table_btn">
-                                        <a href="javascript:void(0);">查看</a>
-                                        <a class="loan_info" data-loan_id="<?= $vo['loan_id']; ?>" href="javascript:void(0);">放款信息</a>
-                                        <a class="repayment_info" data-loan_id="<?= $vo['loan_id']; ?>" href="javascript:void(0);">还款信息</a>
+                                        <a class="stream" data-app_id="<?= $vo['app_id'] ?>" data-group_id="<?= $vo['group_id'] ?>" href="javascript:void(0);">查看</a>
+                                        <a class="loan_info" data-loan_id="<?= $vo['loan_id'] ?>" href="javascript:void(0);">放款信息</a>
+                                        <a class="repayment_info" data-loan_id="<?= $vo['loan_id'] ?>" href="javascript:void(0);">还款信息</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -52,3 +52,4 @@ use yii\widgets\LinkPager;
 </div>
 
 <?= $this->render('/contract/loan_info'); ?>
+<?= $this->render('/contract/stream'); ?>

@@ -30,7 +30,7 @@ class HandleController extends CommonController
         $approve_user_id = Yii::$app->approvr_user->identity->id;
         $pageSize = 20;
         $query = WorkflowLog::find()->alias('wfl')
-                ->select(['wfl.id workflow_log_id', 'wfl.user_id approve_user_id', 'wfl.group_id', 'wfl.node_id', 'wfl.is_read', 'b.*', 'l.*'])
+                ->select(['wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id', 'wfl.group_id', 'wfl.node_id', 'wfl.is_read', 'b.*', 'l.*'])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->leftJoin('{{%enterprise_loan}} l', 'l.base_id=wfl.app_id')
                 ->where(['AND', ['wfl.user_id' => $approve_user_id], ['OR', ['wfl.result' => null], ['wfl.result' => ''], ['wfl.result' => 'pass']], ['wfl.group_id' => $this->group_id]]);
@@ -56,7 +56,7 @@ class HandleController extends CommonController
         $app_ids = WorkflowLog::find()->select('app_id')->where(['user_id' => Yii::$app->approvr_user->identity->id])->asArray()->column();
         $pageSize = 20;
         $query = WorkflowLog::find()->alias('wfl')
-                ->select(['wfl.id workflow_log_id', 'wfl.user_id approve_user_id', 'b.*'])
+                ->select(['wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id', 'b.*'])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['wfl.result' => 'end'], ['wfl.group_id' => $this->group_id]]);
         $countQuery = clone $query;
@@ -73,7 +73,7 @@ class HandleController extends CommonController
         $app_ids = WorkflowLog::find()->select('app_id')->where(['user_id' => Yii::$app->approvr_user->identity->id])->asArray()->column();
         $pageSize = 20;
         $query = WorkflowLog::find()->alias('wfl')
-                ->select(['wfl.id workflow_log_id', 'wfl.user_id approve_user_id', 'b.*'])
+                ->select(['wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id', 'b.*'])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['wfl.result' => 'back'], ['wfl.group_id' => $this->group_id]]);
         $countQuery = clone $query;
@@ -92,7 +92,7 @@ class HandleController extends CommonController
         $app_ids = WorkflowLog::find()->select('app_id')->where(['user_id' => Yii::$app->approvr_user->identity->id])->asArray()->column();
         $pageSize = 20;
         $query = WorkflowLog::find()->alias('wfl')
-                ->select(['wfl.id workflow_log_id', 'wfl.user_id approve_user_id', 'b.*'])
+                ->select(['wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id', 'b.*'])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['wfl.result' => 'defer'], ['wfl.group_id' => $this->group_id]]);
         $countQuery = clone $query;
@@ -123,7 +123,7 @@ class HandleController extends CommonController
         $app_ids = WorkflowLog::find()->select('app_id')->where(['user_id' => Yii::$app->approvr_user->identity->id])->asArray()->column();
         $pageSize = 20;
         $query = WorkflowLog::find()->alias('wfl')
-                ->select(['wfl.id workflow_log_id', 'wfl.user_id approve_user_id', 'b.*'])
+                ->select(['wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id', 'b.*'])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['wfl.result' => 'finish'], ['wfl.group_id' => $this->group_id]]);
         $countQuery = clone $query;

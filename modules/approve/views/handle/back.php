@@ -28,7 +28,7 @@ use yii\widgets\LinkPager;
                                     <td><?= $vo['legal_person_phone'] ?></td>
                                     <td><?= $vo['register_date'] ?></td>
                                     <td class="table_btn">
-                                        <a href="javascript:void(0);">查看</a>
+                                        <a class="stream" data-app_id="<?= $vo['app_id'] ?>" data-group_id="<?= $vo['group_id'] ?>" href="javascript:void(0);">查看</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -48,3 +48,4 @@ use yii\widgets\LinkPager;
         </div>
     </div>
 </div>
+<?= $this->render('/contract/stream'); ?>
