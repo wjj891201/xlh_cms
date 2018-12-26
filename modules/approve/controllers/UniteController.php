@@ -9,6 +9,7 @@ use app\models\WorkflowNode;
 use app\models\Organization;
 use app\models\WorkflowGroup;
 use app\models\EnterpriseLoan;
+use app\models\EnterpriseBase;
 
 class UniteController extends CommonController
 {
@@ -88,29 +89,34 @@ class UniteController extends CommonController
         //把审批结果更新一下
         if ($next_node_id || in_array($action_key, ['end', 'defer', 'finish', 'grant']))
         {
-            if($action_key == 'grant'){ //授信
-                
-                $grant_data['credit_amount']   = Yii::$app->request->post('credit_amount');
-                $grant_data['credit_time']     = Yii::$app->request->post('credit_time');
+            if ($action_key == 'grant')
+            { //授信
+                $grant_data['credit_amount'] = Yii::$app->request->post('credit_amount');
+                $grant_data['credit_time'] = Yii::$app->request->post('credit_time');
                 $grant_data['credit_validity'] = Yii::$app->request->post('credit_validity');
-                $grant_data['loan_id']         = Yii::$app->request->post('loan_id');
-                $model  = new EnterpriseLoan();
-                $res    = $model->grant_edit($grant_data, ['loan_id'=>$grant_data['loan_id']]);
+                $grant_data['loan_id'] = Yii::$app->request->post('loan_id');
+                $model = new EnterpriseLoan();
+                $res = $model->grant_edit($grant_data, ['loan_id' => $grant_data['loan_id']]);
                 $errors = $model->firstErrors;
-                if(!$res && !empty($errors)){
-                    $i   = 0;
+                if (!$res && !empty($errors))
+                {
+                    $i = 0;
                     $arr = [];
-                    foreach($errors as $k => $v){
-                        if($i == 0) {
+                    foreach ($errors as $k => $v)
+                    {
+                        if ($i == 0)
+                        {
                             $arr['key'] = $k;
                             $arr['val'] = $v;
                         }
                         $i++;
                     }
-                    exit(json_encode(['status'=> false, 'msg'=>$arr]));
-                }else{
+                    exit(json_encode(['status' => false, 'msg' => $arr]));
+                }
+                else
+                {
                     WorkflowLog::updateAll($data, ['id' => $workflow_log_id]);
-                    exit(json_encode(['status'=> true, 'msg'=>'授信成功']));
+                    exit(json_encode(['status' => true, 'msg' => '授信成功']));
                 }
                 exit;
             }
@@ -148,6 +154,16 @@ class UniteController extends CommonController
         #如果科技资质认证管理审核结束，那么就进行科技贷申请的流程审核~~~end   
         //从哪来回哪去
         $this->goBack(Yii::$app->request->headers['Referer']);
+    }
+
+    /**
+     * 查看申请资料
+     */
+    public function actionGetInfo()
+    {
+        $base_id = Yii::$app->request->get('base_id');
+        $base = EnterpriseBase::findOne(['base_id' => $base_id]);
+        return $this->render("get_info", ['base' => $base]);
     }
 
 }

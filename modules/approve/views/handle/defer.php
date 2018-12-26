@@ -11,12 +11,15 @@ use yii\widgets\LinkPager;
                     <table class="table4 dataTable no-footer" width="100%" border="0" cellspacing="0" cellpadding="0" id="DataTables_Table_0" role="grid" style="width: 100%;text-align: center;">
                         <thead>
                             <tr class="title table_thread" role="row">
-                                <td class="sorting_disabled">序号</td>
-                                <td class="sorting_disabled">企业名称</td>
-                                <td class="sorting_disabled">企业法人</td>
-                                <td class="sorting_disabled">联系方式</td>
-                                <td class="sorting_disabled">注册时间</td>
-                                <td class="sorting_disabled">操作</td>
+                                <td>序号</td>
+                                <td>企业名称</td>
+                                <td>区域名称</td>
+                                <td>科技企业类型</td>
+                                <td>联系人</td>
+                                <td>联系电话</td>
+                                <td>申请资料</td>
+                                <td>申请时间</td>
+                                <td>操作</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,9 +27,12 @@ use yii\widgets\LinkPager;
                                 <tr>
                                     <td><?= $key + 1 ?></td>
                                     <td><?= $vo['enterprise_name'] ?></td>
-                                    <td><?= $vo['legal_person'] ?></td>
-                                    <td><?= $vo['legal_person_phone'] ?></td>
-                                    <td><?= $vo['register_date'] ?></td>
+                                    <td><?= $vo['town_name'] ?></td>
+                                    <td></td>
+                                    <td><?= $vo['contact_person_man'] ?></td>
+                                    <td><?= $vo['contact_person_phone'] ?></td>
+                                    <td><a href="<?= Url::to(['unite/get-info', 'base_id' => $vo['base_id']]) ?>">详情</a></td>
+                                    <td><?= $vo['base_create_time'] ?></td>
                                     <td class="table_btn">
                                         <a class="stream" data-app_id="<?= $vo['app_id'] ?>" data-group_id="<?= $vo['group_id'] ?>" href="javascript:void(0);">查看</a>
                                         <?php if (Yii::$app->approvr_user->identity->id == $vo['approve_user_id']): ?>
