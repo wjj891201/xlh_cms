@@ -52,4 +52,6 @@ use yii\widgets\LinkPager;
 </div>
 
 <?= $this->render('/contract/loan_info'); ?>
+<?= $this->render('/contract/repayment_info'); ?>
 <?= $this->render('/contract/stream'); ?>
+
