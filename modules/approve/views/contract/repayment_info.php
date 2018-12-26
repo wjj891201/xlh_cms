@@ -148,19 +148,19 @@ $(function(){
 
 // 监控时间日期选择
 $(document).on('change', '#contract_repayment_start_time', function(){
-    set_count_days();
+    set_repayment_days();
 });
 
 $(document).on('change', '#contract_repayment_end_time', function(){
-    set_count_days();
+    set_repayment_days();
 });
 
 $(document).on('click', '#repayment_days', function(){
-    set_count_days();
+    set_repayment_days();
 });
 
 // 设置天数
-function set_count_days(){
+function set_repayment_days(){
     var start_time = $("#contract_repayment_start_time").val();
     var end_time   = $("#contract_repayment_end_time").val();
     if(start_time !== '' && end_time !== ''){

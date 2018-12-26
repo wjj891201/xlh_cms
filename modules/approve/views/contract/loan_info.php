@@ -69,15 +69,15 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
                             </li>
                             <li>
                                 <label>贷款开始时间：</label>
-                                <input type="text" name="contract_loan_start_time" class="datepicker contract_loan_start_time" id="start_time" lay-key="1" readonly="readonly">
+                                <input type="text" name="contract_loan_start_time" class="datepicker contract_loan_start_time" readonly="readonly">
                             </li>
                             <li>
                                 <label>贷款结束时间：</label>
-                                <input type="text" name="contract_loan_end_time" class="datepicker contract_loan_end_time" id="end_time" lay-key="2" readonly="readonly">
+                                <input type="text" name="contract_loan_end_time" class="datepicker contract_loan_end_time" readonly="readonly">
                             </li>
                             <li>
                                 <label>贷款周期：</label>
-                                <input type="number" name="loan_day" class="loan_day" id="count_days" readonly="readonly"> 天
+                                <input type="number" name="loan_day" class="loan_day" readonly="readonly"> 天
                             </li>
                             <li>
                                 <label>贷款利率：</label>
@@ -103,7 +103,7 @@ ul, li, ol {list-style:none;list-style-type:none;zoom:1;}
                             <li>
                                 <label>请上传放款凭证：</label>
                                 <input type="file" class="loan_voucher" id="loan_voucher_uploads" style="width: 184px;" onchange="set_loan_uploads(this);">
-                                <input type="hidden" name="loan_voucher" id="loan_voucher">
+                                <input type="hidden" name="loan_voucher">
                             </li>
                         </ul>
                         <input type="hidden" name="loan_id" id="loan_id">
@@ -175,12 +175,12 @@ $(function(){
             content: $("#loan_info_block"),
             success: function(){
                 laydate.render({
-                    elem: "#start_time",
-                    done: function(value, date, endDate){ $('#start_time').change(); }
+                    elem: ".contract_loan_start_time",
+                    done: function(value, date, endDate){ $('.contract_loan_start_time').change(); }
                 });
                 laydate.render({
-                    "elem": "#end_time",
-                    done: function(value, date, endDate){ $('#end_time').change(); }
+                    "elem": ".contract_loan_end_time",
+                    done: function(value, date, endDate){ $('.contract_loan_end_time').change(); }
                 });
             }
         });
@@ -189,31 +189,31 @@ $(function(){
 });
 
 // 监控时间日期选择
-$(document).on('change', '#start_time', function(){
-    set_count_days();
+$(document).on('change', '.contract_loan_start_time', function(){
+    set_loan_days();
 });
 
-$(document).on('change', '#end_time', function(){
-    set_count_days();
+$(document).on('change', '.contract_loan_end_time', function(){
+    set_loan_days();
 });
 
-$(document).on('click', '#count_days', function(){
-    set_count_days();
+$(document).on('click', '.count_days', function(){
+    set_loan_days();
 });
 
 // 设置天数
-function set_count_days(){
-    var start_time = $("#start_time").val();
-    var end_time   = $("#end_time").val();
+function set_loan_days(){
+    var start_time = $(".contract_loan_start_time").val();
+    var end_time   = $(".contract_loan_end_time").val();
     if(start_time !== '' && end_time !== ''){
         // console.log( start_time +' '+end_time);
         if(start_time > end_time){
-            $("#start_time").val('');
-            $("#count_days").val('');
-            layer.tips('贷款结束时间不能大于开始时间', '#start_time', {tips: [3, 'red'], time:2000});
+            $(".contract_loan_start_time").val('');
+            $(".loan_day").val('');
+            layer.tips('贷款结束时间不能大于开始时间', '.contract_loan_start_time', {tips: [3, 'red'], time:2000});
             return false;
         }
-        $("#count_days").val(DateDiff(start_time, end_time));
+        $(".loan_day").val(DateDiff(start_time, end_time));
         return true;
     }
     return false;
