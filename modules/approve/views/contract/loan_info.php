@@ -182,7 +182,7 @@
         set_loan_days();
     });
 
-    $(document).on('click', '.count_days', function () {
+    $(document).on('click', '.loan_day', function () {
         set_loan_days();
     });
 
