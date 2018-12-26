@@ -99,7 +99,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                         <li class="defaultBox">
                             <label class="labelSM" id="up_title_before" data-index="<?= $data['before_year'] ?>">
                                 <?= $data['before_year'] ?>年度<span>税务报表：</span>
-                                <p style="display: block;font-size:14px;margin-right:8px;">(仅限mht,htm,html类型文件)</p>
+                                <p style="display: block;font-size:14px;margin-right:8px;">(仅限htm,html类型文件)</p>
                             </label>
                             <div class="ubox">
                                 <ul class="editList" data-index="<?= $data['before_year'] ?>">
@@ -141,7 +141,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                         <label class="labelSM" id="up_title_last" data-index="<?= $data['last_year'] ?>">
                             <?= $data['last_year'] ?>年度<span>税务报表：</span>
                             <p style="display: block;font-size:14px;margin-right:8px;">
-                                (仅限mht,htm,html类型文件)
+                                (仅限htm,html类型文件)
                             </p>
                         </label>
                         <div class="ubox">
@@ -182,7 +182,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                         <label class="labelSM" id="up_title_lastest">
                             近一期<span>税务报表：</span>
                             <p style="display: block;font-size:14px;margin-right:8px;">
-                                (仅限mht,htm,html类型文件)
+                                (仅限htm,html类型文件)
                             </p>
                         </label>
                         <div class="ubox">
