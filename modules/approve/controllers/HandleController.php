@@ -4,7 +4,6 @@ namespace app\modules\approve\controllers;
 
 use app\modules\approve\controllers\CommonController;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\data\Pagination;
 use app\models\WorkflowLog;
 use app\models\WorkflowNode;
@@ -46,31 +45,11 @@ class HandleController extends CommonController
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $pageSize]);
         $data = $query->offset($pages->offset)->limit($pages->limit)->asArray()->all();
-        $enterprise = Yii::$app->params['enterprise'];
-        $enterprise = ArrayHelper::index($enterprise, 'id');
         $temp = [];
         foreach ($data as $key => $vo)
         {
             #根据节点获取该节点具有的动作
             $vo['actionList'] = WorkflowAction::getData(['workflow_node_id' => $vo['node_id']]);
-            if (!empty($vo['qualification_certificate']))
-            {
-                $qualification_certificate = json_decode($vo['qualification_certificate'], true);
-                $str = '';
-                $total = count($qualification_certificate);
-                foreach ($qualification_certificate as $k => $v)
-                {
-                    if ($total == $k + 1)
-                    {
-                        $str .= $enterprise[$v['id']]['name'];
-                    }
-                    else
-                    {
-                        $str .= $enterprise[$v['id']]['name'] . ' | ';
-                    }
-                }
-                $vo['company_type'] = $str;
-            }
             $temp[] = $vo;
         }
         $data = $temp;
@@ -98,32 +77,6 @@ class HandleController extends CommonController
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $pageSize]);
         $data = $query->offset($pages->offset)->limit($pages->limit)->asArray()->all();
-        $enterprise = Yii::$app->params['enterprise'];
-        $enterprise = ArrayHelper::index($enterprise, 'id');
-        $temp = [];
-        foreach ($data as $key => $vo)
-        {
-            if (!empty($vo['qualification_certificate']))
-            {
-                $qualification_certificate = json_decode($vo['qualification_certificate'], true);
-                $str = '';
-                $total = count($qualification_certificate);
-                foreach ($qualification_certificate as $k => $v)
-                {
-                    if ($total == $k + 1)
-                    {
-                        $str .= $enterprise[$v['id']]['name'];
-                    }
-                    else
-                    {
-                        $str .= $enterprise[$v['id']]['name'] . ' | ';
-                    }
-                }
-                $vo['company_type'] = $str;
-            }
-            $temp[] = $vo;
-        }
-        $data = $temp;
         return $this->render("end", ['data' => $data, 'pages' => $pages]);
     }
 
@@ -148,32 +101,6 @@ class HandleController extends CommonController
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $pageSize]);
         $data = $query->offset($pages->offset)->limit($pages->limit)->asArray()->all();
-        $enterprise = Yii::$app->params['enterprise'];
-        $enterprise = ArrayHelper::index($enterprise, 'id');
-        $temp = [];
-        foreach ($data as $key => $vo)
-        {
-            if (!empty($vo['qualification_certificate']))
-            {
-                $qualification_certificate = json_decode($vo['qualification_certificate'], true);
-                $str = '';
-                $total = count($qualification_certificate);
-                foreach ($qualification_certificate as $k => $v)
-                {
-                    if ($total == $k + 1)
-                    {
-                        $str .= $enterprise[$v['id']]['name'];
-                    }
-                    else
-                    {
-                        $str .= $enterprise[$v['id']]['name'] . ' | ';
-                    }
-                }
-                $vo['company_type'] = $str;
-            }
-            $temp[] = $vo;
-        }
-        $data = $temp;
         return $this->render("back", ['data' => $data, 'pages' => $pages]);
     }
 
@@ -200,36 +127,6 @@ class HandleController extends CommonController
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $pageSize]);
         $data = $query->offset($pages->offset)->limit($pages->limit)->asArray()->all();
-
-
-        $enterprise = Yii::$app->params['enterprise'];
-        $enterprise = ArrayHelper::index($enterprise, 'id');
-        $temp = [];
-        foreach ($data as $key => $vo)
-        {
-            if (!empty($vo['qualification_certificate']))
-            {
-                $qualification_certificate = json_decode($vo['qualification_certificate'], true);
-                $str = '';
-                $total = count($qualification_certificate);
-                foreach ($qualification_certificate as $k => $v)
-                {
-                    if ($total == $k + 1)
-                    {
-                        $str .= $enterprise[$v['id']]['name'];
-                    }
-                    else
-                    {
-                        $str .= $enterprise[$v['id']]['name'] . ' | ';
-                    }
-                }
-                $vo['company_type'] = $str;
-            }
-            $temp[] = $vo;
-        }
-        $data = $temp;
-
-
         #获取用户要审批哪个节点 1先用审批用户id去查 2再用审批用户所属机构去查
         $nodeInfo = WorkflowNode::find()->where(['approve_user_id' => $approve_user_id])->asArray()->one();
         if (!empty($nodeInfo))
@@ -268,33 +165,7 @@ class HandleController extends CommonController
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['wfl.result' => 'finish'], ['wfl.group_id' => $this->group_id]]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $pageSize]);
-        $data = $query->offset($pages->offset)->limit($pages->limit)->asArray()->all();
-        $enterprise = Yii::$app->params['enterprise'];
-        $enterprise = ArrayHelper::index($enterprise, 'id');
-        $temp = [];
-        foreach ($data as $key => $vo)
-        {
-            if (!empty($vo['qualification_certificate']))
-            {
-                $qualification_certificate = json_decode($vo['qualification_certificate'], true);
-                $str = '';
-                $total = count($qualification_certificate);
-                foreach ($qualification_certificate as $k => $v)
-                {
-                    if ($total == $k + 1)
-                    {
-                        $str .= $enterprise[$v['id']]['name'];
-                    }
-                    else
-                    {
-                        $str .= $enterprise[$v['id']]['name'] . ' | ';
-                    }
-                }
-                $vo['company_type'] = $str;
-            }
-            $temp[] = $vo;
-        }
-        $data = $temp;
+        $data = $query->offset($pages->offset)->limit($pages->limit)->asArray()->all();        
         return $this->render("finish", ['data' => $data, 'pages' => $pages]);
     }
 
