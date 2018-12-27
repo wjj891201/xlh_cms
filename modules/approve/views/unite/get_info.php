@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
         <div class="clear"></div>
         <div class="article2">
             <div class="box3">
-                <h3>一、基本信息</h3>
+                <h3>基本信息</h3>
             </div>
             <div class="box4">
                 <ul>
@@ -35,7 +35,7 @@ use yii\helpers\ArrayHelper;
 
         <div class="article2">
             <div class="box3">
-                <h3>二、财务信息</h3>
+                <h3>财务信息</h3>
             </div>
             <div class="box4">
                 <ul>
@@ -60,12 +60,28 @@ use yii\helpers\ArrayHelper;
 
         <div class="article2">
             <div class="box3">
-                <h3>三、企业概述</h3>
+                <h3>企业概述</h3>
             </div>
             <div class="box4">
                 <ul>
                     <li><label>主要产品及技术领域：</label><?= $base['describe']['product_tech_desc'] ?></li>
                     <li><label>企业拥有自主知识产权数量：</label><?= $base['describe']['equity_num'] ?></li> 
+                    <?php $profession = !empty($base['describe']['profession']) ? json_decode($base['describe']['profession'],true) :[]; ?>
+                    <li style="height:100%">
+                        <label>企业核心管理人员职业经历:</label>
+                        <div style="float:initial;width:900px;margin:5px auto;">
+                        <?php if(!empty($profession)): ?>
+                            <?php foreach($profession as $v): ?>
+                            <ul>
+                                <li><label style="width:120px; float:left;">姓名：</label><?= $v['name']; ?></li>
+                                <li><label style="width:120px; float:left;">职位：</label><?= $v['name']; ?></li>
+                                <li><label style="width:120px; float:left;">经历：</label><p style="float: left; width:60%; line-height:30px; margin-top:8px"><?= $v['experience']; ?></p></li>
+                            </ul>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                        </div>
+                    </li>
+
                     <li>
                         <?php $qualification_certificate = json_decode($base['describe']['qualification_certificate'], true); ?>
                         <label class="boxlabel">企业资质：</label>
@@ -79,10 +95,12 @@ use yii\helpers\ArrayHelper;
                 </ul>
             </div>
         </div>
-
+        
+        <?php $type = Yii::$app->request->get('type', 'base'); ?>
+        <?php if(!empty($type) && $type == 'loan'): ?>
         <div class="article2">
             <div class="box3">
-                <h3>四、融资信息</h3>
+                <h3>融资信息</h3>
             </div>
             <div class="box4">
                 <ul>
@@ -92,10 +110,25 @@ use yii\helpers\ArrayHelper;
                 </ul>
             </div>
         </div>
+        
+        <div class="article2">
+            <div class="box3">
+                <h3>银行批复信息</h3>
+            </div>
+            <div class="box4">
+                <ul>
+                    <li><label>授信金额：</label> <?= $base['loan']['credit_amount'] . '万'; ?></li>
+                    <li><label>授信开始时间：</label> <?= $base['loan']['credit_time']; ?></li>
+                    <li><label>授信截止时间：</label> <?= $base['loan']['credit_validity']; ?></li>
+                    <li><label>已放款金额：</label> <?= $base['loan']['already_loan_amount'] . '万'; ?></li>
+                </ul>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <div class="article2">
             <div class="box3">
-                <h3>五、相关附件</h3>
+                <h3>相关附件</h3>
             </div>
             <div class="box4">
                 <?php $system = Yii::$app->params['system']; ?>
@@ -124,6 +157,6 @@ use yii\helpers\ArrayHelper;
                 </ul>
             </div>
         </div>
-        <a href="<?= Url::to(['unite/get-info', 'base_id'=>$base['base_id'], 'type'=>'export']); ?>" target="_blank" style="cursor:pointer;"><div class="btn3" >导出为pdf</div></a>
+        <a href="<?= Url::to(['unite/get-info', 'base_id'=>$base['base_id'], 'type'=>$type, 'export'=>'export']); ?>" target="_blank" style="cursor:pointer;"><div class="btn3" >导出为pdf</div></a>
     </div>
 </div>

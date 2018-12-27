@@ -37,7 +37,7 @@ use yii\widgets\LinkPager;
                                     <td><?= $vo['bank_name'] ?></td>
                                     <td><?= $vo['contact_person_man'] ?></td>
                                     <td><?= $vo['contact_person_phone'] ?></td>
-                                    <td><a href="<?= Url::to(['unite/get-info', 'base_id' => $vo['base_id']]) ?>">详情</a></td>
+                                    <td><a href="<?= Url::to(['unite/get-info', 'base_id' => $vo['base_id'], 'type'=>'loan']) ?>">详情</a></td>
                                     <td><?= $vo['base_create_time'] ?></td>
                                     <td class="table_btn">
                                         <a class="stream" data-app_id="<?= $vo['app_id'] ?>" data-group_id="<?= $vo['group_id'] ?>" href="javascript:void(0);">查看</a>
