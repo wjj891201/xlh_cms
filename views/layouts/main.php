@@ -3,8 +3,6 @@
 use app\assets\KjdAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\models\Type;
-use app\models\Advert;
 
 KjdAsset::register($this);
 ?>
@@ -43,7 +41,7 @@ KjdAsset::register($this);
         </div>
         <div class="clear"></div>
         <!--content-->
-        <div style="min-height: 600px;">
+        <div id="content_here">
             <?= $content ?>
         </div>
         <!--footer-->
@@ -52,6 +50,17 @@ KjdAsset::register($this);
                 主办单位：南昌市科学技术局&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;技术支持：上海信隆行信息科技股份有限公司（一融网）
             </div>
         </div> 
+        <script>
+            $(function () {
+                var h = $(window).height();
+                var H = $('.top1').height() + $('.footer1').height();
+                <?php if ($this->context->action->id == 'login'): ?>
+                $("#content_here").css({"min-height": h - H, "background": "#288EF3"});
+                <?php else: ?>
+                $("#content_here").css({"min-height": h - H, "background": "#f6f6f6"});
+                <?php endif; ?>
+            });
+        </script>
         <?php $this->endBody() ?>
     </body>
 </html>

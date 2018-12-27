@@ -54,8 +54,9 @@ class MemberController extends CheckController
         $loan_group_id = WorkflowGroup::find()->select('id')->where(['group_key' => 'loan'])->scalar();
         # 2.0查询列表
         $list = EnterpriseBase::find()->alias('eb')
-                        ->select(['eb.enterprise_name', 'el.*'])
+                        ->select(['eb.enterprise_name', 'el.*', 'o.name bank_name'])
                         ->leftJoin('{{%enterprise_loan}} el', 'eb.base_id=el.base_id')
+                        ->leftJoin('{{%organization}} o', 'o.id=el.bank_id')
                         ->where(['eb.user_id' => $this->userid])
                         ->asArray()->all();
         $temp = [];
