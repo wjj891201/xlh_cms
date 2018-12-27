@@ -1,0 +1,40 @@
+@charset "utf-8";
+.mbox{min-height:100px;background:#fff;margin-left:240px;padding-bottom:30px;overflow:hidden;}
+.report_wr{position:relative;overflow:hidden;margin-bottom:-1px;}
+.report_wr .report_title_left{position:absolute;left:0;top:0;bottom:0;background:#4479cf;display:inline-block;width:75px;color:#fff;font-size:16px;text-align:center;border:1px solid #eee;border-right:none;}
+.report_wr .report_title_right{margin-left:75px;border:1px solid #eee;overflow:hidden;}
+.click_area,.shortcut{display:inline-block;vertical-align:middle;}
+.shortcut{width:55px;overflow:hidden;padding-left:5px;}
+.click_area{width:90%;}
+.moreSelectContent{position:relative;}
+.buttons_div{display:inline-block;position:absolute;right:30px;top:0;bottom:0;}
+.btn_u{display:inline-block;vertical-align:middle;}
+.moreSelectContent .btn_u a{float:none;margin:0;margin-bottom:20px;height:40px;line-height:40px;text-align:center;}
+.moreSelectContent .btn_u .reportbutton:hover{color:#fff;}
+.moreSelectContent .reportContent .report_title_right label{width:auto;min-width:136px;padding-right:5px;}
+.report_word{position:absolute;left:50%;top:50%;margin-left:-32px;margin-top:-10px;}
+.less1024 .buttons_div{right:3px;}
+.less1024 .click_area{padding-left:5px;}
+.points{color:#ff1f1f;font-size:13px;font-weight:600;display:block;text-align:left;line-height:25px;margin-left:40px;}
+.moreSelectContent{padding:0px 35px 20px 30px;background:#fff;}
+.moreSelectContent .reportContent{float:left;width:84%;}
+.moreSelectContent .reportbutton{float:right;    /* position: absolute; */right:23px;    /* top: 0; */color:#fff;display:block;width:138px;border-radius:5px;background:#3e9fff;font-size:20px;line-height:50px;text-align:center;}
+.moreSelectContent .reportContent label{width:136px;text-align:left;text-indent:7px;cursor:pointer;float:left;height:38px;display:block;line-height:38px;font-size:14px;}
+.moreSelectContent .reportContent i{width:16px;height:38px;background:url(../images/select.png) no-repeat center;float:left;}
+.moreSelectContent .reportContent .reportchecked{background:url(../images/selected_gray.png) no-repeat center;}
+.moreSelectContent .reportContent .myreportchecked{background:url(../images/selected.png) no-repeat center;}
+.table_overflow{width: 100%;overflow-x: auto;border: 1px solid #eee;min-height: 413px;}
+.table_style table{text-align:left;border: none;}
+.table_style table thead td{    padding: 12px 11px; padding-left:5px;position: relative;}
+.table_style table thead{background:#f1f1f1;text-align:left;}
+.table_style table tbody td{padding: 8px 10px;}
+.table_style table tbody tr{border-bottom: 1px solid #eee;}
+.dialog_stylea .msg{color: red;font-size: 13px;text-align: left !important;display: block;padding-left: 182px;visibility: hidden;padding-bottom: 3px;}
+.buttons_div{display:inline-block;position:absolute;right:30px;top:0;bottom:0;}
+.btn_u{display:inline-block;vertical-align:middle;}
+.moreSelectContent .btn_u a{float:none;margin:0;margin-bottom:20px;height:40px;line-height:40px;text-align:center;}
+.moreSelectContent .btn_u .reportbutton:hover{color:#fff;}
+.moreSelectContent .reportContent .report_title_right label{width:auto;min-width:136px;padding-right:5px;}
+.buttons_div{height:40px;margin-bottom:45px;}
+.buttons_div a{display:block;width:140px;height:40px;float:left;background:#fff;font-size:18px;color:#333;border:1px solid #ddd;border-radius:5px;line-height:40px;text-align:center;margin-right:10px;cursor:pointer;}
+.buttons_div a:hover{color:#3e9fff;border:1px solid #3e9fff;}

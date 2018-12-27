@@ -10,6 +10,9 @@ use app\models\Organization;
 use app\models\WorkflowGroup;
 use app\models\EnterpriseLoan;
 use app\models\EnterpriseBase;
+use yii\helpers\ArrayHelper;
+use PHPExcel;
+
 
 class UniteController extends CommonController
 {
@@ -195,4 +198,212 @@ class UniteController extends CommonController
         return $this->render("get_info", ['base' => $base]);
     }
 
+    public $default_column_name = [1,2,4,9,10,20,23];
+    public $column_name = [
+        1=>['id'=>1, 'title'=>'企业名称', 'name'=>'enterprise_name', 'cate'=>1],
+        2=>['id'=>2, 'title'=>'所属区域', 'name'=>'town_name', 'cate'=>1],
+        3=>['id'=>3, 'title'=>'注册时间', 'name'=>'register_date', 'cate'=>1],
+        4=>['id'=>4, 'title'=>'注册资本', 'name'=>'register_capital', 'cate'=>1],
+        5=>['id'=>5, 'title'=>'法定代表人', 'name'=>'legal_person', 'cate'=>1],
+        6=>['id'=>6, 'title'=>'法人手机', 'name'=>'legal_person_phone', 'cate'=>1],
+        7=>['id'=>7, 'title'=>'统一社会信用代码', 'name'=>'credit_code', 'cate'=>1],
+        8=>['id'=>8, 'title'=>'组织机构代码', 'name'=>'institution_code', 'cate'=>1],
+        9=>['id'=>9, 'title'=>'联系人', 'name'=>'contact_person_man', 'cate'=>1],
+        10=>['id'=>10, 'title'=>'联系人手机', 'name'=>'contact_person_phone', 'cate'=>1],
+        11=>['id'=>11, 'title'=>'电子邮箱', 'name'=>'contact_mail', 'cate'=>1],  
+        13=>['id'=>13, 'title'=>'企业类型', 'name'=>'enterprise_type', 'cate'=>2],
+        14=>['id'=>14, 'title'=>'拥有知识产权数', 'name'=>'equity_num', 'cate'=>2],
+        15=>['id'=>15, 'title'=>'员工总数', 'name'=>'total_employees_num', 'cate'=>2],
+        16=>['id'=>16, 'title'=>'大专以上科技人员数', 'name'=>'above_college_num', 'cate'=>2],
+        17=>['id'=>17, 'title'=>'直接从事研发人员数', 'name'=>'research_num', 'cate'=>2],
+        18=>['id'=>18, 'title'=>'高新技术产品销售收入', 'name'=>'hightec_sales', 'cate'=>3],
+        19=>['id'=>19, 'title'=>'研发经费投入', 'name'=>'research_input', 'cate'=>3],
+        20=>['id'=>20, 'title'=>'净资产', 'name'=>'net_asset', 'cate'=>3],
+        21=>['id'=>21, 'title'=>'资产负债率', 'name'=>'asset_debt_ratio', 'cate'=>3],
+        23=>['id'=>23, 'title'=>'资质申请时间', 'name'=>'base_create_time', 'cate'=>4],
+        23=>['id'=>23, 'title'=>'资质审批状态', 'name'=>'base_status', 'cate'=>4],
+        24=>['id'=>24, 'title'=>'资质通过时间', 'name'=>'base_update_time', 'cate'=>4],
+    ];
+
+
+    public function actionBaseDataInfo(){
+        $export      = Yii::$app->request->get('export');
+        $column      = Yii::$app->request->get('column');
+        $column_data = $this->set_table_field((empty($column) ? [] : explode(',', $column)), $this->column_name, $this->default_column_name);
+        $table       = array_column($column_data, 'title'); //table头部
+        $name        = array_column($column_data, 'name'); //name
+
+        $list   = EnterpriseBase::find()->alias('a')
+                ->select(['a.*', 'b.*', 'c.*', 'd.*', 'e.name town_name'])
+                ->leftJoin('{{%enterprise_describe}} b', 'b.base_id=a.base_id')
+                ->leftJoin('{{%enterprise_finance}} c', 'c.base_id=a.base_id')
+                ->leftJoin('{{%enterprise_loan}} d', 'd.base_id=a.base_id')
+                ->leftJoin('{{%town_list}} e', 'e.id=a.town_id')
+                ->asArray()->all();
+
+        $data   = [];
+        foreach($list as $k => $v){
+            foreach($v as $ko => $vo){
+                if(in_array($ko, $name)){
+                    $data[$k][$ko] = $vo;
+                }
+            }
+        }
+
+        if(!empty($export) && $export=='execl'){
+            $this->data_execl($data, $column_data);
+            exit;
+        }
+
+        $assign['data']                = $this->set_field_name($data); 
+        $assign['name']                = $name; 
+        $assign['table']               = $table; 
+        $assign['column_name']         = $this->column_name; 
+        $assign['default_column_name'] = $this->default_column_name;        
+        return $this->render("base_data_info", $assign);
+    }
+
+    public function data_execl($data=[], $column_data=[]){
+        $table = array_column($column_data, 'title'); //table头部
+        $name  = array_column($column_data, 'name');
+
+        $first = $second = $third = $forth = 0;
+        foreach($column_data as $v){
+            if($v['cate'] == 1){
+                $first += 1;
+            }elseif($v['cate'] == 2){
+                $second += 1;
+            }elseif($v['cate'] == 3){
+                $third += 1;
+            }elseif($v['cate'] == 4){
+                $forth += 1;
+            }
+        }
+
+        $lateral_mark = $this->get_lateral_mark(); //获取横向表
+
+        // 填充头部分类
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->getDefaultStyle()->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        if($first>0){
+            $objPHPExcel->getActiveSheet()->mergeCells('A1:'.$lateral_mark[$first-1].'1');
+            $objPHPExcel->getActiveSheet()->setCellValue("A1","注册信息");
+        }
+        if($second>0){
+            $objPHPExcel->getActiveSheet()->mergeCells($lateral_mark[$first].'1:'.$lateral_mark[$first+$second-1].'1');
+            $objPHPExcel->getActiveSheet()->setCellValue($lateral_mark[$first].'1',"基本情况");           
+        }
+        if($third>0){
+            $objPHPExcel->getActiveSheet()->mergeCells($lateral_mark[$first+$second].'1:'.$lateral_mark[$first+$second+$third-1].'1');
+            $objPHPExcel->getActiveSheet()->setCellValue($lateral_mark[$first+$second].'1',"财务数据");
+        }
+        if($forth>0){
+            $objPHPExcel->getActiveSheet()->mergeCells($lateral_mark[$first+$second+$third].'1:'.$lateral_mark[$first+$second+$third+$forth-1].'1');
+            $objPHPExcel->getActiveSheet()->setCellValue($lateral_mark[$first+$second+$third].'1',"服务数据");
+        }
+
+        // 填充表头信息
+        foreach($table as $k => $v){
+            $objPHPExcel->getActiveSheet()->setCellValue("{$lateral_mark[$k]}2", "{$v}");
+        }
+
+        // 填充内容
+        if(!empty($data)){
+            $column = 3;
+            foreach($data as $rows){  //行写入
+                $span = 0;
+                foreach($rows as $value){ // 列写入
+                    $objPHPExcel->getActiveSheet()->setCellValue($lateral_mark[$span].$column, (empty($value) ? '' : $value));
+                    $span++;
+                }
+                $column++;
+            }
+        }
+
+        $write = new PHPExcel_Writer_Excel5($objPHPExcel);
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control:must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type:application/force-download");
+        header("Content-Type:application/vnd.ms-execl");
+        header("Content-Type:application/octet-stream");
+        header("Content-Type:application/download");;
+        header('Content-Disposition:attachment;filename="'. date('YmdHis') .'.xls"');
+        header("Content-Transfer-Encoding:binary");
+        $write->save('php://output');
+    }
+
+
+    /**
+     * [set_field_name 特殊字段处理]
+     * @param [array] $data []
+     */
+    public function set_field_name($data){
+        $enterprise = Yii::$app->params['enterprise'];
+        $enterprise = ArrayHelper::map($enterprise, 'id','name');
+        if(!empty($data)){
+            foreach($data as $k => $v){
+                if(isset($data[$k]['register_capital']))    $data[$k]['register_capital']     = $v['register_capital'] . '万元';
+                if(isset($data[$k]['equity_num']))          $data[$k]['equity_num']           = (int) $v['equity_num'] . '人';
+                if(isset($data[$k]['total_employees_num'])) $data[$k]['total_employees_num']  = (int) $v['total_employees_num'] . '人';
+                if(isset($data[$k]['above_college_num']))   $data[$k]['above_college_num']    = (int) $v['above_college_num'] . '人';
+                if(isset($data[$k]['research_num']))        $data[$k]['research_num']         = (int) $v['research_num'] . '人';
+                if(isset($data[$k]['hightec_sales']))       $data[$k]['hightec_sales']        = $v['hightec_sales'] . '万元';
+                if(isset($data[$k]['research_input']))      $data[$k]['research_input']       = $v['research_input'] . '万元';
+                if(isset($data[$k]['net_asset']))           $data[$k]['net_asset']            = $v['net_asset'] . '万元';
+                if(isset($data[$k]['asset_debt_ratio']))    $data[$k]['asset_debt_ratio']     = $v['asset_debt_ratio'] . '%';
+                if(isset($data[$k]['enterprise_type'])){
+                    $enterprise_type = explode(',', $v['enterprise_type']);
+                    $str = '';
+                    foreach($enterprise_type  as $j){
+                        $str .= $enterprise[$j] . ',';
+                    }
+                    $data[$k]['enterprise_type']     = rtrim($str, ',');
+                }
+                $data[$k]['base_status'] = '审批通过';
+            }   
+        }
+        return $data;
+    }
+
+    /**
+     * [setTableField 组装字段]
+     * @param [array] $column      [要显示的字段]
+     * @param [array] $column_data [所有字段]
+     * @param [arra]  $default     [自定义显示字段]
+     */
+    private function set_table_field($column, $column_data, $default){
+        $column = empty($column) ? $default : $column; //接收参数 或 默认显示字段
+        $column_array = array_unique($column); //接收参数ID
+        asort($column_array); //排序
+        
+        $arr = [];
+        if(!empty($column_array)){
+            foreach($column_array as $v){
+                if($v>0 && isset($column_data[$v])){
+                    $arr[] = $column_data[$v];
+                }
+            }
+        }
+        return $arr;
+    }
+
+    /**
+     * 获取横向标识
+     * @param  integer $num [description]
+     * @return [type]       [description]
+     */
+    private function get_lateral_mark($num=78){
+        $range = range('A', 'Z');
+        $arr = array();
+        for ($i=0; $i<=$num; $i++) {
+            $y = ($i / 26);
+            if ($y >= 1) {
+                $y  = intval($y);
+                $aa = chr($y+64).chr($i-$y*26 + 65);
+                array_push($arr, $aa);
+            }
+        }
+        return array_merge($range, $arr);
+    }
 }
