@@ -6,8 +6,9 @@ Yii::$classMap['Simple_html_dom'] = '@app/libs/Simple_html_dom.php';
 Yii::$classMap['Mypdf']           = '@app/libs/pdf/Mypdf.php';
 Yii::$classMap['PHPExcel']        = '@app/libs/execl/PHPExcel.php';
 
+
 $config = [
-    'timeZone' => 'Asia/Chongqing',
+    'timeZone' => 'Asia/Shanghai',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
