@@ -67,7 +67,7 @@ class UniteController extends CommonController
                                     ->asArray()->one();
                     if (empty($info['approve_user_id']))
                     {
-                        echo '<script>alert("机构(' . $info['name'] . ')下没有审核用户");</script>';
+                        echo '<script>alert("机构(' . $info['name'] . ')下没有设置审核用户");</script>';
                         exit;
                     }
                     else
@@ -141,6 +141,24 @@ class UniteController extends CommonController
             {
                 //有审核用户
                 $user_id = $first_loan_node_info['approve_user_id'];
+            }
+            else
+            {
+                //无审核用户（根据前台选择的来决定）
+                $bank_id = EnterpriseLoan::find()->select('bank_id')->where(['base_id' => $logInfo['app_id']])->scalar();
+                $info = Organization::find()->alias('o')->select(['o.name', 'au.id approve_user_id'])
+                                ->leftJoin('{{%approve_user}} au', 'au.belong=o.id')
+                                ->where(['o.id' => $bank_id])
+                                ->asArray()->one();
+                if (empty($info['approve_user_id']))
+                {
+                    echo '<script>alert("机构(' . $info['name'] . ')下没有审核用户");</script>';
+                    exit;
+                }
+                else
+                {
+                    $user_id = $info['approve_user_id'];
+                }
             }
             //生成贷款审核的预信息
             $data3 = [

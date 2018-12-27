@@ -36,7 +36,7 @@ ApproveAsset::register($this);
                                 <a <?php if ($this->context->action->id == 'finish'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['handle/finish']) ?>">已通过企业</a>
                             </dd>
                         <?php endif; ?>
-                        <?php if (in_array($belong, [1, 4])): ?>
+                        <?php if (in_array($belong, [1, 23, 24])): ?>
                             <dt <?php if ($this->context->id == 'loan-handle'): ?>class="on"<?php endif; ?>><i class="icon3"></i>贷款</dt>
                             <dd <?php if ($this->context->id == 'loan-handle'): ?>style="display: block"<?php endif; ?>>
                                 <a <?php if ($this->context->action->id == 'loan-wait-for'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['loan-handle/loan-wait-for']) ?>">待审批企业</a>
