@@ -5,9 +5,11 @@ namespace app\modules\approve\controllers;
 use yii\web\Controller;
 use Yii;
 use app\models\Organization;
+use Mypdf;
 
 class CommonController extends Controller
 {
+    public $pdf_title;
 
     public function beforeAction($action)
     {
@@ -23,6 +25,47 @@ class CommonController extends Controller
             $this->view->params['organizationName'] = $organizationName;
         }
         return true;
+    }
+    
+    /**
+     * [pdf pdf导出]
+     * @param  string $html 样式内容
+     * @return string
+     */
+    public function pdf($html=''){
+        // create new PDF document
+        $pdf = new mypdf(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        // set document information
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('XLH');
+        $pdf->SetTitle($this->pdf_title);
+        $pdf->SetSubject('Tutorial');
+        $pdf->SetKeywords('PDF');
+        // set header and footer fonts
+        $pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        // set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+        // set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetHeaderMargin(0);
+        $pdf->SetFooterMargin(0);
+        // remove default footer
+        $pdf->setPrintFooter(false);
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        // set image scale factor
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        // set some language-dependent strings (optional)
+        if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+            require_once(dirname(__FILE__).'/lang/eng.php');
+            $pdf->setLanguageArray($l);
+        }
+        // ---------------------------------------------------------
+        // set font
+        $pdf->SetFont('stsongstdlight', '', 14, '', true);
+        $pdf->AddPage();
+        $pdf->writeHTML($html, true, false, true, false, '');
+        $pdf->Output(date('YmdHis').rand(1111, 9999).'.pdf', 'I');
     }
 
     /**
@@ -87,6 +130,11 @@ class CommonController extends Controller
         return $info["extension"];
     }
 
+    /**
+     * [getModelError 获取自动验证错误信息]
+     * @param  [resource] $model [模型资源]
+     * @return [array]           [错误信息]
+     */
     public function getModelError($model=null){
         $arr = [];
         if(!empty($model)){

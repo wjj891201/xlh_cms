@@ -124,7 +124,6 @@ use yii\helpers\ArrayHelper;
                 </ul>
             </div>
         </div>
-
-        <div class="btn3">导出为pdf</div>
+        <a href="<?= Url::to(['unite/get-info', 'base_id'=>$base['base_id'], 'type'=>'export']); ?>" target="_blank" style="cursor:pointer;"><div class="btn3" >导出为pdf</div></a>
     </div>
 </div>

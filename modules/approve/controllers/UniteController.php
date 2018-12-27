@@ -10,7 +10,6 @@ use app\models\Organization;
 use app\models\WorkflowGroup;
 use app\models\EnterpriseLoan;
 use app\models\EnterpriseBase;
-use Mypdf;
 
 class UniteController extends CommonController
 {
@@ -182,7 +181,16 @@ class UniteController extends CommonController
     public function actionGetInfo()
     {
         $base_id = Yii::$app->request->get('base_id');
-        $base = EnterpriseBase::findOne(['base_id' => $base_id]);
+        $base    = EnterpriseBase::findOne(['base_id' => $base_id]);
+
+        $type    = Yii::$app->request->get('type');
+        if(!empty($type) && $type=='export'){
+            $this->pdf_title = '资质详情';
+            $html = $this->renderPartial("export_base", ['base'=>$base], true);
+            $this->pdf($html);
+            exit;
+        }
+
         return $this->render("get_info", ['base' => $base]);
     }
 
