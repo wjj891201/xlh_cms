@@ -78,7 +78,11 @@ $this->registerJsFile('@web/public/kjd/js/layer/layer.js', ['depends' => ['app\a
                                         <br/>
                                         <span class="gray">贷款周期</span>
                                     </td>    
-                                    <td class="common">xxx银行分行</td>
+                                    <td class="common">
+                                        <?= $vo['bank_name'] ?>
+                                        <br/>
+                                        <span class="gray">贷款银行</span>
+                                    </td>
                                     <td class="last">
                                         <div class="border">
                                             <?php if ($vo['result'] == 'grant'): ?>
