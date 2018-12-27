@@ -58,11 +58,11 @@ class UniteController extends CommonController
                 }
                 else
                 {
-                    //无审核用户
-                    //找出属于该机构的下属（目前暂定主键倒序的第一个，后期根据前台选择的来决定）
+                    //无审核用户（根据前台选择的来决定）
+                    $bank_id = EnterpriseLoan::find()->select('bank_id')->where(['base_id' => $logInfo['app_id']])->scalar();
                     $info = Organization::find()->alias('o')->select(['o.name', 'au.id approve_user_id'])
                                     ->leftJoin('{{%approve_user}} au', 'au.belong=o.id')
-                                    ->where(['o.pid' => $next_node_info['organization_id']])->orderBy(['o.id' => SORT_DESC])
+                                    ->where(['o.id' => $bank_id])
                                     ->asArray()->one();
                     if (empty($info['approve_user_id']))
                     {
@@ -90,7 +90,8 @@ class UniteController extends CommonController
         if ($next_node_id || in_array($action_key, ['end', 'defer', 'finish', 'grant']))
         {
             if ($action_key == 'grant')
-            { //授信
+            {
+                //授信
                 $grant_data['credit_amount'] = Yii::$app->request->post('credit_amount');
                 $grant_data['credit_time'] = Yii::$app->request->post('credit_time');
                 $grant_data['credit_validity'] = Yii::$app->request->post('credit_validity');
