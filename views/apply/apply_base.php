@@ -53,7 +53,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                     <li class="area">
                         <label>所属区域：</label>
                         <span>江西省</span><span>南昌市</span>
-                        <?= $form->field($model, 'town_id', ['errorOptions' => ['class' => 'msg']])->dropDownList($allArea, ['class' => 'gray_select', 'style' => 'width:166px;'])->label(false); ?>
+                        <?= $form->field($model, 'town_id', ['errorOptions' => ['class' => 'msg', 'style' => 'display: inline-block;margin-left:10px;height:38px;line-height:38px;']])->dropDownList($allArea, ['class' => 'gray_select', 'style' => 'width:166px;'])->label(false); ?>
                     </li>
                     <li>
                         <label>法定代表人：</label>
@@ -81,7 +81,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                     </li>
                     <li class="area">
                         <label>选择行业：</label>
-                        <?= $form->field($model, 'industry_id', ['errorOptions' => ['class' => 'msg']])->dropDownList($industry, ['class' => 'gray_select', 'style' => 'width:160px;'])->label(false); ?>
+                        <?= $form->field($model, 'industry_id', ['errorOptions' => ['class' => 'msg', 'style' => 'display: inline-block;margin-left:10px;height:38px;line-height:38px;']])->dropDownList($industry, ['class' => 'gray_select', 'style' => 'width:160px;'])->label(false); ?>
                     </li>
                     <li>
                         <label>企业简介：</label>

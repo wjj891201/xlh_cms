@@ -58,21 +58,23 @@ class EnterpriseDescribe extends ActiveRecord
         }
         # 处理核心人员~~~end
         # 处理资质~~~start
-        $u_zizhi_name = $data['u_zizhi_name'];
+        $u_zizhi_enterprise = $data['u_zizhi_enterprise'];
+        $u_zizhi_china_enterprise = $data['u_zizhi_china_enterprise'];
         $u_zizhi_file = $data['u_zizhi_file'];
         $u_zizhi_file_name = $data['u_zizhi_file_name'];
-        if (!empty($u_zizhi_name) && !empty($u_zizhi_file) && !empty($u_zizhi_file_name))
+        if (!empty($u_zizhi_enterprise) && !empty($u_zizhi_file) && !empty($u_zizhi_file_name))
         {
             $arr_qualification = [];
-            $count = count($u_zizhi_name);
+            $count = count($u_zizhi_enterprise);
             for ($i = 0; $i < $count; $i++)
             {
-                $arr_qualification[$i]['name'] = $u_zizhi_name[$i];
+                $arr_qualification[$i]['id'] = $u_zizhi_enterprise[$i];
+                $arr_qualification[$i]['name'] = $u_zizhi_china_enterprise[$i];
                 $arr_qualification[$i]['file_name'] = $u_zizhi_file_name[$i];
                 $arr_qualification[$i]['path'] = $u_zizhi_file[$i];
             }
             $data['EnterpriseDescribe']['qualification_certificate'] = json_encode($arr_qualification);
-            unset($data['u_zizhi_name'], $data['u_zizhi_file'], $data['u_zizhi_file_name']);
+            unset($data['u_zizhi_enterprise'], $data['u_zizhi_china_enterprise'], $data['u_zizhi_file'], $data['u_zizhi_file_name']);
         }
         # 处理资质~~~end
         if ($this->load($data) && $this->save())

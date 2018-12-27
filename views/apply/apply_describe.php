@@ -84,7 +84,8 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                                     <div class="natural_file">
                                         <p class="natural_file_name"><?= $vo['name'] ?><span class="natural_file_del">x</span></p>
                                         <p class="natural_rel_name"><a href="" class="put_name"><?= $vo['file_name'] ?></a></p>
-                                        <input type="hidden" name="u_zizhi_name[]" value="<?= $vo['name'] ?>">
+                                        <input type="hidden" name="u_zizhi_enterprise[]" value="<?= $vo['id'] ?>">
+                                        <input type="hidden" name="u_zizhi_china_enterprise[]" value="<?= $vo['name'] ?>">
                                         <input type="hidden" name="u_zizhi_file[]" value="<?= $vo['path'] ?>">
                                         <input type="hidden" name="u_zizhi_file_name[]" value="<?= $vo['file_name'] ?>">
                                     </div>
@@ -138,8 +139,13 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                     <ul class="add_contents">
                         <li></li>
                         <li>
-                            <label>资质名称：</label>
-                            <input type="text" class="zizhi_name normal_input" placeholder="10字以内">
+                            <label>企业类型：</label>
+                            <select class="zizhi_enterprise normal_input">
+                                <option value="">请选择</option>
+                                <?php foreach ($enterprise as $key => $vo): ?>
+                                    <option value="<?= $vo['id'] ?>"><?= $vo['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </li>
                         <li>
                             <label>上传资质：</label>
@@ -290,7 +296,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                 area: ['600px', '390px'], //宽高
                 content: $('.special_2'),
                 end: function () {
-                    $('.zizhi_name,.zizhi_file,.zizhi_file_name').val("");
+                    $('.zizhi_enterprise,.zizhi_file,.zizhi_file_name').val("");
                     $('.upload img').attr('src', "/public/kjd/images/upload.png");
                     $(".upload_describe .title").html('选择文件');
                     $(".upload_describe .subtitle").html('请选择附件上传');
@@ -342,9 +348,10 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
             });
         });
         $(document).on('click', '.dokay3', function () {
-            var zizhi_name = $('.zizhi_name').val();
-            if (zizhi_name == '') {
-                layer.tips('请填写资质名称', '.zizhi_name');
+            var zizhi_enterprise = $('.zizhi_enterprise').val();
+            var title = $(".zizhi_enterprise").find("option:selected").text();
+            if (zizhi_enterprise == '') {
+                layer.tips('请选择企业类型', '.zizhi_enterprise');
                 return false;
             }
             var zizhi_file = $('.zizhi_file').val();
@@ -354,9 +361,10 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                 return false;
             }
             var html = "<div class=\"natural_file\">";
-            html += "<p class=\"natural_file_name\">" + zizhi_name + "<span class=\"natural_file_del\">x</span></p>";
+            html += "<p class=\"natural_file_name\">" + title + "<span class=\"natural_file_del\">x</span></p>";
             html += "<p class=\"natural_rel_name\"><a href=\"\" class=\"put_name\">" + zizhi_file_name + "</a></p>";
-            html += "<input type=\"hidden\" name=\"u_zizhi_name[]\" value=\"" + zizhi_name + "\" >";
+            html += "<input type=\"hidden\" name=\"u_zizhi_enterprise[]\" value=\"" + zizhi_enterprise + "\" >";
+            html += "<input type=\"hidden\" name=\"u_zizhi_china_enterprise[]\" value=\"" + title + "\" >";
             html += "<input type=\"hidden\" name=\"u_zizhi_file[]\" value=\"" + zizhi_file + "\" >";
             html += "<input type=\"hidden\" name=\"u_zizhi_file_name[]\" value=\"" + zizhi_file_name + "\" >";
             html += "</div>";

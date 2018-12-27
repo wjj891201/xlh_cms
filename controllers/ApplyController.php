@@ -157,10 +157,9 @@ class ApplyController extends CheckController
                 Yii::$app->end();
             }
         }
-        # 企业适用会计制度
-//        $enterprise = Yii::$app->params['enterprise'];
-//        $enterprise = ArrayHelper::map($enterprise, 'id', 'name');
-        return $this->render('apply_describe', ['model' => $model]);
+        # 企业类型
+        $enterprise = Yii::$app->params['enterprise'];
+        return $this->render('apply_describe', ['model' => $model, 'enterprise' => $enterprise]);
     }
 
     /**
