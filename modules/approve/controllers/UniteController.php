@@ -185,7 +185,8 @@ class UniteController extends CommonController
 
         $export  = Yii::$app->request->get('export');
         if(!empty($export) && $export=='export'){
-            $this->pdf_title = '资质详情';
+            $type = Yii::$app->request->get('type', 'base');
+            $this->pdf_title = (!empty($type) && $type == 'loan') ? '企业贷款申请表' : ((!empty($type) && $type == 'base') ? '企业入库申请表' : '企业申请详情');
             $html = $this->renderPartial("export_base", ['base'=>$base], true);
             $this->pdf($html);
             exit;
