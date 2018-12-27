@@ -60,16 +60,19 @@ ApproveAsset::register($this);
         </div>
         <script>
             $(function () {
+                var h = $(this).height();
+                var H = $('.head-bar').height() + $('.main-bar').height();
+                if (h < H) {
+                    $('.left-nav').height(H);
+                } else {
+                    $('.left-nav').height(h);
+                }
                 $('.quit').click(function () {
                     layer.confirm('确认要退出吗？', {icon: 3, title: '提示', offset: '200px'}, function (index) {
                         location.href = "<?= Url::to(['login/logout']) ?>";
-//                        layer.close(index);
                     });
                 });
             });
-            function download_file(val) {
-                window.location.href = "/approve/ajax/download?filename=" + val;
-            }
         </script>
         <?php $this->endBody() ?>
     </body>
