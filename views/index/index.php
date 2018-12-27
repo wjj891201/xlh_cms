@@ -405,9 +405,7 @@ use yii\helpers\Url;
                                         <ul>
                                             <li style="display:block">
                                                 <div class="linkheader">
-                                                    <ul>
-                                                        <li><a href="#">金融需求</a></li>
-                                                    </ul>
+                                                    <ul><li><a href="#">金融需求</a></li></ul>
                                                 </div>
                                                 <div class="linkcontent">
                                                     <div class="nbox">
@@ -415,81 +413,63 @@ use yii\helpers\Url;
                                                             <div class="line"></div>
                                                         </div>
                                                         <ul>
-                                                            <li>
-                                                                <div class="box">
-                                                                    <div class="c nc1">需求</div>
-                                                                    <div class="text">
-                                                                        <div class="text1">691<span>家</span></div>
-                                                                        <div class="text2">￥5000<span>万</span></div>
+                                                            <?php foreach ($jrxq as $key => $vo): ?>
+                                                                <li>
+                                                                    <div class="box">
+                                                                        <div class="c nc<?= $key + 1 ?>"><?= $vo['title'] ?></div>
+                                                                        <div class="text">
+                                                                            <div class="text1"><?= $vo['count'] ?><span>家</span></div>
+                                                                            <div class="text2">￥<?= $vo['totle'] ?><span>万</span></div>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="box">
-                                                                    <div class="c nc2">受理</div>
-                                                                    <div class="text">
-                                                                        <div class="text1">691<span>家</span></div>
-                                                                        <div class="text2">￥5000<span>万</span></div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="box">
-                                                                    <div class="c nc3">授信</div>
-                                                                    <div class="text">
-                                                                        <div class="text1">691<span>家</span></div>
-                                                                        <div class="text2">￥5000<span>万</span></div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="box noborder">
-                                                                    <div class="c nc4">发放</div>
-                                                                    <div class="text">
-                                                                        <div class="text1">691<span>家</span></div>
-                                                                        <div class="text2">￥5000<span>万</span></div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
+                                                                </li>
+                                                            <?php endforeach; ?>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="linkheader">
-                                                    <ul>
-                                                        <li><a href="#">科技贷</a></li>
-                                                    </ul>
+                                                    <ul><li><a href="#">科技贷</a></li></ul>
                                                 </div>
                                                 <div class="linkcontent">
                                                     <div class="xbox">
                                                         <ul>
-                                                            <li>
-                                                                <div class="bank"><img src="/public/kjd/images/b1.jpg">嘉兴银行</div>
-                                                                <div class="bdata">
-                                                                    <div class="text">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <div class="text1">691<span>家</span></div>
-                                                                                <div class="text2">￥5000<span>万</span></div>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="text1">691<span>家</span></div>
-                                                                                <div class="text2">￥5000<span>万</span></div>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="text1">691<span>家</span></div>
-                                                                                <div class="text2">￥5000<span>万</span></div>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="text1">691<span>家</span></div>
-                                                                                <div class="text2">￥5000<span>万</span></div>
-                                                                            </li>
-                                                                        </ul>
+                                                            <?php foreach ($bank_tj as $key => $vo): ?>
+                                                                <li>
+                                                                    <div class="bank">
+                                                                        <?php if ($vo['organization_name'] == '北京银行'): ?>
+                                                                            <img src="/public/kjd/images/bjyh.png"/>
+                                                                        <?php else: ?>
+                                                                            <img src="/public/kjd/images/xyyh.png"/>
+                                                                        <?php endif; ?>
+                                                                        <?= $vo['organization_name'] ?>
                                                                     </div>
-                                                                </div>
-                                                                <div class="clear"></div>
-                                                            </li>
+                                                                    <div class="bdata">
+                                                                        <div class="text">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <div class="text1"><?= $vo['b_count_1'] ?><span>家</span></div>
+                                                                                    <div class="text2">￥<?= !empty($vo['b_total_1']) ? $vo['b_total_1'] : 0 ?><span>万</span></div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="text1"><?= $vo['b_count_2'] ?><span>家</span></div>
+                                                                                    <div class="text2">￥<?= !empty($vo['b_total_2']) ? $vo['b_total_2'] : 0 ?><span>万</span></div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="text1"><?= $vo['b_count_3'] ?><span>家</span></div>
+                                                                                    <div class="text2">￥<?= !empty($vo['b_total_3']) ? $vo['b_total_3'] : 0 ?><span>万</span></div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="text1"><?= $vo['b_count_4'] ?><span>家</span></div>
+                                                                                    <div class="text2">￥<?= !empty($vo['b_total_4']) ? $vo['b_total_4'] : 0 ?><span>万</span></div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="clear"></div>
+                                                                </li>
+                                                            <?php endforeach; ?>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -517,9 +497,7 @@ use yii\helpers\Url;
                                         <ul>
                                             <li style="display:block">
                                                 <div class="linkheader">
-                                                    <ul>
-                                                        <li><a href="#">金融需求</a></li>
-                                                    </ul>
+                                                    <ul><li><a href="#">金融需求</a></li></ul>
                                                 </div>
                                                 <div class="linkcontent">
                                                     <div class="nbox">
@@ -527,68 +505,63 @@ use yii\helpers\Url;
                                                             <div class="line"></div>
                                                         </div>
                                                         <ul>
-                                                            <li>
-                                                                <div class="box">
-                                                                    <div class="c nc1">需求</div>
-                                                                    <div class="text">
-                                                                        <div class="text1">691<span>家</span></div>
-                                                                        <div class="text2">￥5000<span>万</span></div>
+                                                            <?php foreach ($jrxq as $key => $vo): ?>
+                                                                <li>
+                                                                    <div class="box">
+                                                                        <div class="c nc<?= $key + 1 ?>"><?= $vo['title'] ?></div>
+                                                                        <div class="text">
+                                                                            <div class="text1"><?= $vo['count'] ?><span>家</span></div>
+                                                                            <div class="text2">￥<?= $vo['totle'] ?><span>万</span></div>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="box">
-                                                                    <div class="c nc2">受理</div>
-                                                                    <div class="text">
-                                                                        <div class="text1">691<span>家</span></div>
-                                                                        <div class="text2">￥5000<span>万</span></div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="box noborder">
-                                                                    <div class="c nc3">发放</div>
-                                                                    <div class="text">
-                                                                        <div class="text1">691<span>家</span></div>
-                                                                        <div class="text2">￥5000<span>万</span></div>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
+                                                                </li>
+                                                            <?php endforeach; ?>
                                                         </ul>
                                                     </div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="linkheader">
-                                                    <ul>
-                                                        <li><a href="#">科技贷</a></li>
-                                                    </ul>
+                                                    <ul><li><a href="#">科技贷</a></li></ul>
                                                 </div>
                                                 <div class="linkcontent">
                                                     <div class="xbox">
                                                         <ul>
-                                                            <li>
-                                                                <div class="bank"><img src="/public/kjd/images/b1.jpg">嘉兴银行</div>
-                                                                <div class="bdata">
-                                                                    <div class="text">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <div class="text1">691<span>家</span></div>
-                                                                                <div class="text2">￥5000<span>万</span></div>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="text1">691<span>家</span></div>
-                                                                                <div class="text2">￥5000<span>万</span></div>
-                                                                            </li>
-                                                                            <li>
-                                                                                <div class="text1">691<span>家</span></div>
-                                                                                <div class="text2">￥5000<span>万</span></div>
-                                                                            </li>
-                                                                        </ul>
+                                                            <?php foreach ($bank_tj as $key => $vo): ?>
+                                                                <li>
+                                                                    <div class="bank">
+                                                                        <?php if ($vo['organization_name'] == '北京银行'): ?>
+                                                                            <img src="/public/kjd/images/bjyh.png"/>
+                                                                        <?php else: ?>
+                                                                            <img src="/public/kjd/images/xyyh.png"/>
+                                                                        <?php endif; ?>
+                                                                        <?= $vo['organization_name'] ?>
                                                                     </div>
-                                                                </div>
-                                                                <div class="clear"></div>
-                                                            </li>
+                                                                    <div class="bdata">
+                                                                        <div class="text">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <div class="text1"><?= $vo['b_count_1'] ?><span>家</span></div>
+                                                                                    <div class="text2">￥<?= !empty($vo['b_total_1']) ? $vo['b_total_1'] : 0 ?><span>万</span></div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="text1"><?= $vo['b_count_2'] ?><span>家</span></div>
+                                                                                    <div class="text2">￥<?= !empty($vo['b_total_2']) ? $vo['b_total_2'] : 0 ?><span>万</span></div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="text1"><?= $vo['b_count_3'] ?><span>家</span></div>
+                                                                                    <div class="text2">￥<?= !empty($vo['b_total_3']) ? $vo['b_total_3'] : 0 ?><span>万</span></div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="text1"><?= $vo['b_count_4'] ?><span>家</span></div>
+                                                                                    <div class="text2">￥<?= !empty($vo['b_total_4']) ? $vo['b_total_4'] : 0 ?><span>万</span></div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="clear"></div>
+                                                                </li>
+                                                            <?php endforeach; ?>
                                                         </ul>
                                                     </div>
                                                 </div>
