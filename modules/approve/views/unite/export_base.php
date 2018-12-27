@@ -1,10 +1,12 @@
 <?php
+
 use yii\helpers\ArrayHelper;
+
 $type = Yii::$app->request->get('type', 'base');
 $info = (!empty($type) && $type == 'loan') ? '企业贷款申请表' : ((!empty($type) && $type == 'base') ? '企业入库申请表' : '企业申请详情');
 ?>
 <style>
-    table {font-family:微软雅黑; width:100% border-collapse:collapse; font-size:12px; border-color:#000000;}
+    table {font-family:微软雅黑; width:100%;border-collapse:collapse; font-size:12px; border-color:#000000;}
     td {padding: 10px; line-height:35px;}
     p {text-align: left; margin-left:50px;}
     strong {text-align:center;}
@@ -71,10 +73,10 @@ $info = (!empty($type) && $type == 'loan') ? '企业贷款申请表' : ((!empty(
         <td width="440"><p> <?= $base['enterprise_info'] ?> </p></td>
     </tr>
     <?php
-        $finance_year     = $base['finance']['finance_year'];
-        $previous_year    = !empty($finance_year) ? $finance_year - 1 : date('Y') - 2; //前年
-        $before_last_year = !empty($finance_year) ? $finance_year : date('Y') - 1; //去年
-        $last_year        = !empty($finance_year) ? $finance_year + 1 : date('Y'); //近一期
+    $finance_year = $base['finance']['finance_year'];
+    $previous_year = !empty($finance_year) ? $finance_year - 1 : date('Y') - 2; //前年
+    $before_last_year = !empty($finance_year) ? $finance_year : date('Y') - 1; //去年
+    $last_year = !empty($finance_year) ? $finance_year + 1 : date('Y'); //近一期
     ?>
     <tr>
         <td width="30" rowspan="9"><strong> 财务信息 </strong></td>
@@ -127,49 +129,49 @@ $info = (!empty($type) && $type == 'loan') ? '企业贷款申请表' : ((!empty(
         <td width="170"><strong> 企业核心管理人员职业经历 </strong></td>
         <td width="440">
             <table>
-                <?php $profession = !empty($base['describe']['profession']) ? json_decode($base['describe']['profession'],true) :[]; ?>
-                <?php if(!empty($profession)):?>
-                    <?php foreach($profession as $p=>$pv) :?>
+                <?php $profession = !empty($base['describe']['profession']) ? json_decode($base['describe']['profession'], true) : []; ?>
+                <?php if (!empty($profession)): ?>
+                    <?php foreach ($profession as $p => $pv) : ?>
                         <tr><td width="15%" align="right">姓名：</td><td width="85%" align="left"><?php echo $pv['name'] ? $pv['name'] : ''; ?></td></tr>
                         <tr><td width="15%" align="right">职位：</td><td width="85%" align="left"><?php echo $pv['position'] ? $pv['position'] : ''; ?></td></tr>
                         <tr><td width="15%" align="right">经历：</td><td width="85%" align="left"><?php echo $pv['experience'] ? $pv['experience'] : ''; ?></td></tr>
-                    <?php endforeach;?>
-                <?php endif;?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </table>
-         </td>
+        </td>
     </tr>
 
-    <?php if(!empty($type) && $type == 'loan'): ?>
-    <tr>
-        <td width="30" rowspan="3"><strong> 融资信息 </strong></td>
-        <td width="170"><strong> 贷款金额 </strong></td>
-        <td width="440"><?= $base['loan']['apply_amount']; ?></td>
-    </tr>
-    <tr>
-        <td width="170"><strong> 贷款期限 </strong></td>
-        <td width="440"><?= $base['loan']['period_month']; ?></td>
-    </tr>
-    <tr>
-        <td width="170"><strong> 贷款用途 </strong></td>
-        <td width="440"><?= $base['loan']['loan_purpose']; ?></td>
-    </tr>
+    <?php if (!empty($type) && $type == 'loan'): ?>
+        <tr>
+            <td width="30" rowspan="3"><strong> 融资信息 </strong></td>
+            <td width="170"><strong> 贷款金额 </strong></td>
+            <td width="440"><?= $base['loan']['apply_amount']; ?></td>
+        </tr>
+        <tr>
+            <td width="170"><strong> 贷款期限 </strong></td>
+            <td width="440"><?= $base['loan']['period_month']; ?></td>
+        </tr>
+        <tr>
+            <td width="170"><strong> 贷款用途 </strong></td>
+            <td width="440"><?= $base['loan']['loan_purpose']; ?></td>
+        </tr>
 
-    <tr>
-        <td width="30" rowspan="4"><strong> 银行批复信息 </strong></td>
-        <td width="170"><strong> 授信金额 </strong></td>
-        <td width="440"><?= $base['loan']['credit_amount'] . '万'; ?></td>
-    </tr>
-    <tr>
-        <td width="170"><strong> 授信开始时间 </strong></td>
-        <td width="440"><?= $base['loan']['credit_time']; ?></td>
-    </tr>
-    <tr>
-        <td width="170"><strong> 授信截止时间 </strong></td>
-        <td width="440"><?= $base['loan']['credit_validity']; ?></td>
-    </tr>
-    <tr>
-        <td width="170"><strong> 已放款金额 </strong></td>
-        <td width="440"><?= $base['loan']['already_loan_amount'] . '万'; ?></td>
-    </tr>
+        <tr>
+            <td width="30" rowspan="4"><strong> 银行批复信息 </strong></td>
+            <td width="170"><strong> 授信金额 </strong></td>
+            <td width="440"><?= $base['loan']['credit_amount'] . '万'; ?></td>
+        </tr>
+        <tr>
+            <td width="170"><strong> 授信开始时间 </strong></td>
+            <td width="440"><?= $base['loan']['credit_time']; ?></td>
+        </tr>
+        <tr>
+            <td width="170"><strong> 授信截止时间 </strong></td>
+            <td width="440"><?= $base['loan']['credit_validity']; ?></td>
+        </tr>
+        <tr>
+            <td width="170"><strong> 已放款金额 </strong></td>
+            <td width="440"><?= $base['loan']['already_loan_amount'] . '万'; ?></td>
+        </tr>
     <?php endif; ?>
 </table>

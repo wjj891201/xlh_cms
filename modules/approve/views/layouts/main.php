@@ -45,6 +45,13 @@ ApproveAsset::register($this);
                                 <a <?php if ($this->context->action->id == 'loan-finish'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['loan-handle/loan-finish']) ?>">已通过企业</a>
                             </dd>
                         <?php endif; ?>
+                        <dt <?php if ($this->context->id == 'loan-handle'): ?>class="on"<?php endif; ?>><i class="icon3"></i>数据统计</dt>
+                        <dd <?php if ($this->context->id == 'loan-handle'): ?>style="display: block"<?php endif; ?>>
+                            <a <?php if ($this->context->action->id == 'loan-wait-for'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['loan-handle/loan-wait-for']) ?>">待审批企业</a>
+                            <a <?php if ($this->context->action->id == 'loan-back'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['loan-handle/loan-back']) ?>">被退回企业</a>
+                            <a <?php if ($this->context->action->id == 'loan-end'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['loan-handle/loan-end']) ?>">被终止企业</a>
+                            <a <?php if ($this->context->action->id == 'loan-finish'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['loan-handle/loan-finish']) ?>">已通过企业</a>
+                        </dd>
                     </dl>
                 </ul>
             </div>
