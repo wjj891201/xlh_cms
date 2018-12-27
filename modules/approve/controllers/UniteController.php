@@ -183,8 +183,8 @@ class UniteController extends CommonController
         $base_id = Yii::$app->request->get('base_id');
         $base    = EnterpriseBase::findOne(['base_id' => $base_id]);
 
-        $type    = Yii::$app->request->get('type');
-        if(!empty($type) && $type=='export'){
+        $export  = Yii::$app->request->get('export');
+        if(!empty($export) && $export=='export'){
             $this->pdf_title = '资质详情';
             $html = $this->renderPartial("export_base", ['base'=>$base], true);
             $this->pdf($html);
