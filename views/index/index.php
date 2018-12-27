@@ -83,6 +83,9 @@ use yii\helpers\Url;
                                                 <div class="liwrap"><i class="linkicon linkicon1"></i><span>区域分布</span></div>
                                             </li>
                                             <li>
+                                                <div class="liwrap"><i class="linkicon linkicon3"></i><span>科技企业类型</span></div>
+                                            </li>
+                                            <li>
                                                 <div class="liwrap"><i class="linkicon linkicon2"></i><span>行业分布</span></div>
                                             </li>
                                             <li class="last">
@@ -132,6 +135,30 @@ use yii\helpers\Url;
                                                     </div>
                                                 </div>
                                             </li>
+
+                                            <!-- 科技企业类型 -->
+                                            <li class="showContent">
+                                                <div class="show1">
+                                                    <div class="linkheader"><ul><li><a href="#">科技企业类型</a></li></ul></div>
+                                                    <div class="linkcontent">
+                                                        <div class="slider" style="width:890px;">
+                                                            <ul class="canslider">
+                                                                <li class="areaul">   
+                                                                    <?php foreach ($one_enterprise as $key => $vo): ?>
+                                                                        <div>
+                                                                            <span><?= $vo['name'] ?></span>
+                                                                            <p><?= $vo['count'] ?></p>
+                                                                            <a>查看名单</a>
+                                                                        </div>
+                                                                    <?php endforeach; ?>
+                                                                    <span class="areaulbor"></span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
                                             <!-- 行业分布 -->
                                             <li class="showContent">
                                                 <div class="show1">
@@ -213,6 +240,9 @@ use yii\helpers\Url;
                                                 <div class="liwrap"><i class="linkicon linkicon1"></i><span>区域分布</span></div>
                                             </li>
                                             <li>
+                                                <div class="liwrap"><i class="linkicon linkicon3"></i><span>科技企业类型</span></div>
+                                            </li>
+                                            <li>
                                                 <div class="liwrap"><i class="linkicon linkicon2"></i><span>行业分布</span></div>
                                             </li>
                                             <li class="last">
@@ -262,6 +292,30 @@ use yii\helpers\Url;
                                                     </div>
                                                 </div>
                                             </li>
+
+                                            <!-- 科技企业类型 -->
+                                            <li class="showContent">
+                                                <div class="show1">
+                                                    <div class="linkheader"><ul><li><a href="#">科技企业类型</a></li></ul></div>
+                                                    <div class="linkcontent">
+                                                        <div class="slider" style="width:890px;">
+                                                            <ul class="canslider">
+                                                                <li class="areaul">   
+                                                                    <?php foreach ($two_enterprise as $key => $vo): ?>
+                                                                        <div>
+                                                                            <span><?= $vo['name'] ?></span>
+                                                                            <p><?= $vo['count'] ?></p>
+                                                                            <a>查看名单</a>
+                                                                        </div>
+                                                                    <?php endforeach; ?>
+                                                                    <span class="areaulbor"></span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
                                             <!-- 行业分布 -->
                                             <li class="showContent">
                                                 <div class="show1">
@@ -380,8 +434,17 @@ use yii\helpers\Url;
                                                                 </div>
                                                             </li>
                                                             <li>
+                                                                <div class="box">
+                                                                    <div class="c nc3">授信</div>
+                                                                    <div class="text">
+                                                                        <div class="text1">691<span>家</span></div>
+                                                                        <div class="text2">￥5000<span>万</span></div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
                                                                 <div class="box noborder">
-                                                                    <div class="c nc3">发放</div>
+                                                                    <div class="c nc4">发放</div>
                                                                     <div class="text">
                                                                         <div class="text1">691<span>家</span></div>
                                                                         <div class="text2">￥5000<span>万</span></div>
@@ -406,6 +469,10 @@ use yii\helpers\Url;
                                                                 <div class="bdata">
                                                                     <div class="text">
                                                                         <ul>
+                                                                            <li>
+                                                                                <div class="text1">691<span>家</span></div>
+                                                                                <div class="text2">￥5000<span>万</span></div>
+                                                                            </li>
                                                                             <li>
                                                                                 <div class="text1">691<span>家</span></div>
                                                                                 <div class="text2">￥5000<span>万</span></div>

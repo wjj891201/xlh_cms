@@ -9,7 +9,9 @@ use app\models\Advert;
 use app\models\WorkflowGroup;
 use app\models\EnterpriseBase;
 use app\models\EnterpriseLoan;
+use app\models\EnterpriseDescribe;
 use app\models\Area;
+use yii\db\Expression;
 
 class IndexController extends CommonController
 {
@@ -39,6 +41,11 @@ class IndexController extends CommonController
         {
             $one_town_list[$key]['count'] = EnterpriseBase::apply_all_statistics(['town_id' => $vo['id']]);
         }
+        $one_enterprise = Yii::$app->params['enterprise'];
+        foreach ($one_enterprise as $key => $vo)
+        {
+            $one_enterprise[$key]['count'] = EnterpriseDescribe::find()->where(new Expression('FIND_IN_SET(' . $vo['id'] . ', enterprise_type)'))->count();
+        }
         $one_industry = Yii::$app->params['industry'];
         foreach ($one_industry as $key => $vo)
         {
@@ -52,6 +59,12 @@ class IndexController extends CommonController
         {
             $two_town_list[$key]['count'] = EnterpriseBase::apply_in_statistics(['wl.group_id' => $this->group_id, 'wl.result' => 'finish', 'eb.town_id' => $vo['id']]);
         }
+        $two_enterprise = Yii::$app->params['enterprise'];
+        foreach ($two_enterprise as $key => $vo)
+        {
+            $base_ids = EnterpriseDescribe::find()->select('base_id')->where(new Expression('FIND_IN_SET(' . $vo['id'] . ', enterprise_type)'))->asArray()->column();
+            $two_enterprise[$key]['count'] = EnterpriseBase::apply_in_statistics(['and', ['wl.group_id' => $this->group_id, 'wl.result' => 'finish'], ['in', 'eb.base_id', $base_ids]]);
+        }
         $two_industry = Yii::$app->params['industry'];
         foreach ($two_industry as $key => $vo)
         {
@@ -64,8 +77,8 @@ class IndexController extends CommonController
         $four_num = EnterpriseLoan::find()->alias('el')->leftJoin('{{%workflow_log}} wl', 'el.base_id=wl.app_id')->where(['wl.group_id' => $this->loan_group_id, 'wl.result' => 'grant'])->count();
         return $this->render("index", [
                     'news' => $news, 'logo' => $logo,
-                    'one_num' => $one_num, 'one_town_list' => $one_town_list, 'one_industry' => $one_industry, 'one_company' => $one_company,
-                    'two_num' => $two_num, 'two_town_list' => $two_town_list, 'two_industry' => $two_industry, 'two_company' => $two_company,
+                    'one_num' => $one_num, 'one_town_list' => $one_town_list, 'one_enterprise' => $one_enterprise, 'one_industry' => $one_industry, 'one_company' => $one_company,
+                    'two_num' => $two_num, 'two_town_list' => $two_town_list, 'two_enterprise' => $two_enterprise,  'two_industry' => $two_industry, 'two_company' => $two_company,
                     'three_num' => $three_num,
                     'four_num' => $four_num
         ]);

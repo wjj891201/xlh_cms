@@ -223,7 +223,7 @@ body.off .cbg { -webkit-animation: fadeIn 1s linear forwards; }*/
 .t1 { font-size:20px; color: #0180e9; padding: 20px 0 20px 25px;border-bottom: 1px solid #ddd; }
 .mbox .t1 { float: left; width: 150px; }
 .line { border-bottom: 2px solid #0180e9; width:41px; padding-top: 6px;}
-.nbox li { float: left; width: 33.33%;}
+.nbox li { float: left; width: 25%;}
 .nbox li .box { border-right:1px solid #ddd; height: 100%; padding: 20px 0 20px 25px; font-size: 18px; overflow: hidden;}
 .nbox li .box.noborder {border:none;}
 .nbox li .box .c { width:50px; height: 50px; border:1px solid #ffaf87; background: #ffe8d3; color: #ff6701; text-align: center; line-height: 50px; border-radius: 100%; float: left; margin-right: 25px; margin-top: 18px;  }
@@ -239,9 +239,9 @@ body.off .cbg { -webkit-animation: fadeIn 1s linear forwards; }*/
 .xbox .bank { float: left; width: 80px; font-size: 18px; text-align: center; }
 .xbox .bank img { margin-bottom: 5px; margin-top: -12px; }
 .xbox .bdata {float: left; width: 810px; height: 165px; background: url(../images/nbg.png) no-repeat; position: relative;}
-.xbox .bdata .text { position: absolute; width: 712px; height: 110px;left: 64px; top: 54px;}
+.xbox .bdata .text { position: absolute; width: 778px; height: 110px;left: 27px; top: 54px;}
 .xbox .bdata .text ul { margin-right: -70px; }
-.xbox .bdata .text li { float: left; width: 149px; padding: 7px 20px 0 20px; margin-right:70px; }
+.xbox .bdata .text li { float: left; width: 140px; padding: 7px 20px 0 20px; margin-right:20px; }
 .xbox li { margin-bottom: 50px;}
 
 .contwrap{width:49%;display:inline-block;vertical-align:middle;}

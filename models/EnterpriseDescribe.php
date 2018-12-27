@@ -33,7 +33,7 @@ class EnterpriseDescribe extends ActiveRecord
                 ['equity_num', 'number', 'message' => '{attribute}必须为数字'],
                 ['user_id', 'default', 'value' => Yii::$app->session['member']['userid']],
                 ['base_id', 'default', 'value' => EnterpriseBase::getBaseId()],
-                [['profession', 'qualification_certificate'], 'safe']
+                [['profession', 'enterprise_type', 'qualification_certificate'], 'safe']
         ];
     }
 
@@ -76,6 +76,7 @@ class EnterpriseDescribe extends ActiveRecord
             $data['EnterpriseDescribe']['qualification_certificate'] = json_encode($arr_qualification);
             unset($data['u_zizhi_enterprise'], $data['u_zizhi_china_enterprise'], $data['u_zizhi_file'], $data['u_zizhi_file_name']);
         }
+        $data['EnterpriseDescribe']['enterprise_type'] = implode(',', $u_zizhi_enterprise);
         # 处理资质~~~end
         if ($this->load($data) && $this->save())
         {
