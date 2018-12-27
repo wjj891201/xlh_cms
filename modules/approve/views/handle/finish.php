@@ -28,10 +28,10 @@ use yii\widgets\LinkPager;
                                     <td><?= $key + 1 ?></td>
                                     <td><?= $vo['enterprise_name'] ?></td>
                                     <td><?= $vo['town_name'] ?></td>
-                                    <td></td>
+                                    <td><?= $vo['company_type'] ?></td>
                                     <td><?= $vo['contact_person_man'] ?></td>
                                     <td><?= $vo['contact_person_phone'] ?></td>
-                                    <td><a href="<?= Url::to(['unite/get-info', 'base_id' => $vo['base_id'], 'type'=>'base']) ?>">详情</a></td>
+                                    <td><a href="<?= Url::to(['unite/get-info', 'base_id' => $vo['base_id'], 'type' => 'base']) ?>">详情</a></td>
                                     <td><?= $vo['base_create_time'] ?></td>
                                     <td class="table_btn">
                                         <a class="stream" data-app_id="<?= $vo['app_id'] ?>" data-group_id="<?= $vo['group_id'] ?>" href="javascript:void(0);">查看</a>
