@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\ArrayHelper;
 $type = Yii::$app->request->get('type', 'base');
-$info = (!empty($type) && $type == 'loan') ? '企业贷款申请表' : ((!empty($type) && $type == 'base') ? '企业入库申请表' : '其他');
+$info = (!empty($type) && $type == 'loan') ? '企业贷款申请表' : ((!empty($type) && $type == 'base') ? '企业入库申请表' : '企业申请详情');
 ?>
 <style>
     table {font-family:微软雅黑; width:100% border-collapse:collapse; font-size:12px; border-color:#000000;}
