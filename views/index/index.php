@@ -109,7 +109,7 @@ use yii\helpers\Url;
                                                                         <?php if ($key <= 7): ?>
                                                                             <div>
                                                                                 <span><?= $vo['name'] ?></span><p><?= $vo['count'] ?></p>
-                                                                                <a>查看名单</a>
+                                                                                <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                             </div>
                                                                             <?php if ($key % 4 == 3): ?>
                                                                                 <span class="areaulbor"></span>
@@ -122,7 +122,7 @@ use yii\helpers\Url;
                                                                         <?php if ($key > 7 && $key <= 15): ?>
                                                                             <div>
                                                                                 <span><?= $vo['name'] ?></span><p><?= $vo['count'] ?></p>
-                                                                                <a>查看名单</a>
+                                                                                <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                             </div>
                                                                             <?php if ($key % 4 == 3): ?>
                                                                                 <span class="areaulbor"></span>
@@ -148,7 +148,7 @@ use yii\helpers\Url;
                                                                         <div>
                                                                             <span><?= $vo['name'] ?></span>
                                                                             <p><?= $vo['count'] ?></p>
-                                                                            <a>查看名单</a>
+                                                                            <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                         </div>
                                                                     <?php endforeach; ?>
                                                                     <span class="areaulbor"></span>
@@ -173,7 +173,7 @@ use yii\helpers\Url;
                                                                         <?php if ($key <= 7): ?>
                                                                             <div>
                                                                                 <span><?= $vo['name'] ?></span><p><?= $vo['count'] ?></p>
-                                                                                <a>查看名单</a>
+                                                                                <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                             </div>
                                                                             <?php if ($key % 4 == 3): ?>
                                                                                 <span class="areaulbor"></span>
@@ -186,7 +186,7 @@ use yii\helpers\Url;
                                                                         <?php if ($key > 7 && $key < 15): ?>
                                                                             <div>
                                                                                 <span><?= $vo['name'] ?></span><p><?= $vo['count'] ?></p>
-                                                                                <a>查看名单</a>
+                                                                                <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                             </div>
                                                                             <?php if ($key % 4 == 3): ?>
                                                                                 <span class="areaulbor"></span>
@@ -266,7 +266,7 @@ use yii\helpers\Url;
                                                                         <?php if ($key <= 7): ?>
                                                                             <div>
                                                                                 <span><?= $vo['name'] ?></span><p><?= $vo['count'] ?></p>
-                                                                                <a>查看名单</a>
+                                                                                <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                             </div>
                                                                             <?php if ($key % 4 == 3): ?>
                                                                                 <span class="areaulbor"></span>
@@ -279,7 +279,7 @@ use yii\helpers\Url;
                                                                         <?php if ($key > 7 && $key <= 15): ?>
                                                                             <div>
                                                                                 <span><?= $vo['name'] ?></span><p><?= $vo['count'] ?></p>
-                                                                                <a>查看名单</a>
+                                                                                <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                             </div>
                                                                             <?php if ($key % 4 == 3): ?>
                                                                                 <span class="areaulbor"></span>
@@ -305,7 +305,7 @@ use yii\helpers\Url;
                                                                         <div>
                                                                             <span><?= $vo['name'] ?></span>
                                                                             <p><?= $vo['count'] ?></p>
-                                                                            <a>查看名单</a>
+                                                                            <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                         </div>
                                                                     <?php endforeach; ?>
                                                                     <span class="areaulbor"></span>
@@ -330,7 +330,7 @@ use yii\helpers\Url;
                                                                         <?php if ($key <= 7): ?>
                                                                             <div>
                                                                                 <span><?= $vo['name'] ?></span><p><?= $vo['count'] ?></p>
-                                                                                <a>查看名单</a>
+                                                                                <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                             </div>
                                                                             <?php if ($key % 4 == 3): ?>
                                                                                 <span class="areaulbor"></span>
@@ -343,7 +343,7 @@ use yii\helpers\Url;
                                                                         <?php if ($key > 7 && $key < 15): ?>
                                                                             <div>
                                                                                 <span><?= $vo['name'] ?></span><p><?= $vo['count'] ?></p>
-                                                                                <a>查看名单</a>
+                                                                                <?php if ($vo['count'] > 0): ?><a>查看名单</a><?php endif; ?>
                                                                             </div>
                                                                             <?php if ($key % 4 == 3): ?>
                                                                                 <span class="areaulbor"></span>
