@@ -34,7 +34,7 @@ use yii\widgets\LinkPager;
                                     <td></td>
                                     <td><?= $vo['apply_amount'] ?></td>
                                     <td><?= $vo['period_month'] ?></td>
-                                    <td></td>
+                                    <td><?= $vo['bank_name'] ?></td>
                                     <td><?= $vo['contact_person_man'] ?></td>
                                     <td><?= $vo['contact_person_phone'] ?></td>
                                     <td><a href="<?= Url::to(['unite/get-info', 'base_id' => $vo['base_id']]) ?>">详情</a></td>

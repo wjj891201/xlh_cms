@@ -34,10 +34,12 @@ class LoanHandleController extends CommonController
                     'wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id', 'wfl.group_id', 'wfl.node_id', 'wfl.is_read',
                     'b.base_id', 'b.enterprise_name', 'b.contact_person_man', 'b.contact_person_phone', 'b.base_create_time',
                     'l.loan_id', 'l.apply_amount', 'l.period_month',
+                    'o.name bank_name',
                     'tl.name town_name',
                 ])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->leftJoin('{{%enterprise_loan}} l', 'l.base_id=wfl.app_id')
+                ->leftJoin('{{%organization}} o', 'o.id=l.bank_id')
                 ->leftJoin('{{%town_list}} tl', 'tl.id=b.town_id')
                 ->where(['AND', ['wfl.user_id' => $approve_user_id], ['OR', ['wfl.result' => null], ['wfl.result' => '']], ['wfl.group_id' => $this->loan_group_id]]);
         $countQuery = clone $query;
@@ -66,10 +68,12 @@ class LoanHandleController extends CommonController
                     'wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id',
                     'b.base_id', 'b.enterprise_name', 'b.contact_person_man', 'b.contact_person_phone', 'b.base_create_time',
                     'l.loan_id', 'l.apply_amount', 'l.period_month',
+                    'o.name bank_name',
                     'tl.name town_name',
                 ])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->leftJoin('{{%enterprise_loan}} l', 'l.base_id=wfl.app_id')
+                ->leftJoin('{{%organization}} o', 'o.id=l.bank_id')
                 ->leftJoin('{{%town_list}} tl', 'tl.id=b.town_id')
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['wfl.result' => 'end'], ['wfl.group_id' => $this->loan_group_id]]);
         $countQuery = clone $query;
@@ -90,10 +94,12 @@ class LoanHandleController extends CommonController
                     'wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id',
                     'b.base_id', 'b.enterprise_name', 'b.contact_person_man', 'b.contact_person_phone', 'b.base_create_time',
                     'l.loan_id', 'l.apply_amount', 'l.period_month',
+                    'o.name bank_name',
                     'tl.name town_name',
                 ])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->leftJoin('{{%enterprise_loan}} l', 'l.base_id=wfl.app_id')
+                ->leftJoin('{{%organization}} o', 'o.id=l.bank_id')
                 ->leftJoin('{{%town_list}} tl', 'tl.id=b.town_id')
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['wfl.result' => 'back'], ['wfl.group_id' => $this->loan_group_id]]);
         $countQuery = clone $query;
@@ -116,10 +122,12 @@ class LoanHandleController extends CommonController
                     'wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id',
                     'b.base_id', 'b.enterprise_name', 'b.contact_person_man', 'b.contact_person_phone', 'b.base_create_time',
                     'l.loan_id', 'l.apply_amount', 'l.period_month',
+                    'o.name bank_name',
                     'tl.name town_name',
                 ])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->leftJoin('{{%enterprise_loan}} l', 'l.base_id=wfl.app_id')
+                ->leftJoin('{{%organization}} o', 'o.id=l.bank_id')
                 ->leftJoin('{{%town_list}} tl', 'tl.id=b.town_id')
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['wfl.result' => 'defer'], ['wfl.group_id' => $this->loan_group_id]]);
         $countQuery = clone $query;
@@ -154,10 +162,12 @@ class LoanHandleController extends CommonController
                     'wfl.id workflow_log_id', 'wfl.app_id', 'wfl.group_id', 'wfl.user_id approve_user_id',
                     'b.base_id', 'b.enterprise_name', 'b.contact_person_man', 'b.contact_person_phone', 'b.base_create_time',
                     'l.loan_id', 'l.apply_amount', 'l.period_month',
+                    'o.name bank_name',
                     'tl.name town_name',
                 ])
                 ->leftJoin('{{%enterprise_base}} b', 'b.base_id=wfl.app_id')
                 ->leftJoin('{{%enterprise_loan}} l', 'l.base_id=wfl.app_id')
+                ->leftJoin('{{%organization}} o', 'o.id=l.bank_id')
                 ->leftJoin('{{%town_list}} tl', 'tl.id=b.town_id')
                 ->where(['AND', ['IN', 'wfl.app_id', $app_ids], ['OR', ['wfl.result' => 'finish'], ['wfl.result' => 'grant']], ['wfl.group_id' => $this->loan_group_id]]);
         $countQuery = clone $query;
