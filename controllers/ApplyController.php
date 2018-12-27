@@ -14,6 +14,7 @@ use app\models\Area;
 use app\models\WorkflowGroup;
 use app\models\WorkflowNode;
 use app\models\Advert;
+use app\models\Organization;
 
 class ApplyController extends CheckController
 {
@@ -196,7 +197,15 @@ class ApplyController extends CheckController
                 Yii::$app->end();
             }
         }
-        return $this->render('apply_loan', ['model' => $model]);
+        //查询银行
+        $bank_list = Organization::find()->where(['pid' => 4])->asArray()->all();
+        $options = ['' => '请选择银行'];
+        foreach ($bank_list as $key => $vo)
+        {
+            $options[$vo['id']] = $vo['name'];
+        }
+        $bank_list = $options;
+        return $this->render('apply_loan', ['model' => $model, 'bank_list' => $bank_list]);
     }
 
     /**

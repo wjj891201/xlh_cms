@@ -52,6 +52,10 @@ $this->registerMetaTag(['name' => 'description', 'content' => ''], 'description'
                         <label>贷款用途：</label>
                         <?= $form->field($model, 'loan_purpose', ['errorOptions' => ['class' => 'msg']])->textArea(['class' => 'normal_text', 'placeholder' => '请输入贷款用途50字内'])->label(false); ?>
                     </li>
+                    <li class="area">
+                        <label>选择银行：</label>
+                        <?= $form->field($model, 'bank_id', ['errorOptions' => ['class' => 'msg', 'style' => 'display: inline-block;margin-left:10px;height:38px;line-height:38px;']])->dropDownList($bank_list, ['class' => 'gray_select', 'style' => 'width:312px;'])->label(false); ?>
+                    </li>
                     <div style="clear:both"></div>
                 </ul>
             </div>
