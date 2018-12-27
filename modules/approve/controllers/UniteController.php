@@ -10,6 +10,7 @@ use app\models\Organization;
 use app\models\WorkflowGroup;
 use app\models\EnterpriseLoan;
 use app\models\EnterpriseBase;
+use Mypdf;
 
 class UniteController extends CommonController
 {
