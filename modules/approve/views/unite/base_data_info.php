@@ -1,6 +1,7 @@
 <?php 
 use yii\web\View;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 $this->registerCssFile('@web/public/approve/css/data.css', ['depends'=>['app\assets\ApproveAsset'], 'position'=>View::POS_HEAD]);
 ?>
     <div class="mbox">
@@ -77,6 +78,15 @@ $this->registerCssFile('@web/public/approve/css/data.css', ['depends'=>['app\ass
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="page">
+                    <?=
+                    LinkPager::widget([
+                        'pagination' => $pages,
+                        'prevPageLabel' => '上一页',
+                        'nextPageLabel' => '下一页'
+                    ]);
+                    ?>
                 </div>
             </div>
         </div>
