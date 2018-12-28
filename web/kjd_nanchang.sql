@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-23 23:08:54
+Date: 2018-12-28 09:04:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -195,14 +195,15 @@ CREATE TABLE `mh_approve_user` (
   `created_at` int(11) NOT NULL COMMENT '创建时间',
   `updated_at` int(11) NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of mh_approve_user
 -- ----------------------------
 INSERT INTO `mh_approve_user` VALUES ('27', 'fk', '1', '11OBO0Hb2VzJbA53Z6yBivzOSWtGO9Qk', '$2y$13$2gZPiai0zVPAKdOjBORiteKDZKcCLYA6x0tvidJFvNvXxhH49h88C', null, 'fk@163.com', '15195861092', '10', '10', '1545026170', '1545026170');
 INSERT INTO `mh_approve_user` VALUES ('28', 'kjj', '2', 'TxUWuhORoDr0CDlXDb7SYZdH24XNOEgi', '$2y$13$BiNo6NeXcDufCIVxAsiK9umYoMY4zeYRDpyKEZxCIRx6LC9LW8mfG', null, 'kjj@163.com', '15195861092', '10', '10', '1545026692', '1545026692');
-INSERT INTO `mh_approve_user` VALUES ('29', 'yh', '4', 'pITyfXDjZvI9RLiuZSEcFBbhzCTzeBpY', '$2y$13$CBEgz686L/6LxXXmugi1AuZ4FP7y3F2QwlcrL2mmcIkJtWfukwdnW', null, 'yh@163.com', '18005143011', '10', '10', '1545036198', '1545036198');
+INSERT INTO `mh_approve_user` VALUES ('30', 'bjyh', '23', '-MQCHaual0PU9y_KJr9fUo_ESXPS7G9u', '$2y$13$4hddCoOgC1gAEDspOpZDJe4ThBJgqkZhOTgeP2wVKw/p93GFc17ri', null, 'bjyh@163.com', '18005143011', '10', '10', '1545840038', '1545840038');
+INSERT INTO `mh_approve_user` VALUES ('31', 'xyyh', '24', '-UdLy2ElZjSln5aNAtnX-CTwIBbdiUGr', '$2y$13$//riKrtIg56KN085kIxvEuc810zl0oSXt/D65T8GdJOXzxzyMrUDG', null, 'xyyh@163.com', '15195861092', '10', '10', '1545840091', '1545840091');
 
 -- ----------------------------
 -- Table structure for mh_app_access_log
@@ -282,12 +283,12 @@ CREATE TABLE `mh_enterprise_base` (
   `enterprise_info` text COMMENT '企业简介',
   `business_licence` varchar(255) DEFAULT NULL COMMENT '营业执照',
   PRIMARY KEY (`base_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='基础申请表';
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='基础申请表';
 
 -- ----------------------------
 -- Records of mh_enterprise_base
 -- ----------------------------
-INSERT INTO `mh_enterprise_base` VALUES ('77', '4', '', '', '一起走（北京）健康科技有限公司', '江西省-南昌市', '80', null, '北京市海淀区中关村南大街5号二区683号理工科技大厦1315室', '周琨1', '15195861092', '18005143011', '张三', '54966143@qq.com', '', '3', null, null, '1', '{\"register_date\":\"2012-04-06\",\"register_capital\":\"117.647\",\"legal_person\":\"\\u5468\\u7428\",\"institution_code\":\"593866298\",\"credit_code\":\"911101085938662981\"}', '2012-04-06 00:00:00', '117.647', '593866298', '911101085938662981', '2018-12-22 23:59:33', '2018-12-22 23:59:33', 'ewewewewewewewewewewewe', 'upfile/kjd/20181222/license_1545494349.jpg');
+INSERT INTO `mh_enterprise_base` VALUES ('82', '4', '', '', '一统安易（北京）科技有限公司', '江西省-南昌市', '82', null, '北京市海淀区北三环西路48号3号楼17层20A', '韩斌', '15195861092', '18005143011', '张三', 'zhangchunping0305@163.com', '', '3', null, null, '1', '{\"register_date\":\"2007-02-15\",\"register_capital\":\"500\",\"legal_person\":\"\\u97e9\\u658c\",\"institution_code\":\"799011404\",\"credit_code\":\"911101087990114043\"}', '2007-02-15 00:00:00', '500', '799011404', '911101087990114043', '2018-12-27 14:35:17', '2018-12-27 14:35:17', '企业简介企业简介企业简介企业简介企业简介企业简介企业简介企业简介企业简介企业简介', 'upfile/kjd/20181227/license_1545892516.png');
 
 -- ----------------------------
 -- Table structure for mh_enterprise_describe
@@ -308,12 +309,12 @@ CREATE TABLE `mh_enterprise_describe` (
   `profession` text COMMENT '核心管理人员信息',
   `qualification_certificate` text COMMENT '企业类型附件',
   PRIMARY KEY (`describe_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='企业申请：企业概述';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='企业申请：企业概述';
 
 -- ----------------------------
 -- Records of mh_enterprise_describe
 -- ----------------------------
-INSERT INTO `mh_enterprise_describe` VALUES ('1', '77', '4', '', null, '0', '', '232323232323', '2018-12-23 22:39:07', null, '2', '[{\"name\":\"22\",\"position\":\"22\",\"experience\":\"22\"},{\"name\":\"333\",\"position\":\"4\",\"experience\":\"44444\"}]', '[{\"name\":\"33\",\"file_name\":\"zz_1545575865.jpg\",\"path\":\"upfile\\/kjd\\/20181223\\/zz_1545575865.jpg\"},{\"name\":\"333\",\"file_name\":\"zz_1545575943.jpg\",\"path\":\"upfile\\/kjd\\/20181223\\/zz_1545575943.jpg\"}]');
+INSERT INTO `mh_enterprise_describe` VALUES ('6', '82', '4', '1,3', null, '0', '', '12121212121212', '2018-12-27 16:39:10', null, '4', '[{\"name\":\"wedwew\",\"position\":\"wewe\",\"experience\":\"wewewewewe\"},{\"name\":\"rtytytyt\",\"position\":\"ytyty\",\"experience\":\"tytytytytyt\"}]', '[{\"id\":\"1\",\"name\":\"\\u56fd\\u5bb6\\u79d1\\u6280\\u578b\\u4e2d\\u5c0f\\u4f01\\u4e1a\",\"file_name\":\"zz_1545899929.png\",\"path\":\"upfile\\/kjd\\/20181227\\/zz_1545899929.png\"},{\"id\":\"3\",\"name\":\"\\u56fd\\u5bb6\\u9ad8\\u65b0\\u6280\\u672f\\u4f01\\u4e1a\",\"file_name\":\"zz_1545899945.png\",\"path\":\"upfile\\/kjd\\/20181227\\/zz_1545899945.png\"}]');
 
 -- ----------------------------
 -- Table structure for mh_enterprise_finance
@@ -347,12 +348,12 @@ CREATE TABLE `mh_enterprise_finance` (
   `finance_create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `finance_update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`finance_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='企业申请财务信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='企业申请财务信息表';
 
 -- ----------------------------
 -- Records of mh_enterprise_finance
 -- ----------------------------
-INSERT INTO `mh_enterprise_finance` VALUES ('1', '77', '4', '', '', '', '', '1000', '500', '400', '350', '300', '2017', '1', 'upfile/kjd/20181223/1_1545566370.html', 'upfile/kjd/20181223/2_1545566373.html', '1', 'upfile/kjd/20181223/5_1545566354.html', 'upfile/kjd/20181223/6_1545566363.html', '2', 'upfile/kjd/20181223/3_1545566380.html', null, 'upfile/kjd/20181223/4_1545566382.html', null, '2018-12-23 19:59:47', null);
+INSERT INTO `mh_enterprise_finance` VALUES ('5', '82', '4', '12.57735', '-38.488865', '22.510836', '87.73', '1000', '800', '500', '360', '120', '2017', '1', 'upfile/kjd/20181227/1_1545892583.htm', 'upfile/kjd/20181227/2_1545892586.htm', '1', 'upfile/kjd/20181227/5_1545892570.htm', 'upfile/kjd/20181227/6_1545892578.htm', '3', 'upfile/kjd/20181227/3_1545892592.htm', null, 'upfile/kjd/20181227/4_1545892595.htm', null, '2018-12-27 14:36:38', null);
 
 -- ----------------------------
 -- Table structure for mh_enterprise_loan
@@ -385,22 +386,22 @@ CREATE TABLE `mh_enterprise_loan` (
   `credit_validity` date DEFAULT NULL COMMENT '授信有效期：授信截止时间',
   `already_loan_amount` varchar(100) NOT NULL DEFAULT '0' COMMENT '已放款的数值',
   PRIMARY KEY (`loan_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='企业申请：贷款信息';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='企业申请：贷款信息';
 
 -- ----------------------------
 -- Records of mh_enterprise_loan
 -- ----------------------------
-INSERT INTO `mh_enterprise_loan` VALUES ('1', '4', '77', '2', '2', '1000', '2', '1234567899876543210', null, null, null, null, null, '2018-12-23 22:57:35', null, '1', null, null, null, null, null, null, null, null, '0');
+INSERT INTO `mh_enterprise_loan` VALUES ('4', '4', '82', '2', '2', '1000', '2', '3ののののののののののののの', '24', null, null, null, null, '2018-12-27 14:38:16', null, '1', null, null, null, null, null, '230', '2018-12-28', '2019-01-05', '230');
 
 -- ----------------------------
 -- Table structure for mh_enterprise_loan_contract
 -- ----------------------------
 DROP TABLE IF EXISTS `mh_enterprise_loan_contract`;
 CREATE TABLE `mh_enterprise_loan_contract` (
-  `contract_id` int(11) NOT NULL COMMENT '合同ID',
+  `contract_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '合同ID',
   `contract_num` varchar(100) NOT NULL COMMENT '贷款合同号',
   `loan_id` int(11) NOT NULL COMMENT '贷款ID',
-  `loan_amount_money` decimal(17,6) NOT NULL COMMENT '实际放贷金额',
+  `loan_amount_money` float NOT NULL COMMENT '实际放贷金额',
   `loan_day` int(11) NOT NULL COMMENT '贷款周期',
   `loan_rate` float NOT NULL COMMENT '贷款利率',
   `loan_benchmark_rate` float NOT NULL COMMENT '基准利率',
@@ -416,12 +417,17 @@ CREATE TABLE `mh_enterprise_loan_contract` (
   `repayment_create_time` datetime DEFAULT NULL COMMENT '还款创建时间',
   `contract_repayment_start_time` date DEFAULT NULL COMMENT '合同还款开始时间',
   `contract_repayment_end_time` date DEFAULT NULL COMMENT '合同还款截止时间',
-  `bank_subsidy_amount` decimal(17,6) DEFAULT NULL COMMENT '银行补贴'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `bank_subsidy_amount` decimal(17,6) DEFAULT NULL COMMENT '银行补贴',
+  `loan_voucher` varchar(255) DEFAULT NULL COMMENT '请上传放款凭证',
+  PRIMARY KEY (`contract_id`),
+  KEY `load_id` (`loan_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mh_enterprise_loan_contract
 -- ----------------------------
+INSERT INTO `mh_enterprise_loan_contract` VALUES ('26', 'wmc0001', '4', '200', '8', '10', '5', '1', '2018-12-28', '2019-01-05', '2018-12-27 21:48:23', '0', '2', '0', null, null, null, null, null, null, 'upfile/contract/20181227/0_1545918501.png');
+INSERT INTO `mh_enterprise_loan_contract` VALUES ('27', 'wmc0002', '4', '30', '7', '10', '5', '1', '2018-12-29', '2019-01-05', '2018-12-27 21:49:30', '0', '4', '0', null, null, null, null, null, null, 'upfile/contract/20181227/0_1545918570.png');
 
 -- ----------------------------
 -- Table structure for mh_form_attr
@@ -589,9 +595,9 @@ CREATE TABLE `mh_member` (
 -- ----------------------------
 -- Records of mh_member
 -- ----------------------------
-INSERT INTO `mh_member` VALUES ('4', '15195861092', 'd1fc7f5623db9493f187c74c1618686b', '', '', '', '0', '0', '0', '0', '0', '0', '', '', '0', '', '0', '0', '', '0', '0', '2130706433', '1542440742', '1545547205', '1', '1', '0', '', '0');
+INSERT INTO `mh_member` VALUES ('4', '15195861092', 'd1fc7f5623db9493f187c74c1618686b', '', '', '', '0', '0', '0', '0', '0', '0', '', '', '0', '', '0', '0', '', '0', '0', '2130706433', '1542440742', '1545881885', '1', '1', '0', '', '0');
 INSERT INTO `mh_member` VALUES ('8', '18005143011', '0659c7992e268962384eb17fafe88364', '', '', '', '0', '0', '0', '0', '0', '0', '', '', '0', '', '0', '0', '', '0', '0', '2130706433', '1545192142', '1545274014', '1', '1', '0', '', '0');
-INSERT INTO `mh_member` VALUES ('9', '18755153420', 'd1fc7f5623db9493f187c74c1618686b', '', '', '', '0', '0', '0', '0', '0', '0', '', '', '0', '', '0', '0', '', '0', '0', '2130706433', '1545356950', '1545356962', '1', '1', '0', '', '0');
+INSERT INTO `mh_member` VALUES ('9', '18755153420', 'd1fc7f5623db9493f187c74c1618686b', '', '', '', '0', '0', '0', '0', '0', '0', '', '', '0', '', '0', '0', '', '0', '0', '2130706433', '1545356950', '1545614786', '1', '1', '0', '', '0');
 
 -- ----------------------------
 -- Table structure for mh_migration
@@ -765,7 +771,7 @@ CREATE TABLE `mh_news` (
 -- ----------------------------
 -- Records of mh_news
 -- ----------------------------
-INSERT INTO `mh_news` VALUES ('160', 'cn', '50', '1', '1', '111', '', '0', '0', '', '1', '0', '1', '1', '0', '0', '0', '0', '0', '', '', '科技贷项目上线', '', '', '', '', '', '', '科技贷项目上线Title', '科技贷项目上线Keywords', '科技贷项目上线Description', '', '', '0.00', '0.00', '20', '1544711681', '1544713254', 'news_read', '', '', '0');
+INSERT INTO `mh_news` VALUES ('160', 'cn', '50', '1', '1', '111', '', '0', '0', '', '1', '0', '1', '1', '0', '0', '0', '0', '0', '', '', '科技贷项目上线', '', '', '', '', '', '', '科技贷项目上线Title', '科技贷项目上线Keywords', '科技贷项目上线Description', '', '', '0.00', '0.00', '21', '1544711681', '1544713254', 'news_read', '', '', '0');
 INSERT INTO `mh_news` VALUES ('161', 'cn', '50', '21', '1', '112', '', '0', '0', '', '1', '0', '1', '1', '0', '0', '0', '0', '1', '', '', '用户使用协议', '用户使用协议', '', '', '', '', '', '用户使用协议Title', '用户使用协议Keywords', '用户使用协议Description', '', '', '0.00', '0.00', '1', '1544714478', '1544714572', 'agreement', '', '', '0');
 
 -- ----------------------------
@@ -851,14 +857,37 @@ CREATE TABLE `mh_organization` (
   `fixed` tinyint(2) NOT NULL DEFAULT '0' COMMENT '固定机构不能删除',
   `add_time` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mh_organization
 -- ----------------------------
 INSERT INTO `mh_organization` VALUES ('1', '风控', '0', null, '1', '0', '1543740444');
 INSERT INTO `mh_organization` VALUES ('2', '科技局', '0', null, '1', '0', '1543741706');
+INSERT INTO `mh_organization` VALUES ('23', '北京银行', '4', null, '1', '0', '1545837576');
 INSERT INTO `mh_organization` VALUES ('4', '银行', '0', null, '1', '0', '1543802976');
+INSERT INTO `mh_organization` VALUES ('24', '兴业银行', '4', null, '1', '0', '1545837625');
+
+-- ----------------------------
+-- Table structure for mh_phone_message
+-- ----------------------------
+DROP TABLE IF EXISTS `mh_phone_message`;
+CREATE TABLE `mh_phone_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '类型 1:注册用户',
+  `mobile` varchar(11) NOT NULL COMMENT '手机号',
+  `code` int(6) NOT NULL COMMENT '短信信息 6位整数',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 0:验证失效 1:验证正常',
+  `remark` varchar(1000) NOT NULL DEFAULT '' COMMENT '备注',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `mobile` (`mobile`),
+  KEY `content` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='手机号验证码';
+
+-- ----------------------------
+-- Records of mh_phone_message
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for mh_region
@@ -1288,26 +1317,24 @@ CREATE TABLE `mh_role_access` (
   `created_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '插入时间',
   PRIMARY KEY (`id`),
   KEY `idx_role_id` (`role_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=420 DEFAULT CHARSET=utf8 COMMENT='角色权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=433 DEFAULT CHARSET=utf8 COMMENT='角色权限表';
 
 -- ----------------------------
 -- Records of mh_role_access
 -- ----------------------------
-INSERT INTO `mh_role_access` VALUES ('405', '6', '5', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('406', '6', '8', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('407', '6', '71', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('408', '6', '14', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('409', '6', '48', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('410', '6', '49', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('411', '6', '51', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('412', '6', '52', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('413', '6', '53', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('414', '6', '54', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('415', '6', '55', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('416', '6', '16', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('417', '6', '27', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('418', '6', '28', '2017-11-07 17:58:34');
-INSERT INTO `mh_role_access` VALUES ('419', '6', '29', '2017-11-07 17:58:34');
+INSERT INTO `mh_role_access` VALUES ('420', '6', '5', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('421', '6', '8', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('422', '6', '71', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('423', '6', '52', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('424', '6', '53', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('425', '6', '54', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('426', '6', '16', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('427', '6', '27', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('428', '6', '28', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('429', '6', '92', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('430', '6', '93', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('431', '6', '94', '2018-12-25 17:40:53');
+INSERT INTO `mh_role_access` VALUES ('432', '6', '95', '2018-12-25 17:40:53');
 
 -- ----------------------------
 -- Table structure for mh_skin
@@ -1429,12 +1456,13 @@ CREATE TABLE `mh_user` (
   `loginip` bigint(20) NOT NULL DEFAULT '0' COMMENT '登陆ip',
   PRIMARY KEY (`id`),
   KEY `idx_email` (`email`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of mh_user
 -- ----------------------------
-INSERT INTO `mh_user` VALUES ('1', 'admin', '059c3304b11925e30d95801da52b4828', 'apanly@163.com', '1', '1', '2018-12-20 23:56:06', '2016-11-15 13:36:30', '2130706433');
+INSERT INTO `mh_user` VALUES ('1', 'admin', '059c3304b11925e30d95801da52b4828', 'apanly@163.com', '1', '1', '2018-12-26 23:18:23', '2016-11-15 13:36:30', '2130706433');
+INSERT INTO `mh_user` VALUES ('2', 'nckjd', 'e10adc3949ba59abbe56e057f20f883e', 'nckjd@163.com', '0', '1', '2018-12-25 17:46:58', '2018-12-25 17:42:34', '2130706433');
 
 -- ----------------------------
 -- Table structure for mh_user_role
@@ -1447,11 +1475,12 @@ CREATE TABLE `mh_user_role` (
   `created_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '插入时间',
   PRIMARY KEY (`id`),
   KEY `idx_uid` (`uid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 
 -- ----------------------------
 -- Records of mh_user_role
 -- ----------------------------
+INSERT INTO `mh_user_role` VALUES ('1', '2', '6', '2018-12-25 17:44:48');
 
 -- ----------------------------
 -- Table structure for mh_workflow_action
@@ -1518,12 +1547,15 @@ CREATE TABLE `mh_workflow_log` (
   `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mh_workflow_log
 -- ----------------------------
-INSERT INTO `mh_workflow_log` VALUES ('84', '77', '27', '4', '33', null, '', null, null, '0', '0', '1545577055', '1545577055');
+INSERT INTO `mh_workflow_log` VALUES ('115', '82', '28', '4', '34', '27', '', 'finish', null, '1', '0', '1545897053', '1545898609');
+INSERT INTO `mh_workflow_log` VALUES ('116', '82', '31', '5', '35', '28', '', 'pass', null, '1', '0', '1545898609', '1545915165');
+INSERT INTO `mh_workflow_log` VALUES ('117', '82', '31', '5', '36', '31', '', 'grant', null, '1', '0', '1545915165', '1545918458');
+INSERT INTO `mh_workflow_log` VALUES ('111', '82', '27', '4', '33', null, '', 'pass', '', '1', '0', '1545892696', '1545897053');
 
 -- ----------------------------
 -- Table structure for mh_workflow_node
@@ -1544,7 +1576,7 @@ CREATE TABLE `mh_workflow_node` (
 -- ----------------------------
 -- Records of mh_workflow_node
 -- ----------------------------
-INSERT INTO `mh_workflow_node` VALUES ('33', '4', '风控核查', 'node_1', '0', null, '1', '27');
-INSERT INTO `mh_workflow_node` VALUES ('34', '4', '科技局审核', 'node_2', '0', null, '2', '28');
-INSERT INTO `mh_workflow_node` VALUES ('35', '5', '银行受理', 'node_1', '0', null, '4', '29');
-INSERT INTO `mh_workflow_node` VALUES ('36', '5', '银行授信', 'node_2', '0', null, '4', '29');
+INSERT INTO `mh_workflow_node` VALUES ('33', '4', '审核', 'node_1', '0', null, '1', '27');
+INSERT INTO `mh_workflow_node` VALUES ('34', '4', '审核', 'node_2', '0', null, '2', '28');
+INSERT INTO `mh_workflow_node` VALUES ('35', '5', '受理', 'node_1', '0', null, '4', null);
+INSERT INTO `mh_workflow_node` VALUES ('36', '5', '授信', 'node_2', '0', null, '4', null);
