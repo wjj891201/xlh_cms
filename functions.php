@@ -33,7 +33,7 @@ function getLastSql($query=NULL){
         $queryCommand = clone $query;
         $sql = $queryCommand->createCommand()->getSql();
     }
-    echo $sql;
+    return $sql;
 }
 
 /**

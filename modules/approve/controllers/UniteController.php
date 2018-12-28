@@ -239,10 +239,13 @@ class UniteController extends CommonController
 
         $query  =   EnterpriseBase::find()->alias('a')
                     ->select(['a.*', 'b.*', 'c.*', 'd.*', 'e.name town_name'])
-                    ->leftJoin('{{%enterprise_describe}} b', 'b.base_id=a.base_id')
-                    ->leftJoin('{{%enterprise_finance}} c', 'c.base_id=a.base_id')
-                    ->leftJoin('{{%enterprise_loan}} d', 'd.base_id=a.base_id')
-                    ->leftJoin('{{%town_list}} e', 'e.id=a.town_id');
+                    ->innerJoin('{{%enterprise_describe}} b', 'b.base_id=a.base_id')
+                    ->innerJoin('{{%enterprise_finance}} c', 'c.base_id=a.base_id')
+                    ->innerJoin('{{%enterprise_loan}} d', 'd.base_id=a.base_id')
+                    ->innerJoin('{{%town_list}} e', 'e.id=a.town_id')
+                    ->innerJoin('{{%workflow_log}} f', 'f.app_id=a.base_id')
+                    ->where(['f.group_id'=>$this->loan_group_id, 'f.result'=>'finish']);
+        // echo getLastSql($query);
 
         $countQuery = clone $query;
         $pages      = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 10]);
@@ -312,6 +315,8 @@ class UniteController extends CommonController
      * @return [array] 
      */
     public function actionLoanDataInfo(){
+        $belong      = Yii::$app->approvr_user->identity->belong;
+
         $export      = Yii::$app->request->get('export');
         $column      = Yii::$app->request->get('column');
         $column_data = $this->set_table_field((empty($column) ? [] : explode(',', $column)), $this->column_name_loan, $this->default_column_name_loan);
@@ -320,11 +325,15 @@ class UniteController extends CommonController
 
         $query       =  EnterpriseLoan::find()->alias('a')
                         ->select(['a.*', 'b.*', 'c.*', 'd.*', 'e.name town_name', 'f.name bank_name'])
-                        ->leftJoin('{{%enterprise_base}} b', 'b.base_id=a.base_id')
-                        ->leftJoin('{{%enterprise_finance}} c', 'c.base_id=a.base_id')
-                        ->leftJoin('{{%enterprise_describe}} d', 'd.base_id=a.base_id')
-                        ->leftJoin('{{%town_list}} e', 'e.id=b.town_id')
-                        ->leftJoin('{{%organization}} f', 'f.id=a.bank_id');
+                        ->innerJoin('{{%enterprise_base}} b', 'b.base_id=a.base_id')
+                        ->innerJoin('{{%enterprise_finance}} c', 'c.base_id=a.base_id')
+                        ->innerJoin('{{%enterprise_describe}} d', 'd.base_id=a.base_id')
+                        ->innerJoin('{{%town_list}} e', 'e.id=b.town_id')
+                        ->innerJoin('{{%organization}} f', 'f.id=a.bank_id')
+                        ->innerJoin('{{%workflow_log}} g', 'g.app_id=a.base_id')
+                        ->where(['a.bank_id'=>$belong, 'g.group_id'=>$this->loan_group_id, 'g.result'=>'grant']);
+        
+        // echo getLastSql($query);
 
         $countQuery = clone $query;
         $pages      = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 10]);

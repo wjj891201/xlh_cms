@@ -45,11 +45,17 @@ ApproveAsset::register($this);
                                 <a <?php if ($this->context->action->id == 'loan-finish'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['loan-handle/loan-finish']) ?>">已通过企业</a>
                             </dd>
                         <?php endif; ?>
+                
                         <dt <?php if ($this->context->id == 'unite'): ?>class="on"<?php endif; ?>><i class="icon4"></i>数据统计</dt>
                         <dd <?php if ($this->context->id == 'unite'): ?>style="display: block"<?php endif; ?>>
+                            <?php if (in_array($belong, [1, 2])): ?>
                             <a <?php if ($this->context->action->id == 'base-data-info'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['unite/base-data-info']) ?>">资质报表导出</a>
+                           <?php endif; ?>
+                           <?php if (in_array($belong, [1, 23, 24])): ?>
                             <a <?php if ($this->context->action->id == 'loan-data-info'): ?>class='choose'<?php endif; ?> href="<?= Url::to(['unite/loan-data-info']) ?>">贷款报表导出</a>
+                            <?php endif; ?>
                         </dd>
+                 
                     </dl>
                 </ul>
             </div>
